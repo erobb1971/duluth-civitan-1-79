@@ -35,7 +35,7 @@ const DesktopNavigation = () => {
             <a
               key={item.href}
               href={item.href}
-              className="text-civitan-blue hover:text-civitan-gold transition-colors duration-300"
+              className="text-civitan-blue hover:text-civitan-gold transition-colors duration-300 font-medium"
             >
               {item.title}
             </a>
@@ -43,13 +43,15 @@ const DesktopNavigation = () => {
         </div>
 
         <div className="flex items-center gap-4">
-          {/* Mode toggle hidden */}
-          <Button onClick={() => console.log("Login clicked")} variant="outline">
+          <Button 
+            onClick={() => console.log("Login clicked")} 
+            className="bg-white text-civitan-blue border border-civitan-blue hover:bg-civitan-blue/5"
+          >
             Member Login
           </Button>
           <Button 
             onClick={() => setMembershipModalOpen(true)}
-            className="bg-civitan-gold text-civitan-blue hover:bg-yellow-500"
+            className="bg-civitan-gold text-civitan-blue hover:bg-yellow-400 font-medium"
           >
             Become a Member
           </Button>
