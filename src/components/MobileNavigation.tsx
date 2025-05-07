@@ -34,7 +34,7 @@ const MobileNavigation = () => {
 
   return (
     <>
-      <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-civitan-blue border-t border-civitan-gray z-50">
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-civitan-gray z-50">
         <div className="flex items-center justify-around px-4 py-2">
           {navItems.map((item) => (
             <a
@@ -43,7 +43,7 @@ const MobileNavigation = () => {
                 e.preventDefault();
                 handleNavItemClick(item.title, item.href);
               }}
-              className="flex flex-col items-center text-civitan-blue dark:text-white hover:text-civitan-gold transition-colors duration-300 py-1"
+              className="flex flex-col items-center text-civitan-blue hover:text-civitan-gold transition-colors duration-300 py-1"
             >
               {item.icon}
               <span className="text-xs mt-1">{item.title}</span>

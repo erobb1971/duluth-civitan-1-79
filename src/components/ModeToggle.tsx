@@ -4,37 +4,26 @@ import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 
 const ModeToggle = () => {
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  // Commenting out dark/light mode functionality
+  // const [isDarkMode, setIsDarkMode] = useState(false);
 
   useEffect(() => {
-    // Check if user prefers dark mode
-    const prefersDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    setIsDarkMode(prefersDarkMode);
-    
-    if (prefersDarkMode) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
+    // Ensure light mode is always enabled
+    document.documentElement.classList.remove("dark");
   }, []);
 
   const toggleMode = () => {
-    setIsDarkMode(!isDarkMode);
+    // Commenting out toggle functionality
+    // setIsDarkMode(!isDarkMode);
     
-    if (!isDarkMode) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
+    // Always ensure light mode
+    document.documentElement.classList.remove("dark");
   };
 
   return (
-    <Button variant="outline" size="icon" onClick={toggleMode}>
-      {isDarkMode ? (
-        <Sun className="h-5 w-5" />
-      ) : (
-        <Moon className="h-5 w-5" />
-      )}
+    <Button variant="outline" size="icon" onClick={toggleMode} style={{ display: 'none' }}>
+      {/* Hide the toggle button completely */}
+      <Sun className="h-5 w-5" />
       <span className="sr-only">Toggle theme</span>
     </Button>
   );

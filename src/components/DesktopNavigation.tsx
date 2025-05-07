@@ -22,10 +22,10 @@ const DesktopNavigation = () => {
 
   return (
     <>
-      <div className="hidden lg:flex items-center justify-between w-full px-6 py-4 bg-white dark:bg-civitan-blue border-b border-civitan-gray">
+      <div className="hidden lg:flex items-center justify-between w-full px-6 py-4 bg-white border-b border-civitan-gray">
         <div className="flex items-center gap-2">
           <CivitanLogo size="sm" />
-          <span className="text-xl font-bold text-civitan-blue dark:text-white">
+          <span className="text-xl font-bold text-civitan-blue">
             Duluth Civitan
           </span>
         </div>
@@ -35,7 +35,7 @@ const DesktopNavigation = () => {
             <a
               key={item.href}
               href={item.href}
-              className="text-civitan-blue dark:text-white hover:text-civitan-gold transition-colors duration-300"
+              className="text-civitan-blue hover:text-civitan-gold transition-colors duration-300"
             >
               {item.title}
             </a>
@@ -43,7 +43,7 @@ const DesktopNavigation = () => {
         </div>
 
         <div className="flex items-center gap-4">
-          <ModeToggle />
+          {/* Mode toggle hidden */}
           <Button onClick={() => console.log("Login clicked")} variant="outline">
             Member Login
           </Button>

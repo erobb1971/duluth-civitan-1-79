@@ -13,7 +13,7 @@ const HeroSection = () => {
         <div className="animate-fade-in">
           <CivitanLogo size="xl" className="mx-auto mb-8" />
           <h1 className="text-4xl md:text-6xl font-bold mb-4">
-            Welcome to <span className="text-civitan-gold">Civitan Duluth</span>
+            Welcome to <span className="text-civitan-gold">Duluth Civitan</span>
           </h1>
           <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
             Serving the community through leadership, knowledge, and action since 1985
