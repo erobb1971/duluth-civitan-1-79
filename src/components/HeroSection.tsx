@@ -27,7 +27,7 @@ const HeroSection = () => {
             </Button>
             <Button
               variant="outline"
-              className="border-white text-white hover:bg-white/10 font-bold px-8 py-6 text-lg"
+              className="border-white text-white hover:bg-civitan-gold hover:text-civitan-blue font-bold px-8 py-6 text-lg"
               onClick={() => document.getElementById("events")?.scrollIntoView()}
             >
               View Events
