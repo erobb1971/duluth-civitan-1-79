@@ -20,7 +20,7 @@ const CivitanLogo: React.FC<CivitanLogoProps> = ({
   return (
     <div className={`${sizeClasses[size]} ${className}`}>
       <img 
-        src="/lovable-uploads/a51d13aa-c110-46e7-8d46-e1ce5016ecb3.png" 
+        src="/lovable-uploads/1404d5f9-287c-4de8-bc05-2d618d082a0e.png" 
         alt="Civitan Duluth Logo" 
         className="w-full h-full object-contain"
       />
