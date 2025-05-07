@@ -16,7 +16,9 @@ const Index = () => {
       <AboutSection />
       <TimelineSection />
       <EventsSection />
-      <Footer />
+      <div id="contact">
+        <Footer />
+      </div>
       <MobileNavigation />
     </div>
   );
