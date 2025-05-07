@@ -1,130 +1,70 @@
 
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Check } from "lucide-react";
-
-const membershipTiers = [
-  {
-    title: "Individual",
-    price: "$75",
-    period: "per year",
-    features: [
-      "Monthly club meetings",
-      "Community service opportunities",
-      "Social events access",
-      "Member newsletter",
-    ],
-    buttonText: "Become a Member",
-    recommended: false,
-  },
-  {
-    title: "Family",
-    price: "$120",
-    period: "per year",
-    features: [
-      "All Individual benefits",
-      "Family members included",
-      "Family volunteer opportunities",
-      "Family social events",
-      "Children's activities",
-    ],
-    buttonText: "Join as Family",
-    recommended: true,
-  },
-  {
-    title: "Business",
-    price: "$250",
-    period: "per year",
-    features: [
-      "All Family benefits",
-      "Business logo on website",
-      "Recognition at events",
-      "Sponsorship opportunities",
-      "Networking events",
-    ],
-    buttonText: "Business Signup",
-    recommended: false,
-  },
-];
 
 const MembershipSection = () => {
   return (
-    <section id="membership" className="section bg-white dark:bg-gray-900">
+    <section id="membership" className="section bg-[#121628] text-white py-16">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-civitan-blue dark:text-civitan-gold mb-4">
+          <h2 className="text-3xl md:text-5xl font-bold text-civitan-gold mb-6">
             Become a Member
           </h2>
-          <div className="w-24 h-1 bg-civitan-gold mx-auto mb-6"></div>
-          <p className="text-lg max-w-3xl mx-auto text-gray-700 dark:text-gray-300">
+          <div className="w-24 h-1 bg-civitan-gold mx-auto mb-8"></div>
+          <p className="text-xl max-w-3xl mx-auto text-gray-300">
             Join our community of service-oriented individuals making a difference
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          {membershipTiers.map((tier, index) => (
-            <Card 
-              key={index} 
-              className={`civitan-shadow relative ${
-                tier.recommended 
-                  ? "border-2 border-civitan-gold transform md:-translate-y-4" 
-                  : ""
-              }`}
-            >
-              {tier.recommended && (
-                <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-civitan-gold text-civitan-blue text-sm font-bold py-1 px-4 rounded-full">
-                  Recommended
-                </div>
-              )}
-              <CardHeader className="text-center pb-2">
-                <CardTitle className="text-2xl text-civitan-blue dark:text-white">{tier.title}</CardTitle>
-                <div className="mt-3">
-                  <span className="text-4xl font-bold">{tier.price}</span>
-                  <span className="text-gray-600 dark:text-gray-400 ml-1">{tier.period}</span>
-                </div>
-              </CardHeader>
-              <CardContent className="border-t border-gray-200 dark:border-gray-700 pt-6">
-                <ul className="space-y-3">
-                  {tier.features.map((feature, idx) => (
-                    <li key={idx} className="flex items-start">
-                      <Check className="h-5 w-5 text-civitan-gold mr-2 flex-shrink-0 mt-0.5" />
-                      <span className="text-gray-700 dark:text-gray-300">{feature}</span>
+        <div className="max-w-4xl mx-auto">
+          <Card className="bg-[#1c223a] border-2 border-civitan-gold">
+            <CardContent className="p-8">
+              <div className="grid md:grid-cols-2 gap-8">
+                <div>
+                  <h3 className="text-2xl font-bold text-white mb-6">Member Benefits</h3>
+                  <ul className="space-y-4">
+                    <li className="flex items-start">
+                      <Check className="h-6 w-6 text-civitan-gold mr-3 flex-shrink-0" />
+                      <span>Monthly club meetings and networking</span>
                     </li>
-                  ))}
-                </ul>
-              </CardContent>
-              <CardFooter className="pt-4">
-                <Button 
-                  className={`w-full ${
-                    tier.recommended
-                      ? "bg-civitan-gold text-civitan-blue hover:bg-yellow-500"
-                      : "bg-civitan-blue hover:bg-blue-900 text-white"
-                  }`}
-                >
-                  {tier.buttonText}
-                </Button>
-              </CardFooter>
-            </Card>
-          ))}
-        </div>
-
-        <div className="max-w-3xl mx-auto mt-16 text-center">
-          <div className="bg-gray-100 dark:bg-gray-800 p-6 rounded-lg border-l-4 border-civitan-gold">
-            <h3 className="text-xl font-bold mb-3 text-civitan-blue dark:text-white">
-              Member Benefits
-            </h3>
-            <p className="text-gray-700 dark:text-gray-300 mb-4">
-              When you become a Civitan Duluth member, you join a global organization dedicated to serving the world, with a special focus on helping people with developmental disabilities.
-            </p>
-            <div className="mt-6">
-              <img 
-                src="/lovable-uploads/7771749b-f5ad-4949-8f0b-1d321a504737.png" 
-                alt="Civitan Member Card" 
-                className="max-w-xs mx-auto rounded-lg shadow-lg" 
-              />
-            </div>
-          </div>
+                    <li className="flex items-start">
+                      <Check className="h-6 w-6 text-civitan-gold mr-3 flex-shrink-0" />
+                      <span>Community service opportunities</span>
+                    </li>
+                    <li className="flex items-start">
+                      <Check className="h-6 w-6 text-civitan-gold mr-3 flex-shrink-0" />
+                      <span>Family volunteer opportunities</span>
+                    </li>
+                    <li className="flex items-start">
+                      <Check className="h-6 w-6 text-civitan-gold mr-3 flex-shrink-0" />
+                      <span>Social events and children's activities</span>
+                    </li>
+                    <li className="flex items-start">
+                      <Check className="h-6 w-6 text-civitan-gold mr-3 flex-shrink-0" />
+                      <span>Business sponsorship opportunities</span>
+                    </li>
+                  </ul>
+                  <div className="mt-8">
+                    <Button 
+                      className="w-full md:w-auto bg-civitan-gold hover:bg-yellow-500 text-civitan-blue font-bold py-3 px-8 text-lg"
+                    >
+                      Join Civitan Today
+                    </Button>
+                  </div>
+                </div>
+                
+                <div className="flex items-center justify-center">
+                  <img 
+                    src="/lovable-uploads/7771749b-f5ad-4949-8f0b-1d321a504737.png" 
+                    alt="Civitan Member Card" 
+                    className="max-w-full rounded-lg shadow-xl" 
+                  />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
         </div>
       </div>
     </section>

@@ -1,11 +1,49 @@
 
 import React from "react";
 import CivitanLogo from "./CivitanLogo";
+import { Card, CardContent } from "@/components/ui/card";
+import { Mail, MapPin, Phone } from "lucide-react";
 
 const Footer = () => {
   return (
     <footer className="bg-civitan-blue text-white pt-12 pb-20 lg:pb-8">
       <div className="container mx-auto px-4">
+        {/* Contact Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+          <Card className="bg-civitan-blue border-civitan-gold border-2">
+            <CardContent className="pt-6 flex flex-col items-center text-center">
+              <div className="bg-civitan-gold p-3 rounded-full mb-4">
+                <Phone className="h-6 w-6 text-civitan-blue" />
+              </div>
+              <h3 className="font-bold text-lg mb-2 text-white">Phone</h3>
+              <p className="text-gray-300">(555) 123-4567</p>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-civitan-blue border-civitan-gold border-2">
+            <CardContent className="pt-6 flex flex-col items-center text-center">
+              <div className="bg-civitan-gold p-3 rounded-full mb-4">
+                <Mail className="h-6 w-6 text-civitan-blue" />
+              </div>
+              <h3 className="font-bold text-lg mb-2 text-white">Email</h3>
+              <p className="text-gray-300">info@civitanduluth.org</p>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-civitan-blue border-civitan-gold border-2">
+            <CardContent className="pt-6 flex flex-col items-center text-center">
+              <div className="bg-civitan-gold p-3 rounded-full mb-4">
+                <MapPin className="h-6 w-6 text-civitan-blue" />
+              </div>
+              <h3 className="font-bold text-lg mb-2 text-white">Location</h3>
+              <p className="text-gray-300">
+                3455 Golden Horizon Blvd<br />
+                Duluth, GA 30096
+              </p>
+            </CardContent>
+          </Card>
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           <div className="md:col-span-1">
             <div className="flex items-center mb-4">
@@ -23,7 +61,6 @@ const Footer = () => {
               <li><a href="#about" className="text-gray-300 hover:text-white">About</a></li>
               <li><a href="#timeline" className="text-gray-300 hover:text-white">Timeline</a></li>
               <li><a href="#events" className="text-gray-300 hover:text-white">Events</a></li>
-              <li><a href="#contact" className="text-gray-300 hover:text-white">Contact</a></li>
               <li><a href="#membership" className="text-gray-300 hover:text-white">Membership</a></li>
             </ul>
           </div>
