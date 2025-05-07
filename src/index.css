@@ -115,3 +115,13 @@
     @apply shadow-lg hover:shadow-xl transition-shadow duration-300;
   }
 }
+
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}

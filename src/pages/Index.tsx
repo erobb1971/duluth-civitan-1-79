@@ -7,6 +7,7 @@ import AboutSection from "@/components/AboutSection";
 // import TimelineSection from "@/components/TimelineSection";
 import CtaSection from "@/components/CtaSection";
 import EventsSection from "@/components/EventsSection";
+import GallerySection from "@/components/GallerySection";
 import Footer from "@/components/Footer";
 
 const Index = () => {
@@ -18,6 +19,7 @@ const Index = () => {
       {/* TimelineSection component commented out temporarily
       <TimelineSection /> */}
       <CtaSection />
+      <GallerySection />
       <EventsSection />
       <div id="contact">
         <Footer />
