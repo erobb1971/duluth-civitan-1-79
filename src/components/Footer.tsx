@@ -13,7 +13,7 @@ const Footer = () => {
               <span className="ml-2 text-xl font-bold">Duluth Civitan</span>
             </div>
             <p className="text-gray-300 mb-4">
-              Serving the community through leadership, knowledge, and action since 1985.
+              Improving lives through service since 2002. Dedicated to helping children and adults with developmental disabilities in Gwinnett County.
             </p>
           </div>
           

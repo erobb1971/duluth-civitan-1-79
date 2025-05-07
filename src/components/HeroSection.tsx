@@ -16,7 +16,7 @@ const HeroSection = () => {
             Welcome to <span className="text-civitan-gold">Duluth Civitan</span>
           </h1>
           <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
-            Serving the community through leadership, knowledge, and action since 1985
+            Serving the community through leadership, knowledge, and action since 2002
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <Button

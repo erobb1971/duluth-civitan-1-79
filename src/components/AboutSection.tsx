@@ -5,17 +5,17 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 const features = [
   {
     title: "Community Service",
-    description: "We organize and participate in various community service projects throughout the year.",
+    description: "We organize and participate in various community service projects throughout the year in Gwinnett County.",
     icon: "🤝",
   },
   {
     title: "Leadership Development",
-    description: "We provide opportunities for members to develop and enhance their leadership skills.",
+    description: "We provide opportunities for members to develop and enhance their leadership skills through service.",
     icon: "🚀",
   },
   {
     title: "Social Activities",
-    description: "We host social activities and events for members to network and build relationships.",
+    description: "We host social activities and events for members to network and build relationships within our community.",
     icon: "🎉",
   },
 ];
@@ -30,7 +30,7 @@ const AboutSection = () => {
           </h2>
           <div className="w-24 h-1 bg-civitan-gold mx-auto mb-6"></div>
           <p className="text-lg max-w-3xl mx-auto text-gray-700">
-            Since 1985, Duluth Civitan has been dedicated to serving individual and community needs with an emphasis on helping people with developmental disabilities.
+            Since 2002, Duluth Civitan has been dedicated to improving the lives of children and adults with developmental disabilities in Gwinnett County through hands-on service, fundraising, and advocacy.
           </p>
         </div>
         
