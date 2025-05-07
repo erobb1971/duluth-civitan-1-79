@@ -1,8 +1,9 @@
 
-import React from "react";
+import React, { useState } from "react";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { CalendarDays, Mail } from "lucide-react";
+import CalendarModal from "./CalendarModal";
 
 const upcomingEvents = [
   {
@@ -35,6 +36,8 @@ const upcomingEvents = [
 ];
 
 const EventsSection = () => {
+  const [calendarModalOpen, setCalendarModalOpen] = useState(false);
+  
   const handleEmailClick = (subject: string) => {
     window.location.href = `mailto:info@duluthcivitanclub.org?subject=${subject}&body=Thank you for your interest in our ${subject} event. Please provide your contact information and we will get back to you shortly.`;
   };
@@ -91,12 +94,17 @@ const EventsSection = () => {
           <Button 
             variant="outline" 
             className="border-civitan-blue text-civitan-blue dark:text-white dark:border-white"
-            onClick={() => handleEmailClick("Events")}
+            onClick={() => setCalendarModalOpen(true)}
           >
             View All Events
           </Button>
         </div>
       </div>
+      
+      <CalendarModal
+        open={calendarModalOpen}
+        onOpenChange={setCalendarModalOpen}
+      />
     </section>
   );
 };
