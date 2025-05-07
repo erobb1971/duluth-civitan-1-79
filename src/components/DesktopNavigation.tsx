@@ -12,7 +12,7 @@ interface NavItem {
 
 const navItems: NavItem[] = [
   { title: "About", href: "#about" },
-  { title: "Timeline", href: "#timeline" },
+  // Timeline item removed
   { title: "Events", href: "#events" },
   { title: "Contact", href: "#contact" },
 ];
