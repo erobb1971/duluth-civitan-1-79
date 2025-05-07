@@ -69,7 +69,8 @@ const GallerySection = () => {
           </p>
         </div>
         
-        <div className="relative px-4">
+        {/* Main gallery carousel - visible on all devices */}
+        <div className="relative px-4 my-5">
           <Carousel
             opts={{
               align: "start",
@@ -78,7 +79,7 @@ const GallerySection = () => {
             className="w-full"
           >
             <CarouselContent className="-ml-1">
-              {[...galleryImages, ...galleryImages.slice(0, 3)].map((image, index) => (
+              {galleryImages.map((image, index) => (
                 <CarouselItem key={index} className="pl-1 sm:basis-1/2 md:basis-1/3 lg:basis-1/4">
                   <div className="p-1 h-full">
                     <div className="overflow-hidden rounded-md h-full aspect-square civitan-shadow">
@@ -95,26 +96,6 @@ const GallerySection = () => {
             <CarouselPrevious className="left-2 lg:left-4" />
             <CarouselNext className="right-2 lg:right-4" />
           </Carousel>
-        </div>
-
-        {/* Mobile scrolling gallery - visible only on small screens */}
-        <div className="mt-6 md:hidden">
-          <div className="flex overflow-x-auto space-x-2 pb-4 snap-x snap-mandatory scrollbar-hide">
-            {galleryImages.map((image, index) => (
-              <div 
-                key={index} 
-                className="flex-none w-4/5 snap-center p-1"
-              >
-                <div className="overflow-hidden rounded-md h-full aspect-square civitan-shadow">
-                  <img
-                    src={image.src}
-                    alt={image.alt}
-                    className="h-full w-full object-cover"
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
         </div>
       </div>
     </section>

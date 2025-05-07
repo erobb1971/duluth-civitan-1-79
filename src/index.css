@@ -124,4 +124,16 @@
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
+  
+  /* Mobile spacing fixes */
+  @media (max-width: 768px) {
+    .pb-mobile-nav {
+      padding-bottom: 70px;
+    }
+    
+    .gallery-spacing {
+      margin: 20px 0;
+      padding: 5px;
+    }
+  }
 }

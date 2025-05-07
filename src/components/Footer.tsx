@@ -1,10 +1,9 @@
 
 import React from "react";
-import CivitanLogo from "./CivitanLogo";
 
 const Footer = () => {
   return (
-    <footer className="bg-civitan-blue text-white pt-12 pb-20 lg:pb-8">
+    <footer className="bg-civitan-blue text-white pt-12 pb-20 lg:pb-8 hidden lg:block">
       <div className="container mx-auto px-4">
         <div className="border-t border-gray-800 pt-8">
           <div className="flex flex-col md:flex-row justify-between">
