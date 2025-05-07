@@ -5,6 +5,7 @@ import MobileNavigation from "@/components/MobileNavigation";
 import HeroSection from "@/components/HeroSection";
 import AboutSection from "@/components/AboutSection";
 // import TimelineSection from "@/components/TimelineSection";
+import CtaSection from "@/components/CtaSection";
 import EventsSection from "@/components/EventsSection";
 import Footer from "@/components/Footer";
 
@@ -16,6 +17,7 @@ const Index = () => {
       <AboutSection />
       {/* TimelineSection component commented out temporarily
       <TimelineSection /> */}
+      <CtaSection />
       <EventsSection />
       <div id="contact">
         <Footer />
