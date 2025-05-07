@@ -20,14 +20,14 @@ const HeroSection = () => {
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <Button
-              className="bg-civitan-gold text-civitan-blue hover:bg-yellow-500 font-bold px-8 py-6 text-lg"
+              className="bg-civitan-gold text-civitan-blue hover:bg-yellow-600 hover:text-white font-bold px-8 py-6 text-lg shadow-md"
               onClick={() => document.getElementById("about")?.scrollIntoView()}
             >
               Learn More
             </Button>
             <Button
               variant="outline"
-              className="border-white text-white hover:bg-civitan-gold hover:text-civitan-blue font-bold px-8 py-6 text-lg"
+              className="border-white text-white bg-transparent hover:bg-civitan-gold hover:text-civitan-blue font-bold px-8 py-6 text-lg shadow-md"
               onClick={() => document.getElementById("events")?.scrollIntoView()}
             >
               View Events
