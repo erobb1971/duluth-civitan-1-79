@@ -26,7 +26,7 @@ const Footer = () => {
                 <Mail className="h-6 w-6 text-civitan-blue" />
               </div>
               <h3 className="font-bold text-lg mb-2 text-white">Email</h3>
-              <p className="text-gray-300">info@civitanduluth.org</p>
+              <p className="text-gray-300">info@duluthcivitanclub.org</p>
             </CardContent>
           </Card>
 
@@ -48,7 +48,7 @@ const Footer = () => {
           <div className="md:col-span-1">
             <div className="flex items-center mb-4">
               <CivitanLogo size="sm" />
-              <span className="ml-2 text-xl font-bold">Civitan Duluth</span>
+              <span className="ml-2 text-xl font-bold">Duluth Civitan</span>
             </div>
             <p className="text-gray-300 mb-4">
               Serving the community through leadership, knowledge, and action since 1985.
@@ -71,7 +71,7 @@ const Footer = () => {
               <li>3455 Golden Horizon Blvd</li>
               <li>Duluth, GA 30096</li>
               <li>(555) 123-4567</li>
-              <li>info@civitanduluth.org</li>
+              <li>info@duluthcivitanclub.org</li>
             </ul>
           </div>
           
@@ -102,7 +102,7 @@ const Footer = () => {
         
         <div className="border-t border-gray-800 pt-8 mt-8">
           <div className="flex flex-col md:flex-row justify-between">
-            <p className="text-gray-400">&copy; {new Date().getFullYear()} Civitan Duluth. All rights reserved.</p>
+            <p className="text-gray-400">&copy; {new Date().getFullYear()} Duluth Civitan. All rights reserved.</p>
             <div className="mt-4 md:mt-0">
               <a href="#" className="text-gray-400 hover:text-white mr-4">Privacy Policy</a>
               <a href="#" className="text-gray-400 hover:text-white">Terms of Service</a>

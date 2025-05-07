@@ -1,6 +1,5 @@
 
 import React from "react";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Check } from "lucide-react";
 
@@ -46,13 +45,6 @@ const MembershipSection = () => {
                       <span>Business sponsorship opportunities</span>
                     </li>
                   </ul>
-                  <div className="mt-8">
-                    <Button 
-                      className="w-full md:w-auto bg-civitan-gold hover:bg-yellow-500 text-civitan-blue font-bold py-3 px-8 text-lg"
-                    >
-                      Join Civitan Today
-                    </Button>
-                  </div>
                 </div>
                 
                 <div className="flex items-center justify-center">

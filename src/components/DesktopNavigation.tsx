@@ -1,8 +1,9 @@
 
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import CivitanLogo from "./CivitanLogo";
 import ModeToggle from "./ModeToggle";
+import MembershipApplicationModal from "./MembershipApplicationModal";
 
 interface NavItem {
   title: string;
@@ -17,40 +18,49 @@ const navItems: NavItem[] = [
 ];
 
 const DesktopNavigation = () => {
+  const [membershipModalOpen, setMembershipModalOpen] = useState(false);
+
   return (
-    <div className="hidden lg:flex items-center justify-between w-full px-6 py-4 bg-white dark:bg-civitan-blue border-b border-civitan-gray">
-      <div className="flex items-center gap-2">
-        <CivitanLogo size="sm" />
-        <span className="text-xl font-bold text-civitan-blue dark:text-white">
-          Civitan Duluth
-        </span>
-      </div>
+    <>
+      <div className="hidden lg:flex items-center justify-between w-full px-6 py-4 bg-white dark:bg-civitan-blue border-b border-civitan-gray">
+        <div className="flex items-center gap-2">
+          <CivitanLogo size="sm" />
+          <span className="text-xl font-bold text-civitan-blue dark:text-white">
+            Duluth Civitan
+          </span>
+        </div>
 
-      <div className="flex items-center space-x-6">
-        {navItems.map((item) => (
-          <a
-            key={item.href}
-            href={item.href}
-            className="text-civitan-blue dark:text-white hover:text-civitan-gold transition-colors duration-300"
+        <div className="flex items-center space-x-6">
+          {navItems.map((item) => (
+            <a
+              key={item.href}
+              href={item.href}
+              className="text-civitan-blue dark:text-white hover:text-civitan-gold transition-colors duration-300"
+            >
+              {item.title}
+            </a>
+          ))}
+        </div>
+
+        <div className="flex items-center gap-4">
+          <ModeToggle />
+          <Button onClick={() => console.log("Login clicked")} variant="outline">
+            Member Login
+          </Button>
+          <Button 
+            onClick={() => setMembershipModalOpen(true)}
+            className="bg-civitan-gold text-civitan-blue hover:bg-yellow-500"
           >
-            {item.title}
-          </a>
-        ))}
+            Become a Member
+          </Button>
+        </div>
       </div>
 
-      <div className="flex items-center gap-4">
-        <ModeToggle />
-        <Button onClick={() => console.log("Login clicked")} variant="outline">
-          Member Login
-        </Button>
-        <Button 
-          onClick={() => console.log("Become Member clicked")}
-          className="bg-civitan-gold text-civitan-blue hover:bg-yellow-500"
-        >
-          Become a Member
-        </Button>
-      </div>
-    </div>
+      <MembershipApplicationModal 
+        open={membershipModalOpen} 
+        onOpenChange={setMembershipModalOpen}
+      />
+    </>
   );
 };
 

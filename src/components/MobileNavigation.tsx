@@ -1,7 +1,8 @@
 
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Home, CalendarDays, Mail, User, Menu } from "lucide-react";
+import MembershipApplicationModal from "./MembershipApplicationModal";
 
 interface NavItem {
   title: string;
@@ -18,21 +19,44 @@ const navItems: NavItem[] = [
 ];
 
 const MobileNavigation = () => {
+  const [membershipModalOpen, setMembershipModalOpen] = useState(false);
+
+  const handleNavItemClick = (title: string, href: string) => {
+    if (title === "Login") {
+      console.log("Login clicked");
+    } else if (title === "Menu") {
+      setMembershipModalOpen(true);
+    } else {
+      // Regular navigation
+      window.location.href = href;
+    }
+  };
+
   return (
-    <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-civitan-blue border-t border-civitan-gray z-50">
-      <div className="flex items-center justify-around px-4 py-2">
-        {navItems.map((item) => (
-          <a
-            key={item.href}
-            href={item.href}
-            className="flex flex-col items-center text-civitan-blue dark:text-white hover:text-civitan-gold transition-colors duration-300 py-1"
-          >
-            {item.icon}
-            <span className="text-xs mt-1">{item.title}</span>
-          </a>
-        ))}
+    <>
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-civitan-blue border-t border-civitan-gray z-50">
+        <div className="flex items-center justify-around px-4 py-2">
+          {navItems.map((item) => (
+            <a
+              key={item.href}
+              onClick={(e) => {
+                e.preventDefault();
+                handleNavItemClick(item.title, item.href);
+              }}
+              className="flex flex-col items-center text-civitan-blue dark:text-white hover:text-civitan-gold transition-colors duration-300 py-1"
+            >
+              {item.icon}
+              <span className="text-xs mt-1">{item.title}</span>
+            </a>
+          ))}
+        </div>
       </div>
-    </div>
+
+      <MembershipApplicationModal 
+        open={membershipModalOpen} 
+        onOpenChange={setMembershipModalOpen}
+      />
+    </>
   );
 };
 
