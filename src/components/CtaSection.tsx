@@ -8,7 +8,7 @@ const CtaSection = () => {
   const [membershipModalOpen, setMembershipModalOpen] = useState(false);
 
   const handleMembershipClick = () => {
-    window.location.href = "mailto:info@duluthcivitanclub.org?subject=Membership Application&body=Thank you for your interest in becoming a member of Duluth Civitan. Please provide your contact information and we will get back to you shortly.";
+    setMembershipModalOpen(true);
   };
 
   return (
@@ -64,6 +64,11 @@ const CtaSection = () => {
           </div>
         </div>
       </section>
+
+      <MembershipApplicationModal
+        open={membershipModalOpen}
+        onOpenChange={setMembershipModalOpen}
+      />
     </>
   );
 };

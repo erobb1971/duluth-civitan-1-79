@@ -1,9 +1,9 @@
-
 import React, { useState } from "react";
 import { ArrowUp, CalendarDays, Mail, Mic, User } from "lucide-react";
 import MemberLoginModal from "./MemberLoginModal";
 import VoiceMessageModal from "./VoiceMessageModal";
 import CalendarModal from "./CalendarModal";
+import MembershipApplicationModal from "./MembershipApplicationModal";
 
 interface NavItem {
   title: string;
