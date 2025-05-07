@@ -2,7 +2,7 @@
 import React from "react";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { CalendarDays } from "lucide-react";
+import { CalendarDays, Mail } from "lucide-react";
 
 const upcomingEvents = [
   {
@@ -12,6 +12,7 @@ const upcomingEvents = [
     location: "Civitan Clubhouse",
     description: "Monthly meeting for all members with guest speaker on community leadership.",
     buttonText: "RSVP",
+    emailSubject: "RSVP"
   },
   {
     title: "Charity Golf Tournament",
@@ -20,6 +21,7 @@ const upcomingEvents = [
     location: "Golden Horizon Golf Club",
     description: "Annual charity golf tournament to raise funds for local developmental disability programs.",
     buttonText: "Register",
+    emailSubject: "Registration"
   },
   {
     title: "Summer Volunteer Day",
@@ -28,10 +30,15 @@ const upcomingEvents = [
     location: "Magic Farm",
     description: "Join us for a day of volunteering at our partner organization, Magic Farm.",
     buttonText: "Volunteer",
+    emailSubject: "Volunteer"
   },
 ];
 
 const EventsSection = () => {
+  const handleEmailClick = (subject: string) => {
+    window.location.href = `mailto:info@duluthcivitanclub.org?subject=${subject}&body=Thank you for your interest in our ${subject} event. Please provide your contact information and we will get back to you shortly.`;
+  };
+
   return (
     <section id="events" className="section bg-white dark:bg-gray-900">
       <div className="container mx-auto px-4">
@@ -68,7 +75,11 @@ const EventsSection = () => {
                 </p>
               </CardContent>
               <CardFooter>
-                <Button className="w-full bg-civitan-blue hover:bg-blue-900 text-white">
+                <Button 
+                  className="w-full bg-civitan-blue hover:bg-blue-900 text-white"
+                  onClick={() => handleEmailClick(event.emailSubject)}
+                >
+                  <Mail className="mr-2 h-4 w-4" />
                   {event.buttonText}
                 </Button>
               </CardFooter>
@@ -77,7 +88,11 @@ const EventsSection = () => {
         </div>
         
         <div className="text-center mt-12">
-          <Button variant="outline" className="border-civitan-blue text-civitan-blue dark:text-white dark:border-white">
+          <Button 
+            variant="outline" 
+            className="border-civitan-blue text-civitan-blue dark:text-white dark:border-white"
+            onClick={() => handleEmailClick("Events")}
+          >
             View All Events
           </Button>
         </div>

@@ -21,7 +21,6 @@ const Footer = () => {
             <h3 className="text-lg font-bold mb-4 text-civitan-gold">Quick Links</h3>
             <ul className="space-y-2">
               <li><a href="#about" className="text-gray-300 hover:text-white">About</a></li>
-              <li><a href="#timeline" className="text-gray-300 hover:text-white">Timeline</a></li>
               <li><a href="#events" className="text-gray-300 hover:text-white">Events</a></li>
               <li><a href="#membership" className="text-gray-300 hover:text-white">Membership</a></li>
             </ul>
@@ -64,7 +63,7 @@ const Footer = () => {
         
         <div className="border-t border-gray-800 pt-8 mt-8">
           <div className="flex flex-col md:flex-row justify-between">
-            <p className="text-gray-400">&copy; {new Date().getFullYear()} Duluth Civitan. All rights reserved.</p>
+            <p className="text-gray-400">&copy; 2025 Duluth Civitan. All rights reserved.</p>
             <div className="mt-4 md:mt-0">
               <a href="#" className="text-gray-400 hover:text-white mr-4">Privacy Policy</a>
               <a href="#" className="text-gray-400 hover:text-white">Terms of Service</a>

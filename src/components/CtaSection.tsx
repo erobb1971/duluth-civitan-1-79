@@ -1,11 +1,15 @@
 
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Users } from "lucide-react";
+import { Users, Mail } from "lucide-react";
 import MembershipApplicationModal from "./MembershipApplicationModal";
 
 const CtaSection = () => {
   const [membershipModalOpen, setMembershipModalOpen] = useState(false);
+
+  const handleMembershipClick = () => {
+    window.location.href = "mailto:info@duluthcivitanclub.org?subject=Membership Application&body=Thank you for your interest in becoming a member of Duluth Civitan. Please provide your contact information and we will get back to you shortly.";
+  };
 
   return (
     <>
@@ -50,21 +54,16 @@ const CtaSection = () => {
 
             <div className="text-center">
               <Button 
-                onClick={() => setMembershipModalOpen(true)}
+                onClick={handleMembershipClick}
                 className="bg-civitan-gold text-civitan-blue hover:bg-yellow-400 font-medium text-lg px-8 py-6 h-auto"
               >
-                <Users className="mr-2" />
+                <Mail className="mr-2" />
                 Become a Member
               </Button>
             </div>
           </div>
         </div>
       </section>
-
-      <MembershipApplicationModal 
-        open={membershipModalOpen} 
-        onOpenChange={setMembershipModalOpen}
-      />
     </>
   );
 };
