@@ -41,15 +41,18 @@ const HeroSection = () => {
       <div className="container mx-auto px-4 z-10 text-center">
         <div className="animate-fade-in py-8">
           <CivitanLogo size="xl" className="mx-auto mb-8" />
-          <h1 className="text-4xl md:text-6xl font-bold mb-10 px-4 py-3" style={{ lineHeight: "1.4", letterSpacing: "0.02em" }}>
-            <span className="shimmer-text block md:inline">Make a Lasting</span> <span className="block md:inline">Impact – </span><span className="text-civitan-gold block md:inline">Join the Duluth Civitan Today!</span>
+          <h1 className="text-4xl md:text-6xl font-bold mb-6 px-4 py-3" style={{ lineHeight: "1.5", letterSpacing: "0.02em" }}>
+            <span className="shimmer-text block md:inline">Make A Lasting Impact!</span>
           </h1>
+          <h2 className="text-2xl md:text-3xl font-semibold mb-10 text-civitan-gold">
+            Join the Duluth Civitan Today!
+          </h2>
           <p className="text-xl md:text-2xl mb-10 max-w-3xl mx-auto px-4">
             The Duluth Civitan Club is a civic volunteer group serving Duluth and Gwinnett County since 2002. We empower individuals with developmental disabilities through service, fundraising, and advocacy — building a more inclusive, caring community. Ready to make a difference?
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4 mb-6">
             <Button
-              className="bg-civitan-gold text-civitan-blue hover:bg-yellow-600 hover:text-white font-bold px-8 py-6 text-lg shadow-md"
+              className="bg-civitan-gold text-civitan-blue hover:bg-civitan-gold hover:text-white font-bold px-8 py-6 text-lg shadow-md"
               onClick={handleOpenModal}
             >
               Become A Member
