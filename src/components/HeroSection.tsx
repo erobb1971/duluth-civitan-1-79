@@ -5,9 +5,14 @@ import CivitanLogo from "./CivitanLogo";
 
 const HeroSection = () => {
   return (
-    <section id="home" className="relative min-h-[80vh] flex flex-col items-center justify-center bg-civitan-blue text-white overflow-hidden">
+    <section id="home" className="relative min-h-[80vh] flex flex-col items-center justify-center text-white overflow-hidden">
       <div className="absolute inset-0 z-0">
-        <div className="absolute inset-0 bg-gradient-to-b from-civitan-blue/90 to-civitan-blue/100"></div>
+        <img 
+          src="/lovable-uploads/2b8d2cdf-8faf-46dc-9c05-425213ffb8f1.png" 
+          alt="Duluth Cityscape" 
+          className="w-full h-full object-cover" 
+        />
+        <div className="absolute inset-0 bg-civitan-blue/50"></div>
       </div>
       <div className="container mx-auto px-4 z-10 text-center">
         <div className="animate-fade-in">
