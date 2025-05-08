@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -114,40 +115,6 @@
     @apply shadow-lg hover:shadow-xl transition-shadow duration-300;
   }
 
-  /* Outlined hero text effect */
-  @keyframes outlineMove {
-    0% {
-      text-shadow: 0 0 2px #FFC72C;
-    }
-    50% {
-      text-shadow: 0 0 4px #FFC72C;
-    }
-    100% {
-      text-shadow: 0 0 2px #FFC72C;
-    }
-  }
-
-  .outlined-hero-text {
-    font-size: 3rem;
-    font-weight: 900;
-    color: transparent;
-    -webkit-text-stroke: 2px #FFC72C;
-    text-align: center;
-    animation: outlineMove 3s infinite ease-in-out;
-    text-transform: uppercase;
-    margin-bottom: 1rem;
-    padding: 0.5rem 0;
-    line-height: 1.3;
-    letter-spacing: 0.02em;
-  }
-
-  @media (min-width: 768px) {
-    .outlined-hero-text {
-      font-size: 4.5rem;
-      -webkit-text-stroke: 2.5px #FFC72C;
-    }
-  }
-  
   /* Glassmorphism cards */
   .glassmorphism-card {
     position: relative;
