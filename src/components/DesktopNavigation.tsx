@@ -24,8 +24,9 @@ const DesktopNavigation = () => {
   };
 
   const handleDonateClick = () => {
-    // You can replace this URL with your actual donation page or payment provider link
-    window.open("https://donatetoourcause.org", "_blank");
+    // Placeholder for donate functionality - no link for now
+    console.log("Donate button clicked");
+    alert("Donation functionality coming soon!");
   };
 
   return (
