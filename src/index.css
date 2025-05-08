@@ -115,6 +115,58 @@
     @apply shadow-lg hover:shadow-xl transition-shadow duration-300;
   }
 
+  /* Hero text effect - similar to CodePen example */
+  .hero-text {
+    position: relative;
+    font-size: 3rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    line-height: 1.3;
+    display: inline-block;
+  }
+
+  .hero-text span {
+    color: transparent;
+    -webkit-text-stroke: 2px #FFC72C;
+    position: relative;
+  }
+
+  .hero-text span::before {
+    content: "Make A Lasting Impact!";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    color: #FFC72C;
+    -webkit-text-stroke: 0px;
+    border-right: 2px solid #FFC72C;
+    overflow: hidden;
+    animation: animate 6s linear infinite;
+  }
+
+  @keyframes animate {
+    0%, 10%, 100% {
+      width: 0;
+    }
+    70%, 90% {
+      width: 100%;
+    }
+  }
+
+  @media (min-width: 768px) {
+    .hero-text {
+      font-size: 4rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .hero-text {
+      font-size: 5rem;
+    }
+  }
+
   /* Glassmorphism cards */
   .glassmorphism-card {
     position: relative;
