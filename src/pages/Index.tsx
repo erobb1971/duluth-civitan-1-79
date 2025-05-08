@@ -8,6 +8,7 @@ import AboutSection from "@/components/AboutSection";
 import CtaSection from "@/components/CtaSection";
 import EventsSection from "@/components/EventsSection";
 import GallerySection from "@/components/GallerySection";
+import ContactSection from "@/components/ContactSection";
 import Footer from "@/components/Footer";
 
 const Index = () => {
@@ -21,9 +22,8 @@ const Index = () => {
       <CtaSection />
       <GallerySection />
       <EventsSection />
-      <div id="contact">
-        <Footer />
-      </div>
+      <ContactSection />
+      <Footer />
       <MobileNavigation />
     </div>
   );

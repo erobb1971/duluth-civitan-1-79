@@ -7,6 +7,17 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Mail, MapPin, Phone } from "lucide-react";
 
 const ContactSection = () => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const name = formData.get('name') as string;
+    const email = formData.get('email') as string;
+    const subject = formData.get('subject') as string;
+    const message = formData.get('message') as string;
+    
+    window.location.href = `mailto:info@duluthcivitanclub.org?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${message}`)}`;
+  };
+
   return (
     <section id="contact" className="section bg-gray-100 dark:bg-gray-800">
       <div className="container mx-auto px-4">
@@ -37,7 +48,9 @@ const ContactSection = () => {
                 <Mail className="h-6 w-6 text-civitan-blue" />
               </div>
               <h3 className="font-bold text-lg mb-2 text-civitan-blue dark:text-white">Email</h3>
-              <p className="text-gray-700 dark:text-gray-300">info@civitanduluth.org</p>
+              <p className="text-gray-700 dark:text-gray-300">
+                <a href="mailto:info@duluthcivitanclub.org" className="hover:underline">info@duluthcivitanclub.org</a>
+              </p>
             </CardContent>
           </Card>
 
@@ -61,26 +74,26 @@ const ContactSection = () => {
               <h3 className="text-xl font-bold mb-6 text-civitan-blue dark:text-white text-center">
                 Send Us a Message
               </h3>
-              <form className="space-y-6">
+              <form className="space-y-6" onSubmit={handleSubmit}>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <label htmlFor="name" className="block text-sm font-medium mb-2">
                       Your Name
                     </label>
-                    <Input id="name" placeholder="John Doe" />
+                    <Input id="name" name="name" placeholder="John Doe" required />
                   </div>
                   <div>
                     <label htmlFor="email" className="block text-sm font-medium mb-2">
                       Email Address
                     </label>
-                    <Input id="email" type="email" placeholder="john@example.com" />
+                    <Input id="email" name="email" type="email" placeholder="john@example.com" required />
                   </div>
                 </div>
                 <div>
                   <label htmlFor="subject" className="block text-sm font-medium mb-2">
                     Subject
                   </label>
-                  <Input id="subject" placeholder="How can we help you?" />
+                  <Input id="subject" name="subject" placeholder="How can we help you?" required />
                 </div>
                 <div>
                   <label htmlFor="message" className="block text-sm font-medium mb-2">
@@ -88,12 +101,14 @@ const ContactSection = () => {
                   </label>
                   <Textarea
                     id="message"
+                    name="message"
                     placeholder="Type your message here..."
                     rows={5}
+                    required
                   />
                 </div>
                 <div className="text-center">
-                  <Button className="bg-civitan-blue hover:bg-blue-900 text-white px-8">
+                  <Button type="submit" className="bg-civitan-blue hover:bg-blue-900 text-white px-8">
                     Send Message
                   </Button>
                 </div>

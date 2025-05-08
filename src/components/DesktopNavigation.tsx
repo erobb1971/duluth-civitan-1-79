@@ -18,7 +18,7 @@ const DesktopNavigation = () => {
         <div className="flex h-16 items-center justify-between">
           <div className="flex items-center">
             <a href="#" className="flex items-center">
-              <CivitanLogo />
+              <CivitanLogo size="sm" className="p-1" />
             </a>
           </div>
 

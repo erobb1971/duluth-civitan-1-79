@@ -22,7 +22,7 @@ const CivitanLogo: React.FC<CivitanLogoProps> = ({
       <img 
         src="/lovable-uploads/1404d5f9-287c-4de8-bc05-2d618d082a0e.png" 
         alt="Civitan Duluth Logo" 
-        className="w-full h-full object-contain"
+        className="w-full h-full object-contain p-1"
       />
     </div>
   );
