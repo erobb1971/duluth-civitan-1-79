@@ -11,9 +11,10 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Mail } from "lucide-react";
+import { Mail, X } from "lucide-react";
 import { useToast } from "@/components/ui/use-toast";
 import { Checkbox } from "@/components/ui/checkbox";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface MembershipApplicationModalProps {
   open: boolean;
@@ -25,6 +26,7 @@ const MembershipApplicationModal: React.FC<MembershipApplicationModalProps> = ({
   onOpenChange,
 }) => {
   const { toast } = useToast();
+  const isMobile = useIsMobile();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [formData, setFormData] = useState({
@@ -126,11 +128,18 @@ const MembershipApplicationModal: React.FC<MembershipApplicationModalProps> = ({
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[550px] max-h-[90vh] overflow-y-auto bg-white p-0">
-        <div className="bg-civitan-blue text-white p-6 rounded-t-lg">
+        <div className="bg-civitan-blue text-white p-6 rounded-t-lg relative">
           <DialogTitle className="text-2xl font-bold">Membership Application</DialogTitle>
           <DialogDescription className="text-white/90 mt-2">
             Complete this form to apply for membership with Duluth Civitan.
           </DialogDescription>
+          <button 
+            onClick={() => onOpenChange(false)}
+            className="absolute right-4 top-4 rounded-sm opacity-70 transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-civitan-blue"
+            aria-label="Close"
+          >
+            <X className="h-5 w-5 text-white" />
+          </button>
         </div>
         
         {!submitted ? (
