@@ -39,7 +39,7 @@ const HeroSection = () => {
         style={{ 
           transform: `translateY(${parallaxOffset}px)`,
           backgroundImage: `url("/lovable-uploads/2b8d2cdf-8faf-46dc-9c05-425213ffb8f1.png")`,
-          backgroundPosition: "center center", // Changed from top center
+          backgroundPosition: "top center", // Changed to top center
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
         }}
