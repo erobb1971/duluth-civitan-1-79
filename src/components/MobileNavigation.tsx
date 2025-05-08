@@ -1,5 +1,6 @@
+
 import React, { useState } from "react";
-import { ArrowUp, CalendarDays, Mail, Mic, User } from "lucide-react";
+import { ArrowUp, CalendarDays, Mail, Mic, User, PiggyBank } from "lucide-react";
 import MemberLoginModal from "./MemberLoginModal";
 import VoiceMessageModal from "./VoiceMessageModal";
 import CalendarModal from "./CalendarModal";
@@ -28,6 +29,11 @@ const MobileNavigation = () => {
   const handleContactClick = () => {
     window.location.href = "mailto:info@duluthcivitanclub.org";
   };
+  
+  const handleDonateClick = () => {
+    // You can replace this URL with your actual donation page or payment provider link
+    window.open("https://donatetoourcause.org", "_blank");
+  };
 
   const navItems: NavItem[] = [
     { 
@@ -41,6 +47,12 @@ const MobileNavigation = () => {
       href: "#", 
       icon: <CalendarDays className="w-5 h-5" />,
       action: () => setCalendarModalOpen(true)
+    },
+    { 
+      title: "Donate", 
+      href: "#", 
+      icon: <PiggyBank className="w-5 h-5" />,
+      action: handleDonateClick
     },
     { 
       title: "Record", 

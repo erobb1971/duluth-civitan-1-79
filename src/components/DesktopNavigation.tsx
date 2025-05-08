@@ -6,7 +6,7 @@ import MembershipApplicationModal from "./MembershipApplicationModal";
 import MemberLoginModal from "./MemberLoginModal";
 import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger, navigationMenuTriggerStyle } from "./ui/navigation-menu";
 import { cn } from "@/lib/utils";
-import { User } from "lucide-react";
+import { User, PiggyBank } from "lucide-react";
 
 const DesktopNavigation = () => {
   const [membershipModalOpen, setMembershipModalOpen] = useState(false);
@@ -21,6 +21,11 @@ const DesktopNavigation = () => {
         behavior: "smooth",
       });
     }
+  };
+
+  const handleDonateClick = () => {
+    // You can replace this URL with your actual donation page or payment provider link
+    window.open("https://donatetoourcause.org", "_blank");
   };
 
   return (
@@ -107,6 +112,15 @@ const DesktopNavigation = () => {
           </NavigationMenu>
 
           <div className="flex items-center space-x-4">
+            <Button 
+              variant="default"
+              onClick={handleDonateClick}
+              className="bg-civitan-gold hover:bg-yellow-500 text-civitan-blue font-bold"
+            >
+              <PiggyBank className="h-4 w-4 mr-2" />
+              Donate
+            </Button>
+            
             <Button 
               variant="outline" 
               onClick={() => setLoginModalOpen(true)}
