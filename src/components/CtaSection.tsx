@@ -24,7 +24,7 @@ const CtaSection = () => {
             </p>
 
             <div className="grid md:grid-cols-2 gap-8 mb-12">
-              <div className="bg-white/10 p-6 rounded-lg">
+              <div className="glassmorphism-card bg-white/10 p-6 rounded-lg backdrop-blur-sm border border-white/20 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
                 <h3 className="text-2xl font-bold mb-4 text-civitan-gold">Why Join Duluth Civitan?</h3>
                 <p className="mb-4">As a Civitan member, you'll have the opportunity to:</p>
                 <ul className="list-disc pl-6 space-y-2">
@@ -35,7 +35,7 @@ const CtaSection = () => {
                   <li>Attend social and networking events</li>
                 </ul>
               </div>
-              <div className="bg-white/10 p-6 rounded-lg">
+              <div className="glassmorphism-card bg-white/10 p-6 rounded-lg backdrop-blur-sm border border-white/20 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1">
                 <h3 className="text-2xl font-bold mb-4 text-civitan-gold">Our Mission</h3>
                 <p className="mb-4">
                   We partner with trusted local nonprofits to support inclusive programs 

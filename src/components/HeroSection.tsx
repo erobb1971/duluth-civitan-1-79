@@ -3,10 +3,12 @@ import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import CivitanLogo from "./CivitanLogo";
 import { useIsMobile } from "@/hooks/use-mobile";
+import MembershipApplicationModal from "./MembershipApplicationModal";
 
 const HeroSection = () => {
   const [scrollPosition, setScrollPosition] = useState(0);
   const isMobile = useIsMobile();
+  const [membershipModalOpen, setMembershipModalOpen] = useState(false);
   
   useEffect(() => {
     const handleScroll = () => {
@@ -18,6 +20,10 @@ const HeroSection = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
+  const handleOpenModal = () => {
+    setMembershipModalOpen(true);
+  };
 
   return (
     <section id="home" className="relative min-h-[80vh] flex flex-col items-center justify-center text-white overflow-hidden">
@@ -36,7 +42,7 @@ const HeroSection = () => {
         <div className="animate-fade-in">
           <CivitanLogo size="xl" className="mx-auto mb-8" />
           <h1 className="text-4xl md:text-6xl font-bold mb-4">
-            Make a Lasting Impact – <span className="text-civitan-gold">Join the Duluth Civitan Today!</span>
+            <span className="shimmer-text">Make a Lasting Impact</span> – <span className="text-civitan-gold">Join the Duluth Civitan Today!</span>
           </h1>
           <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
             The Duluth Civitan Club is a civic volunteer group serving Duluth and Gwinnett County since 2002. We empower individuals with developmental disabilities through service, fundraising, and advocacy — building a more inclusive, caring community. Ready to make a difference?
@@ -44,9 +50,9 @@ const HeroSection = () => {
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <Button
               className="bg-civitan-gold text-civitan-blue hover:bg-yellow-600 hover:text-white font-bold px-8 py-6 text-lg shadow-md"
-              onClick={() => document.getElementById("about")?.scrollIntoView()}
+              onClick={handleOpenModal}
             >
-              Learn More
+              Become A Member
             </Button>
             {!isMobile && (
               <Button
@@ -60,6 +66,11 @@ const HeroSection = () => {
           </div>
         </div>
       </div>
+      
+      <MembershipApplicationModal
+        open={membershipModalOpen}
+        onOpenChange={setMembershipModalOpen}
+      />
     </section>
   );
 };
