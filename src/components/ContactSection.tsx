@@ -9,8 +9,8 @@ const ContactSection = () => {
       {/* Blue background layer */}
       <div className="absolute inset-0 z-0 bg-civitan-blue"></div>
       
-      <div className="container mx-auto px-4 relative z-10">
-        <div className="text-center mb-12">
+      <div className="container mx-auto px-4 sm:px-6 relative z-10">
+        <div className="text-center mb-10 sm:mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
             Contact Us
           </h2>
@@ -20,7 +20,7 @@ const ContactSection = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 max-w-4xl mx-auto">
           <Card className="civitan-shadow bg-white/90">
             <CardContent className="pt-6 flex flex-col items-center text-center">
               <a href="tel:6782420445" className="hover:scale-110 transition-transform" aria-label="Call us at 678-242-0445">

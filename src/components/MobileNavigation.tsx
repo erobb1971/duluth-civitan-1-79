@@ -78,7 +78,7 @@ const MobileNavigation = () => {
   return (
     <>
       <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-civitan-gray z-50">
-        <div className="flex items-center justify-around px-2 py-1">
+        <div className="flex items-center justify-around px-1 py-1.5">
           {navItems.map((item, index) => (
             <button
               key={index}
@@ -86,10 +86,10 @@ const MobileNavigation = () => {
                 e.preventDefault();
                 item.action ? item.action() : window.location.href = item.href;
               }}
-              className="flex flex-col items-center text-civitan-blue hover:text-civitan-gold transition-colors duration-300 px-1 py-1"
+              className="flex flex-col items-center text-civitan-blue hover:text-civitan-gold transition-colors duration-300 px-0.5 py-0.5"
             >
               {item.icon}
-              <span className="text-xs mt-0.5">{item.title}</span>
+              <span className="text-[10px] mt-0.5">{item.title}</span>
             </button>
           ))}
         </div>

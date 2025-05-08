@@ -45,56 +45,57 @@ const EventsSection = () => {
   };
 
   return (
-    <section id="events" className="section bg-white dark:bg-gray-900">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-civitan-blue dark:text-civitan-gold mb-4">
+    <section id="events" className="section bg-white dark:bg-gray-900 py-8 sm:py-16">
+      <div className="container mx-auto px-4 sm:px-6">
+        <div className="text-center mb-8 sm:mb-12">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-civitan-blue dark:text-civitan-gold mb-3 sm:mb-4">
             Upcoming Events
           </h2>
-          <div className="w-24 h-1 bg-civitan-gold mx-auto mb-6"></div>
-          <p className="text-lg max-w-3xl mx-auto text-gray-700 dark:text-gray-300">
+          <div className="w-16 sm:w-24 h-1 bg-civitan-gold mx-auto mb-4 sm:mb-6"></div>
+          <p className="text-sm sm:text-lg max-w-3xl mx-auto text-gray-700 dark:text-gray-300 px-2">
             Stay involved with our community through these upcoming activities and events
           </p>
         </div>
         
-        <div className="max-w-3xl mx-auto mb-12">
+        <div className="max-w-3xl mx-auto mb-8 sm:mb-12 px-2 sm:px-0">
           <a href="https://civitan.org/convention/" target="_blank" rel="noopener noreferrer" className="block hover:opacity-90 transition-opacity">
             <img 
               src="/lovable-uploads/50742192-6c88-49ea-a0c3-f33fd52d643f.png"
               alt="ATLCIVITAN2025"
               className="w-full h-auto rounded-lg shadow-lg"
+              loading="lazy"
             />
           </a>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-8 px-2 sm:px-0">
           {upcomingEvents.map((event, index) => (
             <Card key={index} className="civitan-shadow">
-              <CardHeader>
+              <CardHeader className="p-4 sm:p-6">
                 <div className="flex items-center mb-2">
-                  <CalendarDays className="w-5 h-5 text-civitan-gold mr-2" />
-                  <span className="text-gray-600 dark:text-gray-400 text-sm">
+                  <CalendarDays className="w-4 h-4 sm:w-5 sm:h-5 text-civitan-gold mr-2" />
+                  <span className="text-gray-600 dark:text-gray-400 text-xs sm:text-sm">
                     {event.date} | {event.time}
                   </span>
                 </div>
-                <CardTitle className="text-xl text-civitan-blue dark:text-white">
+                <CardTitle className="text-lg sm:text-xl text-civitan-blue dark:text-white">
                   {event.title}
                 </CardTitle>
-                <div className="text-sm text-gray-600 dark:text-gray-400">
+                <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
                   {event.location}
                 </div>
               </CardHeader>
-              <CardContent>
-                <p className="text-gray-700 dark:text-gray-300">
+              <CardContent className="px-4 sm:px-6 pb-2">
+                <p className="text-xs sm:text-sm text-gray-700 dark:text-gray-300">
                   {event.description}
                 </p>
               </CardContent>
-              <CardFooter>
+              <CardFooter className="p-4 sm:p-6 pt-2">
                 <Button 
-                  className="w-full bg-civitan-blue hover:bg-blue-900 text-white"
+                  className="w-full bg-civitan-blue hover:bg-blue-900 text-white text-xs sm:text-sm py-2"
                   onClick={() => handleEmailClick(event.emailSubject)}
                 >
-                  <Mail className="mr-2 h-4 w-4" />
+                  <Mail className="mr-2 h-3 w-3 sm:h-4 sm:w-4" />
                   {event.buttonText}
                 </Button>
               </CardFooter>
@@ -103,7 +104,7 @@ const EventsSection = () => {
         </div>
         
         {!isMobile && (
-          <div className="text-center mt-12">
+          <div className="text-center mt-8 sm:mt-12">
             <Button 
               variant="outline" 
               className="border-civitan-blue text-civitan-blue dark:text-white dark:border-white"
