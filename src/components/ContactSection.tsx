@@ -19,13 +19,16 @@ const ContactSection = () => {
 
   return (
     <section id="contact" className="section relative overflow-hidden hidden md:block">
+      {/* Blue background layer */}
       <div className="absolute inset-0 z-0 bg-civitan-blue"></div>
+      
+      {/* Parallax background image with center bottom position */}
       <div 
-        className="absolute inset-0 z-0 opacity-25"
+        className="absolute inset-0 z-0 opacity-20"
         style={{ 
           transform: `translateY(${scrollPosition * 0.2}px)`,
           backgroundImage: `url("/lovable-uploads/2b8d2cdf-8faf-46dc-9c05-425213ffb8f1.png")`,
-          backgroundPosition: "top center",
+          backgroundPosition: "center bottom",
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
         }}
