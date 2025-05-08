@@ -21,8 +21,9 @@ const HeroSection = () => {
 
   return (
     <section id="home" className="relative min-h-[80vh] flex flex-col items-center justify-center text-white overflow-hidden">
+      <div className="absolute inset-0 z-0 bg-civitan-blue"></div>
       <div 
-        className="absolute inset-0 z-0"
+        className="absolute inset-0 z-0 opacity-25"
         style={{ 
           transform: `translateY(${scrollPosition * 0.3}px)`,
           backgroundImage: `url("/lovable-uploads/2b8d2cdf-8faf-46dc-9c05-425213ffb8f1.png")`,
@@ -30,9 +31,7 @@ const HeroSection = () => {
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
         }}
-      >
-        <div className="absolute inset-0 bg-civitan-blue/25"></div>
-      </div>
+      />
       <div className="container mx-auto px-4 z-10 text-center">
         <div className="animate-fade-in">
           <CivitanLogo size="xl" className="mx-auto mb-8" />

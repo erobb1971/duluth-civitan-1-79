@@ -19,8 +19,9 @@ const ContactSection = () => {
 
   return (
     <section id="contact" className="section relative overflow-hidden">
+      <div className="absolute inset-0 z-0 bg-civitan-blue"></div>
       <div 
-        className="absolute inset-0 z-0"
+        className="absolute inset-0 z-0 opacity-25"
         style={{ 
           transform: `translateY(${scrollPosition * 0.2}px)`,
           backgroundImage: `url("/lovable-uploads/2b8d2cdf-8faf-46dc-9c05-425213ffb8f1.png")`,
@@ -28,9 +29,7 @@ const ContactSection = () => {
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
         }}
-      >
-        <div className="absolute inset-0 bg-civitan-blue/25"></div>
-      </div>
+      />
       
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-12">
