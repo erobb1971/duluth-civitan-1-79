@@ -39,15 +39,15 @@ const HeroSection = () => {
         }}
       />
       <div className="container mx-auto px-4 z-10 text-center">
-        <div className="animate-fade-in">
+        <div className="animate-fade-in py-4">
           <CivitanLogo size="xl" className="mx-auto mb-8" />
-          <h1 className="text-4xl md:text-6xl font-bold mb-4">
-            <span className="shimmer-text">Make a Lasting Impact</span> – <span className="text-civitan-gold">Join the Duluth Civitan Today!</span>
+          <h1 className="text-4xl md:text-6xl font-bold mb-6 tracking-normal leading-relaxed px-2">
+            <span className="shimmer-text">Make a Lasting</span> Impact – <span className="text-civitan-gold">Join the Duluth Civitan Today!</span>
           </h1>
-          <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
+          <p className="text-xl md:text-2xl mb-10 max-w-3xl mx-auto px-2">
             The Duluth Civitan Club is a civic volunteer group serving Duluth and Gwinnett County since 2002. We empower individuals with developmental disabilities through service, fundraising, and advocacy — building a more inclusive, caring community. Ready to make a difference?
           </p>
-          <div className="flex flex-col sm:flex-row justify-center gap-4">
+          <div className="flex flex-col sm:flex-row justify-center gap-4 mb-4">
             <Button
               className="bg-civitan-gold text-civitan-blue hover:bg-yellow-600 hover:text-white font-bold px-8 py-6 text-lg shadow-md"
               onClick={handleOpenModal}
