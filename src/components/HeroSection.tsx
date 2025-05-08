@@ -41,9 +41,7 @@ const HeroSection = () => {
       <div className="container mx-auto px-4 z-10 text-center">
         <div className="animate-fade-in py-8">
           <CivitanLogo size="xl" className="mx-auto mb-8" />
-          <h1 className="text-4xl md:text-6xl font-bold mb-6 px-4 py-3" style={{ lineHeight: "1.5", letterSpacing: "0.02em" }}>
-            <span className="shimmer-text block md:inline">Make A Lasting Impact!</span>
-          </h1>
+          <h1 className="outlined-hero-text">Make A Lasting Impact!</h1>
           <h2 className="text-2xl md:text-3xl font-semibold mb-10 text-civitan-gold">
             Join the Duluth Civitan Today!
           </h2>
