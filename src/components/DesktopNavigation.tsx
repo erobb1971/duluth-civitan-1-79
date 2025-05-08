@@ -12,6 +12,17 @@ const DesktopNavigation = () => {
   const [membershipModalOpen, setMembershipModalOpen] = useState(false);
   const [loginModalOpen, setLoginModalOpen] = useState(false);
 
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
+    e.preventDefault();
+    const section = document.getElementById(sectionId);
+    if (section) {
+      window.scrollTo({
+        top: section.offsetTop - 64, // Adjust for header height
+        behavior: "smooth",
+      });
+    }
+  };
+
   return (
     <header className="hidden lg:block sticky top-0 z-40 w-full bg-white border-b border-gray-200 shadow-sm">
       <div className="container mx-auto px-4">
@@ -28,6 +39,7 @@ const DesktopNavigation = () => {
                 <NavigationMenuLink 
                   href="/#home"
                   className={navigationMenuTriggerStyle()}
+                  onClick={(e) => handleNavClick(e, "home")}
                 >
                   Home
                 </NavigationMenuLink>
@@ -37,6 +49,7 @@ const DesktopNavigation = () => {
                 <NavigationMenuLink 
                   href="/#about"
                   className={navigationMenuTriggerStyle()}
+                  onClick={(e) => handleNavClick(e, "about")}
                 >
                   About
                 </NavigationMenuLink>
@@ -46,6 +59,7 @@ const DesktopNavigation = () => {
                 <NavigationMenuLink 
                   href="/#events"
                   className={navigationMenuTriggerStyle()}
+                  onClick={(e) => handleNavClick(e, "events")}
                 >
                   Events
                 </NavigationMenuLink>
@@ -55,6 +69,7 @@ const DesktopNavigation = () => {
                 <NavigationMenuLink 
                   href="/#contact"
                   className={navigationMenuTriggerStyle()}
+                  onClick={(e) => handleNavClick(e, "contact")}
                 >
                   Contact
                 </NavigationMenuLink>

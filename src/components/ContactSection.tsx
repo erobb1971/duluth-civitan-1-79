@@ -5,7 +5,7 @@ import { Mail, MapPin, Phone } from "lucide-react";
 
 const ContactSection = () => {
   return (
-    <section id="contact" className="section relative overflow-hidden hidden md:block">
+    <section id="contact" className="section relative overflow-hidden hidden md:block pt-16">
       {/* Blue background layer */}
       <div className="absolute inset-0 z-0 bg-civitan-blue"></div>
       
