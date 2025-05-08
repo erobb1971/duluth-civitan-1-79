@@ -10,7 +10,11 @@ const CookieConsent = () => {
     // Check if user has already accepted cookies in this session
     const hasAccepted = sessionStorage.getItem("cookie-consent-accepted");
     if (!hasAccepted) {
-      setShowConsent(true);
+      // Small delay to prevent immediate popup
+      const timer = setTimeout(() => {
+        setShowConsent(true);
+      }, 1500);
+      return () => clearTimeout(timer);
     }
   }, []);
 
@@ -22,29 +26,29 @@ const CookieConsent = () => {
   if (!showConsent) return null;
 
   return (
-    <div className="fixed bottom-2 left-2 right-2 md:left-4 md:right-auto md:max-w-xs z-50 bg-white dark:bg-gray-800 p-3 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 text-xs">
-      <div className="flex items-start gap-2">
+    <div className="fixed bottom-1 left-1 md:bottom-2 md:left-2 z-50 bg-white dark:bg-gray-800 p-2 rounded-lg shadow-md border border-gray-200 dark:border-gray-700 text-[10px] md:text-xs max-w-[200px] md:max-w-[240px]">
+      <div className="flex items-start gap-1">
         <div className="flex-1">
           <p className="text-gray-700 dark:text-gray-300">
-            We use cookies to enhance your experience. By continuing, you agree to our use of cookies.
+            We use cookies to enhance your experience.
           </p>
         </div>
-        <Button 
-          variant="ghost" 
-          size="sm" 
-          onClick={acceptCookies}
-          className="h-6 px-2 text-xs"
-        >
-          Accept
-        </Button>
         <button 
           onClick={acceptCookies} 
           className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
           aria-label="Close"
         >
-          <X className="h-4 w-4" />
+          <X className="h-3 w-3 md:h-4 md:w-4" />
         </button>
       </div>
+      <Button 
+        variant="ghost" 
+        size="sm" 
+        onClick={acceptCookies}
+        className="h-5 px-2 text-[10px] md:text-xs mt-1 w-full"
+      >
+        Accept
+      </Button>
     </div>
   );
 };

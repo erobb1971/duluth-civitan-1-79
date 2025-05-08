@@ -122,7 +122,7 @@ const VoiceMessageModal = ({ open, onOpenChange }: VoiceMessageModalProps) => {
             Voice Message
           </DialogTitle>
           <DialogDescription className="text-center pt-2">
-            Record your message and we'll get back to you soon.
+            Record your message and we'll send it to info@duluthcivitanclub.org.
           </DialogDescription>
         </DialogHeader>
         
@@ -182,7 +182,7 @@ const VoiceMessageModal = ({ open, onOpenChange }: VoiceMessageModalProps) => {
             className="w-full"
           >
             <Send className="mr-2 h-5 w-5" />
-            Send Message
+            Send to info@duluthcivitanclub.org
           </Button>
         </DialogFooter>
       </DialogContent>
