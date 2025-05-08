@@ -25,21 +25,29 @@ const HeroSection = () => {
     setMembershipModalOpen(true);
   };
 
+  // Calculate parallax effect with a stronger multiplier
+  const parallaxOffset = scrollPosition * 0.5; // Increased from 0.3 for more noticeable effect
+
   return (
-    <section id="home" className="relative min-h-[80vh] flex flex-col items-center justify-center text-white overflow-hidden">
+    <section id="home" className="relative h-screen w-screen flex flex-col items-center justify-center text-white overflow-hidden">
+      {/* Blue background layer */}
       <div className="absolute inset-0 z-0 bg-civitan-blue"></div>
+      
+      {/* Parallax background image with enhanced effect */}
       <div 
-        className="absolute inset-0 z-0 opacity-25"
+        className="absolute inset-0 z-0 opacity-30" // Slightly increased opacity from 0.25
         style={{ 
-          transform: `translateY(${scrollPosition * 0.3}px)`,
+          transform: `translateY(${parallaxOffset}px)`,
           backgroundImage: `url("/lovable-uploads/2b8d2cdf-8faf-46dc-9c05-425213ffb8f1.png")`,
-          backgroundPosition: "top center",
+          backgroundPosition: "center center", // Changed from top center
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
         }}
       />
-      <div className="container mx-auto px-4 z-10 text-center">
-        <div className="animate-fade-in py-8">
+      
+      {/* Content container with padding adjustments */}
+      <div className="container mx-auto px-4 z-10 text-center py-16">
+        <div className="animate-fade-in py-8 max-w-4xl mx-auto">
           <CivitanLogo size="xl" className="mx-auto mb-8" />
           <h1 className="text-shine">Make A Lasting Impact!</h1>
           <h2 className="text-2xl md:text-3xl font-semibold mb-10 text-civitan-gold">
