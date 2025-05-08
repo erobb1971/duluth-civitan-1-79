@@ -57,20 +57,19 @@ const galleryImages = [
 
 const GallerySection = () => {
   return (
-    <section className="py-5 bg-white dark:bg-gray-900">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-8">
-          <h2 className="text-3xl md:text-4xl font-bold text-civitan-blue dark:text-civitan-gold mb-4">
+    <section className="py-4 sm:py-5 bg-white dark:bg-gray-900">
+      <div className="container mx-auto px-3 sm:px-4">
+        <div className="text-center mb-6">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-civitan-blue dark:text-civitan-gold mb-3">
             Our Community Impact
           </h2>
-          <div className="w-24 h-1 bg-civitan-gold mx-auto mb-6"></div>
-          <p className="text-lg max-w-3xl mx-auto text-gray-700 dark:text-gray-300">
+          <div className="w-16 sm:w-24 h-1 bg-civitan-gold mx-auto mb-4"></div>
+          <p className="text-base sm:text-lg max-w-3xl mx-auto text-gray-700 dark:text-gray-300">
             See how we're making a difference in the Duluth community
           </p>
         </div>
         
-        {/* Main gallery carousel - visible on all devices */}
-        <div className="relative px-4 my-5">
+        <div className="relative px-2 sm:px-4 my-4">
           <Carousel
             opts={{
               align: "start",
@@ -80,12 +79,15 @@ const GallerySection = () => {
           >
             <CarouselContent className="-ml-1">
               {galleryImages.map((image, index) => (
-                <CarouselItem key={index} className="pl-1 sm:basis-1/2 md:basis-1/3 lg:basis-1/4">
+                <CarouselItem key={index} className="pl-1 basis-1/2 sm:basis-1/3 md:basis-1/3 lg:basis-1/4">
                   <div className="p-1 h-full">
                     <div className="overflow-hidden rounded-md h-full aspect-square civitan-shadow">
                       <img
                         src={image.src}
                         alt={image.alt}
+                        loading="lazy"
+                        width="250"
+                        height="250"
                         className="h-full w-full object-cover transition-transform duration-300 hover:scale-105"
                       />
                     </div>
@@ -93,8 +95,8 @@ const GallerySection = () => {
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <CarouselPrevious className="left-2 lg:left-4" />
-            <CarouselNext className="right-2 lg:right-4" />
+            <CarouselPrevious className="left-1 sm:left-2 lg:left-4 hidden sm:flex" />
+            <CarouselNext className="right-1 sm:right-2 lg:right-4 hidden sm:flex" />
           </Carousel>
         </div>
       </div>

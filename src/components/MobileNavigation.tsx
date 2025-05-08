@@ -40,37 +40,37 @@ const MobileNavigation = () => {
     { 
       title: "Top", 
       href: "#", 
-      icon: <ArrowUp className="w-5 h-5" />,
+      icon: <ArrowUp className="w-4 h-4" />,
       action: handleScrollToTop
     },
     { 
       title: "Events", 
       href: "#", 
-      icon: <CalendarDays className="w-5 h-5" />,
+      icon: <CalendarDays className="w-4 h-4" />,
       action: () => setCalendarModalOpen(true)
     },
     { 
       title: "Donate", 
       href: "#", 
-      icon: <PiggyBank className="w-5 h-5" />,
+      icon: <PiggyBank className="w-4 h-4" />,
       action: handleDonateClick
     },
     { 
       title: "Record", 
       href: "#", 
-      icon: <Mic className="w-5 h-5" />,
+      icon: <Mic className="w-4 h-4" />,
       action: () => setVoiceMessageModalOpen(true)
     },
     { 
       title: "Contact", 
       href: "#", 
-      icon: <Mail className="w-5 h-5" />,
+      icon: <Mail className="w-4 h-4" />,
       action: handleContactClick
     },
     { 
       title: "Login", 
       href: "#", 
-      icon: <User className="w-5 h-5" />,
+      icon: <User className="w-4 h-4" />,
       action: () => setLoginModalOpen(true)
     },
   ];
@@ -78,7 +78,7 @@ const MobileNavigation = () => {
   return (
     <>
       <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-civitan-gray z-50">
-        <div className="flex items-center justify-around px-4 py-2">
+        <div className="flex items-center justify-around px-2 py-1">
           {navItems.map((item, index) => (
             <button
               key={index}
@@ -86,10 +86,10 @@ const MobileNavigation = () => {
                 e.preventDefault();
                 item.action ? item.action() : window.location.href = item.href;
               }}
-              className="flex flex-col items-center text-civitan-blue hover:text-civitan-gold transition-colors duration-300 py-1"
+              className="flex flex-col items-center text-civitan-blue hover:text-civitan-gold transition-colors duration-300 px-1 py-1"
             >
               {item.icon}
-              <span className="text-xs mt-1">{item.title}</span>
+              <span className="text-xs mt-0.5">{item.title}</span>
             </button>
           ))}
         </div>
