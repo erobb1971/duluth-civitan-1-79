@@ -35,7 +35,7 @@ const HeroSection = () => {
       
       {/* Parallax background image with enhanced effect */}
       <div 
-        className="absolute inset-0 z-0 opacity-30" // Slightly increased opacity from 0.25
+        className="absolute inset-0 z-0 opacity-20" // Changed opacity from 0.30 to 0.20 (20%)
         style={{ 
           transform: `translateY(${parallaxOffset}px)`,
           backgroundImage: `url("/lovable-uploads/2b8d2cdf-8faf-46dc-9c05-425213ffb8f1.png")`,
