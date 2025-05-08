@@ -1,23 +1,11 @@
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Users, Mail } from "lucide-react";
 import MembershipApplicationModal from "./MembershipApplicationModal";
 
 const CtaSection = () => {
   const [membershipModalOpen, setMembershipModalOpen] = useState(false);
-  const [scrollPosition, setScrollPosition] = useState(0);
-  
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrollPosition(window.scrollY);
-    };
-    
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
 
   const handleMembershipClick = () => {
     setMembershipModalOpen(true);
@@ -28,18 +16,6 @@ const CtaSection = () => {
       <section className="relative bg-civitan-blue py-16 overflow-hidden">
         {/* Blue background layer */}
         <div className="absolute inset-0 z-0 bg-civitan-blue"></div>
-        
-        {/* Parallax background image with top center position */}
-        <div 
-          className="absolute inset-0 z-0 opacity-20"
-          style={{ 
-            transform: `translateY(${scrollPosition * 0.2}px)`,
-            backgroundImage: `url("/lovable-uploads/2b8d2cdf-8faf-46dc-9c05-425213ffb8f1.png")`,
-            backgroundPosition: "top center", // Changed to top center
-            backgroundSize: "cover",
-            backgroundRepeat: "no-repeat",
-          }}
-        />
         
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-5xl mx-auto text-white">
