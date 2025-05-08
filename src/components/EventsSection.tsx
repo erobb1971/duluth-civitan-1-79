@@ -56,6 +56,16 @@ const EventsSection = () => {
             Stay involved with our community through these upcoming activities and events
           </p>
         </div>
+        
+        <div className="max-w-3xl mx-auto mb-12">
+          <a href="https://civitan.org/convention/" target="_blank" rel="noopener noreferrer" className="block hover:opacity-90 transition-opacity">
+            <img 
+              src="/lovable-uploads/50742192-6c88-49ea-a0c3-f33fd52d643f.png"
+              alt="ATLCIVITAN2025"
+              className="w-full h-auto rounded-lg shadow-lg"
+            />
+          </a>
+        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {upcomingEvents.map((event, index) => (

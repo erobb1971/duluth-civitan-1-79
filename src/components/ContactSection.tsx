@@ -18,7 +18,7 @@ const ContactSection = () => {
   }, []);
 
   return (
-    <section id="contact" className="section relative overflow-hidden">
+    <section id="contact" className="section relative overflow-hidden hidden md:block">
       <div className="absolute inset-0 z-0 bg-civitan-blue"></div>
       <div 
         className="absolute inset-0 z-0 opacity-25"
@@ -45,39 +45,34 @@ const ContactSection = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
           <Card className="civitan-shadow bg-white/90">
             <CardContent className="pt-6 flex flex-col items-center text-center">
-              <div className="bg-civitan-gold p-3 rounded-full mb-4">
-                <Phone className="h-6 w-6 text-civitan-blue" />
-              </div>
+              <a href="tel:6782420445" className="hover:scale-110 transition-transform" aria-label="Call us at 678-242-0445">
+                <div className="bg-civitan-gold p-3 rounded-full mb-4">
+                  <Phone className="h-6 w-6 text-civitan-blue" />
+                </div>
+              </a>
               <h3 className="font-bold text-lg mb-2 text-civitan-blue">Phone</h3>
-              <p className="text-gray-700">
-                <a href="tel:6782420445" className="hover:underline">678-242-0445</a>
-              </p>
             </CardContent>
           </Card>
 
           <Card className="civitan-shadow bg-white/90">
             <CardContent className="pt-6 flex flex-col items-center text-center">
-              <div className="bg-civitan-gold p-3 rounded-full mb-4">
-                <Mail className="h-6 w-6 text-civitan-blue" />
-              </div>
+              <a href="mailto:info@duluthcivitanclub.org" className="hover:scale-110 transition-transform" aria-label="Email us at info@duluthcivitanclub.org">
+                <div className="bg-civitan-gold p-3 rounded-full mb-4">
+                  <Mail className="h-6 w-6 text-civitan-blue" />
+                </div>
+              </a>
               <h3 className="font-bold text-lg mb-2 text-civitan-blue">Email</h3>
-              <p className="text-gray-700">
-                <a href="mailto:info@duluthcivitanclub.org" className="hover:underline">info@duluthcivitanclub.org</a>
-              </p>
             </CardContent>
           </Card>
 
           <Card className="civitan-shadow bg-white/90">
             <CardContent className="pt-6 flex flex-col items-center text-center">
-              <div className="bg-civitan-gold p-3 rounded-full mb-4">
-                <MapPin className="h-6 w-6 text-civitan-blue" />
-              </div>
+              <a href="https://g.co/kgs/ftSkpxj" target="_blank" rel="noopener noreferrer" className="hover:scale-110 transition-transform" aria-label="Find us in Duluth, Georgia">
+                <div className="bg-civitan-gold p-3 rounded-full mb-4">
+                  <MapPin className="h-6 w-6 text-civitan-blue" />
+                </div>
+              </a>
               <h3 className="font-bold text-lg mb-2 text-civitan-blue">Location</h3>
-              <p className="text-gray-700">
-                <a href="https://g.co/kgs/ftSkpxj" target="_blank" rel="noopener noreferrer" className="hover:underline">
-                  Duluth, Georgia
-                </a>
-              </p>
             </CardContent>
           </Card>
         </div>
