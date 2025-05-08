@@ -9,6 +9,7 @@ import CtaSection from "@/components/CtaSection";
 import EventsSection from "@/components/EventsSection";
 import GallerySection from "@/components/GallerySection";
 import ContactSection from "@/components/ContactSection";
+import ImpactScrollGallery from "@/components/ImpactScrollGallery";
 import Footer from "@/components/Footer";
 
 const Index = () => {
@@ -23,6 +24,7 @@ const Index = () => {
       <GallerySection />
       <EventsSection />
       <ContactSection />
+      <ImpactScrollGallery />
       <Footer />
       <MobileNavigation />
     </div>
