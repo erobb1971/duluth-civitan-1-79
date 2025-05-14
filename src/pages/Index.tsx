@@ -4,7 +4,7 @@ import DesktopNavigation from "@/components/DesktopNavigation";
 import MobileNavigation from "@/components/MobileNavigation";
 import HeroSection from "@/components/HeroSection";
 import AboutSection from "@/components/AboutSection";
-// import TimelineSection from "@/components/TimelineSection";
+import TimelineSection from "@/components/TimelineSection";
 import CtaSection from "@/components/CtaSection";
 import EventsSection from "@/components/EventsSection";
 import GallerySection from "@/components/GallerySection";
@@ -17,8 +17,7 @@ const Index = () => {
       <DesktopNavigation />
       <HeroSection />
       <AboutSection />
-      {/* TimelineSection component commented out temporarily
-      <TimelineSection /> */}
+      <TimelineSection />
       <CtaSection />
       <GallerySection />
       <EventsSection />

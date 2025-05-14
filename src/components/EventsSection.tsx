@@ -5,13 +5,15 @@ import { Button } from "@/components/ui/button";
 import { CalendarDays, Mail } from "lucide-react";
 import CalendarModal from "./CalendarModal";
 import { useIsMobile } from "@/hooks/use-mobile";
-import { useFacebookEvents } from "@/hooks/use-facebook-events";
 import { toast } from "@/hooks/use-toast";
+import { getNextEvents, formatEventDate } from "@/utils/events";
 
 const EventsSection = () => {
   const [calendarModalOpen, setCalendarModalOpen] = useState(false);
   const isMobile = useIsMobile();
-  const { events, isLoading, error } = useFacebookEvents();
+  
+  // Get the next 3 upcoming events
+  const upcomingEvents = getNextEvents(3);
   
   const handleEmailClick = (subject: string) => {
     // Send an email with the event details
@@ -22,6 +24,27 @@ const EventsSection = () => {
       title: "Thank you!",
       description: "Your interest has been submitted. We'll be in touch soon.",
     });
+  };
+
+  // Add schema.org Event markup
+  const eventSchema = {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "itemListElement": upcomingEvents.map((event, index) => ({
+      "@type": "ListItem",
+      "position": index + 1,
+      "item": {
+        "@type": "Event",
+        "name": event.title,
+        "startDate": event.startDate,
+        "endDate": event.endDate || event.startDate,
+        "location": event.location ? {
+          "@type": "Place",
+          "name": event.location
+        } : undefined,
+        "description": event.description || ""
+      }
+    }))
   };
 
   return (
@@ -48,51 +71,45 @@ const EventsSection = () => {
           </a>
         </div>
 
-        {isLoading ? (
-          <div className="text-center py-8">
-            <p>Loading events from Facebook...</p>
-          </div>
-        ) : error ? (
-          <div className="text-center py-8">
-            <p className="text-red-500">{error}</p>
-            <p className="mt-2">Showing fallback events</p>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-8 px-2 sm:px-0">
-            {events.map((event, index) => (
-              <Card key={index} className="civitan-shadow">
-                <CardHeader className="p-4 sm:p-6">
-                  <div className="flex items-center mb-2">
-                    <CalendarDays className="w-4 h-4 sm:w-5 sm:h-5 text-civitan-gold mr-2" />
-                    <span className="text-gray-600 dark:text-gray-400 text-xs sm:text-sm">
-                      {event.date} | {event.time}
-                    </span>
-                  </div>
-                  <CardTitle className="text-lg sm:text-xl text-civitan-blue dark:text-white">
-                    {event.title}
-                  </CardTitle>
-                  <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">
-                    {event.location}
-                  </div>
-                </CardHeader>
-                <CardContent className="px-4 sm:px-6 pb-2">
-                  <p className="text-xs sm:text-sm text-gray-700 dark:text-gray-300">
-                    {event.description}
-                  </p>
-                </CardContent>
-                <CardFooter className="p-4 sm:p-6 pt-2">
-                  <Button 
-                    className="w-full bg-civitan-blue hover:bg-blue-900 text-white text-xs sm:text-sm py-2"
-                    onClick={() => handleEmailClick(event.emailSubject)}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-8 px-2 sm:px-0">
+          {upcomingEvents.map((event, index) => (
+            <Card key={index} className="civitan-shadow">
+              <CardHeader className="p-4 sm:p-6">
+                <div className="flex items-center mb-2">
+                  <CalendarDays className="w-4 h-4 sm:w-5 sm:h-5 text-civitan-gold mr-2" />
+                  <time 
+                    dateTime={event.startDate} 
+                    className="text-gray-600 dark:text-gray-400 text-xs sm:text-sm"
                   >
-                    <Mail className="mr-2 h-3 w-3 sm:h-4 sm:w-4" />
-                    {event.buttonText}
-                  </Button>
-                </CardFooter>
-              </Card>
-            ))}
-          </div>
-        )}
+                    {formatEventDate(event.startDate)} {event.time && `| ${event.time}`}
+                  </time>
+                </div>
+                <CardTitle className="text-lg sm:text-xl text-civitan-blue dark:text-white">
+                  {event.title}
+                </CardTitle>
+                {event.location && (
+                  <address className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 not-italic">
+                    {event.location}
+                  </address>
+                )}
+              </CardHeader>
+              <CardContent className="px-4 sm:px-6 pb-2">
+                <p className="text-xs sm:text-sm text-gray-700 dark:text-gray-300">
+                  {event.description || "Join us for this exciting event!"}
+                </p>
+              </CardContent>
+              <CardFooter className="p-4 sm:p-6 pt-2">
+                <Button 
+                  className="w-full bg-civitan-blue hover:bg-blue-900 text-white text-xs sm:text-sm py-2"
+                  onClick={() => handleEmailClick(event.emailSubject || `Inquiry about ${event.title}`)}
+                >
+                  <Mail className="mr-2 h-3 w-3 sm:h-4 sm:w-4" />
+                  {event.buttonText || "RSVP"}
+                </Button>
+              </CardFooter>
+            </Card>
+          ))}
+        </div>
         
         {!isMobile && (
           <div className="text-center mt-8 sm:mt-12">
@@ -110,6 +127,12 @@ const EventsSection = () => {
       <CalendarModal
         open={calendarModalOpen}
         onOpenChange={setCalendarModalOpen}
+      />
+
+      {/* Add schema.org Event markup */}
+      <script 
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(eventSchema) }}
       />
     </section>
   );
