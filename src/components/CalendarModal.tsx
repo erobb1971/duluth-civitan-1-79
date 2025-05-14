@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import {
   Dialog,
@@ -8,11 +9,19 @@ import {
 } from "@/components/ui/dialog";
 import { Calendar } from "@/components/ui/calendar";
 import { format } from "date-fns";
-import { Event, EventType, getEventDots, eventsData } from "@/utils/events";
+import { Event, EventType, getEventDots, eventsData, getGoogleCalendarUrl, getICalUrl } from "@/utils/events";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
-import { Mail } from "lucide-react";
+import { Calendar as CalendarIcon, Map, Mail } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
+import { 
+  DropdownMenu, 
+  DropdownMenuContent, 
+  DropdownMenuItem, 
+  DropdownMenuLabel, 
+  DropdownMenuSeparator, 
+  DropdownMenuTrigger 
+} from "@/components/ui/dropdown-menu";
 
 interface CalendarModalProps {
   open: boolean;
@@ -149,10 +158,13 @@ const CalendarModal = ({ open, onOpenChange }: CalendarModalProps) => {
                     <CardHeader className="p-3 pb-1.5">
                       <h4 className="text-sm font-medium">{event.title}</h4>
                       {event.location && (
-                        <p className="text-xs text-gray-600">{event.location}</p>
+                        <div className="flex items-start mt-1">
+                          <Map className="w-3 h-3 text-civitan-gold mr-1 flex-shrink-0 mt-0.5" />
+                          <p className="text-xs text-gray-600">{event.location}</p>
+                        </div>
                       )}
                       {event.time && (
-                        <p className="text-xs text-gray-600">{event.time}</p>
+                        <p className="text-xs text-gray-600 mt-1">{event.time}</p>
                       )}
                     </CardHeader>
                     {event.description && (
@@ -161,14 +173,61 @@ const CalendarModal = ({ open, onOpenChange }: CalendarModalProps) => {
                       </CardContent>
                     )}
                     {event.buttonText && (
-                      <CardFooter className="p-3 pt-1.5">
-                        <Button 
-                          className="w-full bg-civitan-blue hover:bg-blue-900 text-white text-xs py-2"
-                          onClick={() => handleEmailClick(event)}
-                        >
-                          <Mail className="mr-1.5 h-3 w-3" />
-                          {event.buttonText}
-                        </Button>
+                      <CardFooter className="p-3 pt-1.5 flex flex-col gap-2">
+                        <div className="flex gap-2 w-full">
+                          <Button 
+                            className="flex-1 bg-civitan-blue hover:bg-blue-900 text-white text-xs py-2"
+                            onClick={() => handleEmailClick(event)}
+                          >
+                            <Mail className="mr-1.5 h-3 w-3" />
+                            {event.buttonText}
+                          </Button>
+                          
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                              <Button variant="outline" size="sm" className="h-8 border-civitan-blue text-civitan-blue dark:text-white dark:border-white">
+                                <CalendarIcon className="h-3 w-3" />
+                              </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                              <DropdownMenuLabel>Add to Calendar</DropdownMenuLabel>
+                              <DropdownMenuSeparator />
+                              <DropdownMenuItem asChild>
+                                <a 
+                                  href={getGoogleCalendarUrl(event)} 
+                                  target="_blank" 
+                                  rel="noopener noreferrer" 
+                                  className="cursor-pointer"
+                                >
+                                  Google Calendar
+                                </a>
+                              </DropdownMenuItem>
+                              <DropdownMenuItem asChild>
+                                <a 
+                                  href={getICalUrl(event)} 
+                                  download={`civitan-event-${event.id}.ics`}
+                                  className="cursor-pointer"
+                                >
+                                  Apple/Outlook (.ics)
+                                </a>
+                              </DropdownMenuItem>
+                            </DropdownMenuContent>
+                          </DropdownMenu>
+                        </div>
+                        
+                        {event.googleMapsUrl && (
+                          <Button 
+                            variant="outline" 
+                            className="w-full border-civitan-blue text-civitan-blue dark:text-white dark:border-white text-xs"
+                            asChild
+                            size="sm"
+                          >
+                            <a href={event.googleMapsUrl} target="_blank" rel="noopener noreferrer">
+                              <Map className="mr-1.5 h-3 w-3" />
+                              Get Directions
+                            </a>
+                          </Button>
+                        )}
                       </CardFooter>
                     )}
                   </Card>

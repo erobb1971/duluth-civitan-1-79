@@ -1,3 +1,4 @@
+
 import { format, isAfter, isBefore, isEqual, parseISO, startOfDay } from "date-fns";
 
 export type EventType = "civitan" | "national" | "international";
@@ -15,6 +16,7 @@ export interface Event {
   emailSubject?: string;
   noEmail?: boolean; // Flag to indicate we should just show a toast without email
   rsvpMessage?: string; // Custom message for RSVP confirmation
+  googleMapsUrl?: string; // URL for directions
 }
 
 const today = startOfDay(new Date());
@@ -31,6 +33,56 @@ export const formatEventDate = (dateString: string): string => {
   return format(date, "MMMM d, yyyy");
 };
 
+// Generate Google Calendar URL
+export const getGoogleCalendarUrl = (event: Event): string => {
+  const startDate = event.startDate;
+  const endDate = event.endDate || event.startDate;
+  const timeStr = event.time ? ` at ${event.time}` : '';
+  const locationStr = event.location ? ` at ${event.location}` : '';
+  
+  // Format: https://calendar.google.com/calendar/render?action=TEMPLATE&text=Title&dates=20250522T090000/20250522T100000&details=Description&location=Location
+  const baseUrl = 'https://calendar.google.com/calendar/render?action=TEMPLATE';
+  const textParam = `&text=${encodeURIComponent(event.title)}`;
+  
+  // Format dates (using T000000 for all day events)
+  const startParam = startDate.replace(/-/g, '') + 'T000000';
+  const endParam = endDate.replace(/-/g, '') + 'T235900';
+  const datesParam = `&dates=${startParam}/${endParam}`;
+  
+  // Optional parameters
+  const descriptionParam = event.description 
+    ? `&details=${encodeURIComponent(event.description)}` 
+    : '';
+  const locationParam = event.location 
+    ? `&location=${encodeURIComponent(event.location)}` 
+    : '';
+    
+  return `${baseUrl}${textParam}${datesParam}${descriptionParam}${locationParam}`;
+};
+
+// Generate iCal format data (for Apple Calendar, Outlook, etc.)
+export const getICalUrl = (event: Event): string => {
+  // Basic format of an iCal file
+  const startDate = event.startDate.replace(/-/g, '');
+  const endDate = (event.endDate || event.startDate).replace(/-/g, '');
+  
+  const icalData = [
+    'BEGIN:VCALENDAR',
+    'VERSION:2.0',
+    'PRODID:-//Duluth Civitan Club//EN',
+    'BEGIN:VEVENT',
+    `SUMMARY:${event.title}`,
+    `DTSTART:${startDate}`,
+    `DTEND:${endDate}`,
+    event.description ? `DESCRIPTION:${event.description}` : '',
+    event.location ? `LOCATION:${event.location}` : '',
+    'END:VEVENT',
+    'END:VCALENDAR'
+  ].filter(Boolean).join('\n');
+
+  return `data:text/calendar;charset=utf8,${encodeURIComponent(icalData)}`;
+};
+
 // All events data
 export const eventsData: Event[] = [
   {
@@ -43,7 +95,8 @@ export const eventsData: Event[] = [
     buttonText: "RSVP",
     emailSubject: "RSVP for Cocktail Reception with Mayor on May 22",
     noEmail: true,
-    rsvpMessage: "We have received your RSVP and look forward to seeing you there."
+    rsvpMessage: "We have received your RSVP and look forward to seeing you there.",
+    googleMapsUrl: "https://maps.google.com/?q=Courtyard+by+Marriott+Downtown+Duluth+GA"
   },
   {
     id: "memorial-day-2025",
@@ -65,10 +118,12 @@ export const eventsData: Event[] = [
   {
     id: "curiosity-lab-tour",
     title: "🧪 Tour: Curiosity Lab, Peachtree Corners",
+    location: "Curiosity Lab, Peachtree Corners",
     startDate: "2025-06-23",
     type: "civitan",
     buttonText: "Register",
-    emailSubject: "Registration for Curiosity Lab Tour on June 23"
+    emailSubject: "Registration for Curiosity Lab Tour on June 23",
+    googleMapsUrl: "https://maps.google.com/?q=Curiosity+Lab+Peachtree+Corners+GA"
   },
   {
     id: "author-talk-ben-cole",
@@ -83,10 +138,12 @@ export const eventsData: Event[] = [
     id: "parc-duluth-tour",
     title: "🏡 Tour: Parc @ Duluth, hosted by Rachel Sanders",
     description: "Includes boxed lunch",
+    location: "Parc @ Duluth",
     startDate: "2025-07-28",
     type: "civitan",
     buttonText: "Register",
-    emailSubject: "Registration for Parc @ Duluth Tour on July 28"
+    emailSubject: "Registration for Parc @ Duluth Tour on July 28",
+    googleMapsUrl: "https://maps.google.com/?q=Parc+at+Duluth+GA"
   },
   {
     id: "civitan-international-conference",
@@ -97,7 +154,8 @@ export const eventsData: Event[] = [
     endDate: "2025-08-09",
     type: "international",
     buttonText: "Register",
-    emailSubject: "Registration for Civitan International Conference on August 6-9"
+    emailSubject: "Registration for Civitan International Conference on August 6-9",
+    googleMapsUrl: "https://maps.google.com/?q=Crowne+Plaza+Atlanta+Perimeter+at+Ravinia"
   },
   {
     id: "civitan-business-meeting",
@@ -111,10 +169,12 @@ export const eventsData: Event[] = [
     id: "vox-pop-uli-tour",
     title: "🖨️ Tour: Vox Pop Uli, Peachtree Corners",
     description: "Focus: Branding & production",
+    location: "Vox Pop Uli, Peachtree Corners",
     startDate: "2025-08-25",
     type: "civitan",
     buttonText: "Register",
-    emailSubject: "Registration for Vox Pop Uli Tour on August 25"
+    emailSubject: "Registration for Vox Pop Uli Tour on August 25",
+    googleMapsUrl: "https://maps.google.com/?q=Vox+Pop+Uli+Peachtree+Corners+GA"
   },
   {
     id: "speaker-charel-aoun",
@@ -129,11 +189,13 @@ export const eventsData: Event[] = [
     id: "duluth-fall-festival",
     title: "🎪 Duluth Fall Festival",
     description: "Booth, cotton candy sales, local nonprofit support",
+    location: "Downtown Duluth",
     startDate: "2025-09-27",
     endDate: "2025-09-28",
     type: "civitan",
     buttonText: "Volunteer",
-    emailSubject: "Volunteer for Duluth Fall Festival on September 27-28"
+    emailSubject: "Volunteer for Duluth Fall Festival on September 27-28",
+    googleMapsUrl: "https://maps.google.com/?q=Downtown+Duluth+GA"
   },
   // National holidays
   {
