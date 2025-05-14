@@ -1,10 +1,7 @@
 
 import React, { useState } from "react";
-import { ArrowUp, CalendarDays, Mail, Mic, User, PiggyBank } from "lucide-react";
-import MemberLoginModal from "./MemberLoginModal";
-import VoiceMessageModal from "./VoiceMessageModal";
+import { ArrowUp, CalendarDays, Mail, PiggyBank } from "lucide-react";
 import CalendarModal from "./CalendarModal";
-import MembershipApplicationModal from "./MembershipApplicationModal";
 import DonationModal from "./DonationModal";
 
 interface NavItem {
@@ -15,9 +12,6 @@ interface NavItem {
 }
 
 const MobileNavigation = () => {
-  const [membershipModalOpen, setMembershipModalOpen] = useState(false);
-  const [loginModalOpen, setLoginModalOpen] = useState(false);
-  const [voiceMessageModalOpen, setVoiceMessageModalOpen] = useState(false);
   const [calendarModalOpen, setCalendarModalOpen] = useState(false);
   const [donationModalOpen, setDonationModalOpen] = useState(false);
 
@@ -56,22 +50,10 @@ const MobileNavigation = () => {
       action: handleDonateClick
     },
     { 
-      title: "Record", 
-      href: "#", 
-      icon: <Mic className="w-4 h-4" />,
-      action: () => setVoiceMessageModalOpen(true)
-    },
-    { 
       title: "Contact", 
       href: "#", 
       icon: <Mail className="w-4 h-4" />,
       action: handleContactClick
-    },
-    { 
-      title: "Login", 
-      href: "#", 
-      icon: <User className="w-4 h-4" />,
-      action: () => setLoginModalOpen(true)
     },
   ];
 
@@ -86,7 +68,7 @@ const MobileNavigation = () => {
                 e.preventDefault();
                 item.action ? item.action() : window.location.href = item.href;
               }}
-              className="flex flex-col items-center text-civitan-blue hover:text-civitan-gold transition-colors duration-300 px-0.5 py-0.5"
+              className="flex flex-col items-center text-civitan-blue hover:text-civitan-gold transition-colors duration-300 px-2 py-0.5"
             >
               {item.icon}
               <span className="text-[10px] mt-0.5">{item.title}</span>
@@ -94,21 +76,6 @@ const MobileNavigation = () => {
           ))}
         </div>
       </div>
-
-      <MembershipApplicationModal 
-        open={membershipModalOpen} 
-        onOpenChange={setMembershipModalOpen}
-      />
-
-      <MemberLoginModal
-        open={loginModalOpen}
-        onOpenChange={setLoginModalOpen}
-      />
-
-      <VoiceMessageModal
-        open={voiceMessageModalOpen}
-        onOpenChange={setVoiceMessageModalOpen}
-      />
 
       <CalendarModal
         open={calendarModalOpen}

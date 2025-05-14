@@ -1,5 +1,5 @@
 
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 
 const timelineEvents = [
   {
@@ -10,7 +10,7 @@ const timelineEvents = [
   {
     year: "2003-2004",
     title: "First Club President",
-    description: "Bob Watson served as the first president of the Duluth Civitan Club.",
+    description: "Bob Watson (Deceased) served as the first president of the Duluth Civitan Club.",
   },
   {
     year: "2004-2005",
@@ -80,12 +80,12 @@ const timelineEvents = [
   {
     year: "2019-2020",
     title: "Transition Period",
-    description: "Jon Hoovestol served as president until his passing.",
+    description: "Jon Hoovestol (Deceased) served as president.",
   },
   {
     year: "2020-2021",
     title: "Co-Presidential Term",
-    description: "Jon Hoovestol and Terry Crouch served as co-presidents.",
+    description: "Jon Hoovestol & Terry Crouch served as co-presidents.",
   },
   {
     year: "2021-2022",
@@ -111,6 +111,7 @@ const timelineEvents = [
 
 const TimelineSection = () => {
   const timelineRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -119,14 +120,23 @@ const TimelineSection = () => {
       timelineRefs.current.forEach((ref, index) => {
         if (ref) {
           const rect = ref.getBoundingClientRect();
-          const isVisible = rect.top < windowHeight * 0.85 && rect.bottom >= 0;
+          const isItemVisible = rect.top < windowHeight * 0.85 && rect.bottom >= 0;
           
-          if (isVisible) {
+          if (isItemVisible) {
             ref.classList.add('animate-fade-in');
             ref.classList.add('opacity-100');
           }
         }
       });
+
+      // Check if the founders section is visible
+      const foundersSection = document.querySelector('.founders-section');
+      if (foundersSection) {
+        const rect = foundersSection.getBoundingClientRect();
+        if (rect.top < windowHeight * 0.85 && rect.bottom >= 0) {
+          setIsVisible(true);
+        }
+      }
     };
 
     // Initialize timeline items as invisible
@@ -151,10 +161,10 @@ const TimelineSection = () => {
   }, []);
 
   return (
-    <section id="timeline" className="section bg-gray-100 dark:bg-gray-800">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-12 sm:mb-16">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-civitan-blue dark:text-civitan-gold mb-3 sm:mb-4">
+    <section id="timeline" className="section bg-gray-100 dark:bg-gray-800 py-10 md:py-16 overflow-hidden">
+      <div className="container mx-auto px-4 sm:px-6">
+        <div className="text-center mb-8 sm:mb-16">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-civitan-blue dark:text-civitan-gold mb-3">
             Our Journey Through Time
           </h2>
           <div className="w-16 sm:w-24 h-1 bg-civitan-gold mx-auto mb-4 sm:mb-6"></div>
@@ -164,13 +174,12 @@ const TimelineSection = () => {
         </div>
 
         <div className="relative max-w-5xl mx-auto">
-          <div className="timeline-connector"></div>
-
-          <div className="mb-8 text-center">
-            <div className="inline-block bg-white dark:bg-gray-900 p-4 rounded-lg shadow-md border border-civitan-gold">
-              <h3 className="text-xl font-bold text-civitan-blue dark:text-white mb-2">Founders / Club Builders</h3>
-              <ul className="text-gray-700 dark:text-gray-300 text-sm sm:text-base">
-                <li>Terry Crouch (Founder)</li>
+          {/* Founders Section with Enhanced Styling */}
+          <div className={`founders-section mb-12 text-center transition-all duration-700 ease-in-out ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+            <div className="inline-block bg-white dark:bg-gray-900 p-4 sm:p-6 rounded-lg shadow-md border-2 border-civitan-gold relative z-10 max-w-sm mx-auto">
+              <h3 className="text-xl font-bold text-civitan-blue dark:text-white mb-3">Founders / Club Builders</h3>
+              <ul className="text-gray-700 dark:text-gray-300 text-sm sm:text-base space-y-1">
+                <li className="font-medium">Terry Crouch (Founder)</li>
                 <li>Cheryl Crouch</li>
                 <li>Terry Swaim</li>
                 <li>Chuck Hartman</li>
@@ -178,22 +187,36 @@ const TimelineSection = () => {
             </div>
           </div>
 
+          {/* Timeline Connector Line */}
+          <div className="timeline-connector"></div>
+
+          {/* Timeline Events */}
           {timelineEvents.map((event, index) => (
             <div
               key={index}
               ref={el => timelineRefs.current[index] = el}
-              className={`timeline-item relative flex ${
-                index % 2 === 0 ? "flex-row" : "flex-row-reverse"
-              } mb-12`}
+              className={`timeline-item relative flex mb-12 ${
+                index % 2 === 0 
+                  ? "md:flex-row flex-col-reverse" 
+                  : "md:flex-row-reverse flex-col-reverse"
+              }`}
             >
-              <div className="w-1/2"></div>
-              <div
-                className={`w-1/2 ${
-                  index % 2 === 0 ? "pl-8" : "pr-8 text-right"
-                }`}
-              >
-                <div className="bg-white dark:bg-gray-900 p-6 rounded-lg civitan-shadow">
-                  <span className="inline-block bg-civitan-gold text-civitan-blue px-3 py-1 rounded-full text-sm font-bold mb-2">
+              {/* For mobile: always show content below the timeline point */}
+              <div className="md:w-1/2 w-full md:px-0 px-4">
+                <div 
+                  className={`
+                    bg-white dark:bg-gray-900 p-4 sm:p-6 rounded-lg civitan-shadow
+                    ${index % 2 === 0 
+                      ? "md:ml-8 md:mr-4" 
+                      : "md:mr-8 md:ml-4"
+                    }
+                    md:text-left ${index % 2 === 0 ? "md:text-left" : "md:text-right"} text-left
+                  `}
+                >
+                  <span className={`
+                    inline-block bg-civitan-gold text-civitan-blue px-3 py-1 rounded-full 
+                    text-sm font-bold mb-2
+                  `}>
                     {event.year}
                   </span>
                   <h3 className="text-xl font-bold text-civitan-blue dark:text-white mb-2">
@@ -204,6 +227,7 @@ const TimelineSection = () => {
                   </p>
                 </div>
               </div>
+              <div className="md:w-1/2 w-full"></div>
             </div>
           ))}
         </div>

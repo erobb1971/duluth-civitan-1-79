@@ -5,7 +5,7 @@ import { Mail, MapPin, Phone } from "lucide-react";
 
 const ContactSection = () => {
   return (
-    <section id="contact" className="section relative overflow-hidden hidden md:block pt-16">
+    <section id="contact" className="section relative overflow-hidden pt-16">
       {/* Blue background layer */}
       <div className="absolute inset-0 z-0 bg-civitan-blue"></div>
       
@@ -40,6 +40,7 @@ const ContactSection = () => {
                 </div>
               </a>
               <h3 className="font-bold text-lg mb-2 text-civitan-blue">Email</h3>
+              <p className="text-sm text-gray-600">info@duluthcivitanclub.org</p>
             </CardContent>
           </Card>
 
@@ -51,6 +52,7 @@ const ContactSection = () => {
                 </div>
               </a>
               <h3 className="font-bold text-lg mb-2 text-civitan-blue">Location</h3>
+              <p className="text-sm text-gray-600">Duluth, Georgia</p>
             </CardContent>
           </Card>
         </div>
