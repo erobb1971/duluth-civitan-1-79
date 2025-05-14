@@ -96,7 +96,7 @@ export const getICalUrl = (event: Event): string => {
   return `data:text/calendar;charset=utf8,${encodeURIComponent(icalData)}`;
 };
 
-// All events data
+// All events data - Updated to use "USA" instead of "US" for national holidays
 export const eventsData: Event[] = [
   {
     id: "cocktail-reception-2025",
@@ -113,7 +113,7 @@ export const eventsData: Event[] = [
   },
   {
     id: "memorial-day-2025",
-    title: "🇺🇸 Memorial Day (No Meeting)",
+    title: "🇺🇸 Memorial Day (No Meeting) - USA",
     startDate: "2025-05-26",
     type: "national",
     buttonText: "More Info",
@@ -147,7 +147,7 @@ export const eventsData: Event[] = [
   },
   {
     id: "independence-day-2025",
-    title: "🇺🇸 Independence Day (No Meeting)",
+    title: "🇺🇸 Independence Day (No Meeting) - USA",
     startDate: "2025-07-04",
     type: "national",
     buttonText: "More Info",
@@ -216,7 +216,7 @@ export const eventsData: Event[] = [
   },
   {
     id: "labor-day-2025",
-    title: "🇺🇸 Labor Day (No Meeting)",
+    title: "🇺🇸 Labor Day (No Meeting) - USA",
     startDate: "2025-09-01",
     type: "national",
     buttonText: "More Info",

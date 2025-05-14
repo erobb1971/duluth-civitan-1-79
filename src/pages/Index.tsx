@@ -9,6 +9,7 @@ import CtaSection from "@/components/CtaSection";
 import EventsSection from "@/components/EventsSection";
 import GallerySection from "@/components/GallerySection";
 import ContactSection from "@/components/ContactSection";
+import PartnersSection from "@/components/PartnersSection";
 import Footer from "@/components/Footer";
 
 const Index = () => {
@@ -19,6 +20,7 @@ const Index = () => {
       <AboutSection />
       <TimelineSection />
       <CtaSection />
+      <PartnersSection />
       <GallerySection />
       <EventsSection />
       <ContactSection />

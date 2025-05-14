@@ -138,6 +138,32 @@
     }
   }
 
+  /* Timeline animations */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.6s ease forwards;
+  }
+
+  /* Partner card hover effects */
+  .partner-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .partner-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+  }
+
   @media (min-width: 640px) {
     .text-shine {
       font-size: 3rem;
@@ -185,6 +211,36 @@
   to {
     background-position: 200% center;
   }
+}
+
+/* Calendar icon animation */
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+}
+
+.animate-bounce {
+  animation: bounce 1s ease infinite;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.5;
+  }
+}
+
+.animate-pulse {
+  animation: pulse 1.5s ease infinite;
 }
 
 @layer utilities {
