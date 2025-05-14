@@ -17,6 +17,8 @@ export interface Event {
   noEmail?: boolean; // Flag to indicate we should just show a toast without email
   rsvpMessage?: string; // Custom message for RSVP confirmation
   googleMapsUrl?: string; // URL for directions
+  isNoMeeting?: boolean; // Flag to indicate this is a "no meeting" event
+  nextMeetingDate?: string; // Next meeting date after a holiday or no-meeting event
 }
 
 const today = startOfDay(new Date());
@@ -31,6 +33,17 @@ export const isEventInFuture = (event: Event): boolean => {
 export const formatEventDate = (dateString: string): string => {
   const date = parseISO(dateString);
   return format(date, "MMMM d, yyyy");
+};
+
+// Get next meeting date after a holiday
+export const getNextMeetingDate = (currentDate: string): string => {
+  // Get all future events sorted by date
+  const futureEvents = eventsData
+    .filter(event => isAfter(parseISO(event.startDate), parseISO(currentDate)) && !event.isNoMeeting)
+    .sort((a, b) => parseISO(a.startDate).getTime() - parseISO(b.startDate).getTime());
+  
+  // Return the date of the first future event that's not a holiday or "no meeting"
+  return futureEvents.length > 0 ? futureEvents[0].startDate : "";
 };
 
 // Generate Google Calendar URL
@@ -104,35 +117,55 @@ export const eventsData: Event[] = [
     startDate: "2025-05-26",
     type: "national",
     buttonText: "More Info",
-    emailSubject: "Memorial Day Inquiry"
+    emailSubject: "Memorial Day Inquiry",
+    isNoMeeting: true,
+    description: "We will not be having a meeting due to Memorial Day, but our next meeting is on June 9th and we would love for you to come, bring a friend!",
+    nextMeetingDate: "2025-06-09",
   },
   {
     id: "speaker-owens-baker",
     title: "🗣️ Speaker: Bethany Owens Baker, Senior Provisions",
     description: "Topic: Dimensions of Wellness",
+    location: "Chamber's 1818 Club",
     startDate: "2025-06-09",
+    time: "11:45 AM",
     type: "civitan",
     buttonText: "RSVP",
-    emailSubject: "RSVP for Speaker Event: Bethany Owens Baker on June 9"
+    emailSubject: "RSVP for Speaker Event: Bethany Owens Baker on June 9",
+    googleMapsUrl: "https://maps.google.com/?q=Chambers+1818+Club+Duluth+GA"
   },
   {
     id: "curiosity-lab-tour",
     title: "🧪 Tour: Curiosity Lab, Peachtree Corners",
     location: "Curiosity Lab, Peachtree Corners",
     startDate: "2025-06-23",
+    time: "12:00 PM",
     type: "civitan",
     buttonText: "Register",
     emailSubject: "Registration for Curiosity Lab Tour on June 23",
     googleMapsUrl: "https://maps.google.com/?q=Curiosity+Lab+Peachtree+Corners+GA"
   },
   {
+    id: "independence-day-2025",
+    title: "🇺🇸 Independence Day (No Meeting)",
+    startDate: "2025-07-04",
+    type: "national",
+    buttonText: "More Info",
+    emailSubject: "Independence Day Inquiry",
+    isNoMeeting: true,
+    description: "We will not be having a meeting due to Independence Day, but our next meeting is on July 14th and we would love for you to come, bring a friend!"
+  },
+  {
     id: "author-talk-ben-cole",
     title: "📘 Author Talk: Ben Cole",
     description: "Topic: Four Down on Old Peachtree Road",
+    location: "Chamber's 1818 Club",
     startDate: "2025-07-14",
+    time: "11:45 AM",
     type: "civitan",
     buttonText: "RSVP",
-    emailSubject: "RSVP for Author Talk: Ben Cole on July 14"
+    emailSubject: "RSVP for Author Talk: Ben Cole on July 14",
+    googleMapsUrl: "https://maps.google.com/?q=Chambers+1818+Club+Duluth+GA"
   },
   {
     id: "parc-duluth-tour",
@@ -140,6 +173,7 @@ export const eventsData: Event[] = [
     description: "Includes boxed lunch",
     location: "Parc @ Duluth",
     startDate: "2025-07-28",
+    time: "12:00 PM",
     type: "civitan",
     buttonText: "Register",
     emailSubject: "Registration for Parc @ Duluth Tour on July 28",
@@ -160,10 +194,13 @@ export const eventsData: Event[] = [
   {
     id: "civitan-business-meeting",
     title: "🏢 Reserved for Civitan Business",
+    location: "Chamber's 1818 Club",
     startDate: "2025-08-11",
+    time: "11:45 AM",
     type: "civitan",
     buttonText: "RSVP",
-    emailSubject: "RSVP for Civitan Business Meeting on August 11"
+    emailSubject: "RSVP for Civitan Business Meeting on August 11",
+    googleMapsUrl: "https://maps.google.com/?q=Chambers+1818+Club+Duluth+GA"
   },
   {
     id: "vox-pop-uli-tour",
@@ -171,19 +208,34 @@ export const eventsData: Event[] = [
     description: "Focus: Branding & production",
     location: "Vox Pop Uli, Peachtree Corners",
     startDate: "2025-08-25",
+    time: "12:00 PM",
     type: "civitan",
     buttonText: "Register",
     emailSubject: "Registration for Vox Pop Uli Tour on August 25",
     googleMapsUrl: "https://maps.google.com/?q=Vox+Pop+Uli+Peachtree+Corners+GA"
   },
   {
+    id: "labor-day-2025",
+    title: "🇺🇸 Labor Day (No Meeting)",
+    startDate: "2025-09-01",
+    type: "national",
+    buttonText: "More Info",
+    emailSubject: "Labor Day Inquiry",
+    isNoMeeting: true,
+    description: "We will not be having a meeting due to Labor Day, but our next meeting is on September 8th and we would love for you to come, bring a friend!",
+    nextMeetingDate: "2025-09-08"
+  },
+  {
     id: "speaker-charel-aoun",
     title: "🎓 Speaker: Charel Aoun, GA First Generation Foundation",
     description: "Topic: College access for first-gen students",
+    location: "Chamber's 1818 Club",
     startDate: "2025-09-08",
+    time: "11:45 AM",
     type: "civitan",
     buttonText: "RSVP",
-    emailSubject: "RSVP for Speaker: Charel Aoun on September 8"
+    emailSubject: "RSVP for Speaker: Charel Aoun on September 8",
+    googleMapsUrl: "https://maps.google.com/?q=Chambers+1818+Club+Duluth+GA"
   },
   {
     id: "duluth-fall-festival",
@@ -196,23 +248,6 @@ export const eventsData: Event[] = [
     buttonText: "Volunteer",
     emailSubject: "Volunteer for Duluth Fall Festival on September 27-28",
     googleMapsUrl: "https://maps.google.com/?q=Downtown+Duluth+GA"
-  },
-  // National holidays
-  {
-    id: "independence-day-2025",
-    title: "🇺🇸 Independence Day",
-    startDate: "2025-07-04",
-    type: "national",
-    buttonText: "More Info",
-    emailSubject: "Independence Day Inquiry"
-  },
-  {
-    id: "labor-day-2025",
-    title: "🇺🇸 Labor Day",
-    startDate: "2025-09-01",
-    type: "national",
-    buttonText: "More Info",
-    emailSubject: "Labor Day Inquiry"
   }
 ];
 

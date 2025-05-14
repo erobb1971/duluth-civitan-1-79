@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Calendar as CalendarIcon, Map, Mail, ExternalLink } from "lucide-react";
+import { Calendar as CalendarIcon, Map, Mail, ExternalLink, Info } from "lucide-react";
 import CalendarModal from "./CalendarModal";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { toast } from "@/hooks/use-toast";
@@ -77,6 +77,53 @@ const EventsSection = () => {
           </p>
         </div>
         
+        {/* Meeting schedule information */}
+        <div className="max-w-3xl mx-auto mb-8 sm:mb-12 px-2 sm:px-0">
+          <Card className="civitan-shadow">
+            <CardHeader className="bg-civitan-blue text-white p-4 sm:p-6">
+              <CardTitle className="text-lg sm:text-xl">🗓️ Regular Meeting Schedule</CardTitle>
+            </CardHeader>
+            <CardContent className="p-4 sm:p-6">
+              <div className="space-y-4">
+                <div>
+                  <p className="font-medium">2nd Monday of each month at 11:45 AM</p>
+                  <div className="flex items-start mt-2">
+                    <Map className="w-4 h-4 sm:w-5 sm:h-5 text-civitan-gold mr-2 flex-shrink-0 mt-0.5" />
+                    <p className="text-sm text-gray-600">Chamber's 1818 Club</p>
+                  </div>
+                </div>
+
+                <div>
+                  <p className="font-medium">4th Monday of each month at 12:00 PM (Noon)</p>
+                  <div className="flex items-start mt-2">
+                    <Map className="w-4 h-4 sm:w-5 sm:h-5 text-civitan-gold mr-2 flex-shrink-0 mt-0.5" />
+                    <p className="text-sm text-gray-600">Rotating community locations</p>
+                  </div>
+                  <div className="flex items-start mt-2">
+                    <Info className="w-4 h-4 sm:w-5 sm:h-5 text-civitan-gold mr-2 flex-shrink-0 mt-0.5" />
+                    <p className="text-sm text-gray-600">Please contact us for more details if you would like to attend</p>
+                  </div>
+                  <div className="mt-3">
+                    <Button 
+                      className="bg-civitan-blue hover:bg-blue-900 text-white text-xs sm:text-sm"
+                      onClick={() => {
+                        window.location.href = "mailto:info@duluthcivitanclub.org?subject=Meeting Location Inquiry";
+                      }}
+                    >
+                      <Mail className="mr-2 h-3 w-3 sm:h-4 sm:w-4" />
+                      Contact for Details
+                    </Button>
+                  </div>
+                </div>
+
+                <div className="text-sm text-gray-600 italic border-t pt-4 mt-4">
+                  Note: If a scheduled meeting falls on a holiday, there will be no meeting on that date.
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
         <div className="max-w-3xl mx-auto mb-8 sm:mb-12 px-2 sm:px-0">
           <a href="https://civitan.org/convention/" target="_blank" rel="noopener noreferrer" className="block hover:opacity-90 transition-opacity">
             <img 
@@ -115,7 +162,9 @@ const EventsSection = () => {
               </CardHeader>
               <CardContent className="px-4 sm:px-6 pb-2 flex-grow">
                 <p className="text-xs sm:text-sm text-gray-700 dark:text-gray-300">
-                  {event.description || "Join us for this exciting event!"}
+                  {event.description || (event.isNoMeeting 
+                    ? `We will not be having a meeting due to ${event.title.split('(')[0].trim()}, but our next meeting is on ${event.nextMeetingDate ? formatEventDate(event.nextMeetingDate) : 'the next scheduled date'} and we would love for you to come, bring a friend!`
+                    : "Join us for this exciting event!")}
                 </p>
               </CardContent>
               <CardFooter className="p-4 sm:p-6 pt-2 flex flex-col gap-2 mt-auto">

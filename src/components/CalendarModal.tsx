@@ -12,7 +12,7 @@ import { format } from "date-fns";
 import { Event, EventType, getEventDots, eventsData, getGoogleCalendarUrl, getICalUrl } from "@/utils/events";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
-import { Calendar as CalendarIcon, Map, Mail } from "lucide-react";
+import { Calendar as CalendarIcon, Map, Mail, Info } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { 
   DropdownMenu, 
@@ -147,6 +147,13 @@ const CalendarModal = ({ open, onOpenChange }: CalendarModalProps) => {
             </div>
           </div>
           
+          <div className="w-full mt-6 mb-2 p-3 bg-gray-50 rounded-lg border border-gray-200 text-sm">
+            <div className="font-medium mb-1">🗓️ Regular Meeting Schedule:</div>
+            <p>2nd Monday: 11:45 AM at Chamber's 1818 Club</p>
+            <p>4th Monday: 12:00 PM at rotating locations</p>
+            <div className="text-xs text-gray-500 mt-1 italic">Note: No meetings on holidays</div>
+          </div>
+          
           {selectedDateEvents.length > 0 ? (
             <div className="w-full mt-4 max-h-64 overflow-y-auto">
               <h3 className="text-lg font-semibold text-center mb-2">
@@ -167,11 +174,13 @@ const CalendarModal = ({ open, onOpenChange }: CalendarModalProps) => {
                         <p className="text-xs text-gray-600 mt-1">{event.time}</p>
                       )}
                     </CardHeader>
-                    {event.description && (
-                      <CardContent className="p-3 py-1">
-                        <p className="text-xs">{event.description}</p>
-                      </CardContent>
-                    )}
+                    <CardContent className="p-3 py-1">
+                      <p className="text-xs">
+                        {event.description || (event.isNoMeeting 
+                          ? `We will not be having a meeting due to ${event.title.split('(')[0].trim()}, but our next meeting is on ${event.nextMeetingDate ? format(new Date(event.nextMeetingDate), "MMMM d, yyyy") : 'the next scheduled date'} and we would love for you to come, bring a friend!` 
+                          : "Join us for this exciting event!")}
+                      </p>
+                    </CardContent>
                     {event.buttonText && (
                       <CardFooter className="p-3 pt-1.5 flex flex-col gap-2">
                         <div className="flex gap-2 w-full">
