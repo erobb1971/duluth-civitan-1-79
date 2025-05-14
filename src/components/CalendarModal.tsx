@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import {
   Dialog,
@@ -36,8 +35,18 @@ const CalendarModal = ({ open, onOpenChange }: CalendarModalProps) => {
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
 
-  const handleEmailClick = (subject: string) => {
-    window.location.href = `mailto:info@duluthcivitanclub.org?subject=${subject}&body=Thank you for your interest in this event. Please provide your contact information and we will get back to you shortly.`;
+  const handleEmailClick = (event: Event) => {
+    // If noEmail is true, just show toast without triggering email
+    if (event.noEmail) {
+      toast({
+        title: "Thank you!",
+        description: event.rsvpMessage || "Your RSVP has been received.",
+      });
+      return;
+    }
+    
+    // Otherwise proceed with email
+    window.location.href = `mailto:info@duluthcivitanclub.org?subject=${event.emailSubject || "Event Inquiry"}&body=Thank you for your interest in this event. Please provide your contact information and we will get back to you shortly.`;
     
     toast({
       title: "Thank you!",
@@ -155,7 +164,7 @@ const CalendarModal = ({ open, onOpenChange }: CalendarModalProps) => {
                       <CardFooter className="p-3 pt-1.5">
                         <Button 
                           className="w-full bg-civitan-blue hover:bg-blue-900 text-white text-xs py-2"
-                          onClick={() => event.emailSubject && handleEmailClick(event.emailSubject)}
+                          onClick={() => handleEmailClick(event)}
                         >
                           <Mail className="mr-1.5 h-3 w-3" />
                           {event.buttonText}

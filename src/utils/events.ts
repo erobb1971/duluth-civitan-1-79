@@ -1,4 +1,3 @@
-
 import { format, isAfter, isBefore, isEqual, parseISO, startOfDay } from "date-fns";
 
 export type EventType = "civitan" | "national" | "international";
@@ -14,6 +13,8 @@ export interface Event {
   type: EventType;
   buttonText?: string;
   emailSubject?: string;
+  noEmail?: boolean; // Flag to indicate we should just show a toast without email
+  rsvpMessage?: string; // Custom message for RSVP confirmation
 }
 
 const today = startOfDay(new Date());
@@ -34,13 +35,15 @@ export const formatEventDate = (dateString: string): string => {
 export const eventsData: Event[] = [
   {
     id: "cocktail-reception-2025",
-    title: "🥂 Cocktail Reception: Meet the Mayor of Duluth",
+    title: "🥂 Cocktail Reception: Meet the Mayor of Duluth, GA Greg Whitlock",
     location: "Courtyard by Marriott, Downtown Duluth",
     startDate: "2025-05-22",
     time: "5:00 PM – 7:00 PM",
     type: "civitan",
     buttonText: "RSVP",
-    emailSubject: "RSVP for Cocktail Reception with Mayor on May 22"
+    emailSubject: "RSVP for Cocktail Reception with Mayor on May 22",
+    noEmail: true,
+    rsvpMessage: "We have received your RSVP and look forward to seeing you there."
   },
   {
     id: "memorial-day-2025",

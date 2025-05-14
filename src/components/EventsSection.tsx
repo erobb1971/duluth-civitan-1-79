@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -15,9 +14,18 @@ const EventsSection = () => {
   // Get the next 3 upcoming events
   const upcomingEvents = getNextEvents(3);
   
-  const handleEmailClick = (subject: string) => {
-    // Send an email with the event details
-    window.location.href = `mailto:info@duluthcivitanclub.org?subject=${subject}&body=Thank you for your interest in this event. Please provide your contact information and we will get back to you shortly.`;
+  const handleEmailClick = (event: { emailSubject?: string, noEmail?: boolean, rsvpMessage?: string }) => {
+    // If noEmail is true, just show toast without triggering email
+    if (event.noEmail) {
+      toast({
+        title: "Thank you!",
+        description: event.rsvpMessage || "Your RSVP has been received.",
+      });
+      return;
+    }
+    
+    // Otherwise, handle as before with email
+    window.location.href = `mailto:info@duluthcivitanclub.org?subject=${event.emailSubject || "Event Inquiry"}&body=Thank you for your interest in this event. Please provide your contact information and we will get back to you shortly.`;
     
     // Show thank you toast
     toast({
@@ -101,7 +109,7 @@ const EventsSection = () => {
               <CardFooter className="p-4 sm:p-6 pt-2">
                 <Button 
                   className="w-full bg-civitan-blue hover:bg-blue-900 text-white text-xs sm:text-sm py-2"
-                  onClick={() => handleEmailClick(event.emailSubject || `Inquiry about ${event.title}`)}
+                  onClick={() => handleEmailClick(event)}
                 >
                   <Mail className="mr-2 h-3 w-3 sm:h-4 sm:w-4" />
                   {event.buttonText || "RSVP"}
