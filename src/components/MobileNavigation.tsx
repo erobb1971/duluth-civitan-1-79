@@ -5,6 +5,7 @@ import MemberLoginModal from "./MemberLoginModal";
 import VoiceMessageModal from "./VoiceMessageModal";
 import CalendarModal from "./CalendarModal";
 import MembershipApplicationModal from "./MembershipApplicationModal";
+import DonationModal from "./DonationModal";
 
 interface NavItem {
   title: string;
@@ -18,6 +19,7 @@ const MobileNavigation = () => {
   const [loginModalOpen, setLoginModalOpen] = useState(false);
   const [voiceMessageModalOpen, setVoiceMessageModalOpen] = useState(false);
   const [calendarModalOpen, setCalendarModalOpen] = useState(false);
+  const [donationModalOpen, setDonationModalOpen] = useState(false);
 
   const handleScrollToTop = () => {
     window.scrollTo({
@@ -31,9 +33,7 @@ const MobileNavigation = () => {
   };
   
   const handleDonateClick = () => {
-    // Placeholder for donate functionality - no link for now
-    console.log("Donate button clicked");
-    alert("Donation functionality coming soon!");
+    setDonationModalOpen(true);
   };
 
   const navItems: NavItem[] = [
@@ -113,6 +113,11 @@ const MobileNavigation = () => {
       <CalendarModal
         open={calendarModalOpen}
         onOpenChange={setCalendarModalOpen}
+      />
+
+      <DonationModal
+        open={donationModalOpen}
+        onOpenChange={setDonationModalOpen}
       />
     </>
   );

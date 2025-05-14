@@ -4,6 +4,7 @@ import CivitanLogo from "./CivitanLogo";
 import { Button } from "@/components/ui/button";
 import MembershipApplicationModal from "./MembershipApplicationModal";
 import MemberLoginModal from "./MemberLoginModal";
+import DonationModal from "./DonationModal";
 import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger, navigationMenuTriggerStyle } from "./ui/navigation-menu";
 import { cn } from "@/lib/utils";
 import { User, PiggyBank } from "lucide-react";
@@ -11,6 +12,7 @@ import { User, PiggyBank } from "lucide-react";
 const DesktopNavigation = () => {
   const [membershipModalOpen, setMembershipModalOpen] = useState(false);
   const [loginModalOpen, setLoginModalOpen] = useState(false);
+  const [donationModalOpen, setDonationModalOpen] = useState(false);
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
     e.preventDefault();
@@ -24,9 +26,7 @@ const DesktopNavigation = () => {
   };
 
   const handleDonateClick = () => {
-    // Placeholder for donate functionality - no link for now
-    console.log("Donate button clicked");
-    alert("Donation functionality coming soon!");
+    setDonationModalOpen(true);
   };
 
   return (
@@ -142,6 +142,11 @@ const DesktopNavigation = () => {
       <MemberLoginModal
         open={loginModalOpen}
         onOpenChange={setLoginModalOpen}
+      />
+
+      <DonationModal
+        open={donationModalOpen}
+        onOpenChange={setDonationModalOpen}
       />
     </header>
   );
