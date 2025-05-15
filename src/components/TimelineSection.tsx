@@ -334,8 +334,9 @@ const TimelineSection = () => {
         </div>
       </div>
 
-      {/* Add pulse animation and 3D effect styles */}
-      <style jsx>{`
+      {/* Add animation styles */}
+      <style>
+        {`
         @keyframes pulse {
           0% { box-shadow: 0 0 0 0 rgba(255, 199, 44, 0.7); }
           70% { box-shadow: 0 0 0 10px rgba(255, 199, 44, 0); }
@@ -360,7 +361,8 @@ const TimelineSection = () => {
           transform: translateY(0) !important;
           opacity: 1 !important;
         }
-      `}</style>
+        `}
+      </style>
 
       {/* Scroll cue indicator */}
       <div 
