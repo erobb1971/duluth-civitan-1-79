@@ -69,6 +69,7 @@ const MobileNavigation = () => {
                 item.action ? item.action() : window.location.href = item.href;
               }}
               className="flex flex-col items-center text-civitan-blue hover:text-civitan-gold transition-colors duration-300 px-2 py-0.5"
+              aria-label={item.title}
             >
               {item.icon}
               <span className="text-[10px] mt-0.5">{item.title}</span>

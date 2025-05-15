@@ -1,5 +1,7 @@
 
 import React, { useRef, useEffect, useState } from "react";
+import { ChevronsDown } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 const timelineEvents = [
   {
@@ -111,12 +113,15 @@ const timelineEvents = [
 
 const TimelineSection = () => {
   const timelineRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const sectionRef = useRef<HTMLElement>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const [showScrollCue, setShowScrollCue] = useState(true);
 
   useEffect(() => {
     const handleScroll = () => {
       const windowHeight = window.innerHeight;
       
+      // Handle timeline items animation
       timelineRefs.current.forEach((ref, index) => {
         if (ref) {
           const rect = ref.getBoundingClientRect();
@@ -136,6 +141,13 @@ const TimelineSection = () => {
         if (rect.top < windowHeight * 0.85 && rect.bottom >= 0) {
           setIsVisible(true);
         }
+      }
+      
+      // Hide scroll cue when scrolled down enough
+      if (sectionRef.current) {
+        const sectionRect = sectionRef.current.getBoundingClientRect();
+        const scrolledIntoSection = sectionRect.top < windowHeight * 0.3;
+        setShowScrollCue(!scrolledIntoSection);
       }
     };
 
@@ -161,7 +173,11 @@ const TimelineSection = () => {
   }, []);
 
   return (
-    <section id="timeline" className="section bg-gray-100 dark:bg-gray-800 py-10 md:py-16 overflow-hidden">
+    <section 
+      id="timeline" 
+      ref={sectionRef}
+      className="section bg-gray-100 dark:bg-gray-800 py-10 md:py-16 overflow-hidden relative"
+    >
       <div className="container mx-auto px-4 sm:px-6">
         <div className="text-center mb-8 sm:mb-16">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-civitan-blue dark:text-civitan-gold mb-3">
@@ -232,6 +248,22 @@ const TimelineSection = () => {
           ))}
         </div>
       </div>
+
+      {/* Scroll cue indicator */}
+      <div 
+        className={cn(
+          "absolute bottom-4 left-1/2 transform -translate-x-1/2 text-civitan-blue dark:text-civitan-gold transition-opacity duration-500",
+          showScrollCue ? "opacity-80" : "opacity-0 pointer-events-none"
+        )}
+      >
+        <div className="flex flex-col items-center animate-bounce cursor-pointer">
+          <span className="text-xs mb-1">Scroll for more</span>
+          <ChevronsDown size={20} />
+        </div>
+      </div>
+
+      {/* Transition overlay for smoother scroll to CTA section */}
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-civitan-blue to-transparent z-20"></div>
     </section>
   );
 };

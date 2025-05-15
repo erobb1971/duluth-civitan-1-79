@@ -11,10 +11,10 @@ const CivitanLogo: React.FC<CivitanLogoProps> = ({
   size = "md"
 }) => {
   const sizeClasses = {
-    sm: "w-8 h-8 md:w-12 md:h-12",
-    md: "w-12 h-12 md:w-16 md:h-16",
-    lg: "w-16 h-16 md:w-24 md:h-24",
-    xl: "w-24 h-24 md:w-32 md:h-32"
+    sm: "w-10 h-10 md:w-14 md:h-14", // Increased from w-8/h-8 to w-10/h-10
+    md: "w-14 h-14 md:w-20 md:h-20", // Increased from w-12/h-12 to w-14/h-14
+    lg: "w-20 h-20 md:w-28 md:h-28", // Increased from w-16/h-16 to w-20/h-20
+    xl: "w-28 h-28 md:w-36 md:h-36"  // Increased from w-24/h-24 to w-28/h-28
   };
 
   return (

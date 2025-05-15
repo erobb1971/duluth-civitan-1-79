@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Mail, MapPin, Phone } from "lucide-react";
@@ -23,12 +22,13 @@ const ContactSection = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 max-w-4xl mx-auto">
           <Card className="civitan-shadow bg-white/90">
             <CardContent className="pt-6 flex flex-col items-center text-center">
-              <a href="tel:6782420445" className="hover:scale-110 transition-transform" aria-label="Call us at 678-242-0445">
+              <a href="tel:678-242-0445" className="hover:scale-110 transition-transform" aria-label="Call us at 678-242-0445">
                 <div className="bg-civitan-gold p-3 rounded-full mb-4">
                   <Phone className="h-6 w-6 text-civitan-blue" />
                 </div>
               </a>
               <h3 className="font-bold text-lg mb-2 text-civitan-blue">Phone</h3>
+              <p className="text-sm text-gray-600">678-242-0445</p>
             </CardContent>
           </Card>
 

@@ -7,8 +7,8 @@ const CookieConsent = () => {
   const [showConsent, setShowConsent] = useState(false);
 
   useEffect(() => {
-    // Check if user has already accepted cookies in this session
-    const hasAccepted = sessionStorage.getItem("cookie-consent-accepted");
+    // Check if user has already accepted cookies (using localStorage for persistence)
+    const hasAccepted = localStorage.getItem("cookie-consent-accepted");
     if (!hasAccepted) {
       // Small delay to prevent immediate popup
       const timer = setTimeout(() => {
@@ -19,7 +19,7 @@ const CookieConsent = () => {
   }, []);
 
   const acceptCookies = () => {
-    sessionStorage.setItem("cookie-consent-accepted", "true");
+    localStorage.setItem("cookie-consent-accepted", "true");
     setShowConsent(false);
   };
 
