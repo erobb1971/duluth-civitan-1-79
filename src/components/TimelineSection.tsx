@@ -117,16 +117,22 @@ const TimelineSection = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [showScrollCue, setShowScrollCue] = useState(true);
   const [isExpanding, setIsExpanding] = useState(false);
-  const [cardTransforms, setCardTransforms] = useState<string[]>([]);
   
   useEffect(() => {
-    // Initialize card transforms array
-    setCardTransforms(Array(timelineEvents.length).fill(''));
+    // Initialize timeline items as invisible
+    timelineRefs.current.forEach(ref => {
+      if (ref) {
+        ref.classList.add('opacity-0');
+        ref.classList.add('translate-y-4');
+        ref.classList.add('transition-all');
+        ref.classList.add('duration-500');
+      }
+    });
 
     const handleScroll = () => {
       const windowHeight = window.innerHeight;
       
-      // Handle timeline items animation with enhanced 3D effects and pulsing
+      // Handle timeline items animation with subtle effects
       timelineRefs.current.forEach((ref, index) => {
         if (ref) {
           const rect = ref.getBoundingClientRect();
@@ -142,41 +148,9 @@ const TimelineSection = () => {
               timelinePoint.classList.add('timeline-point-pulse');
             }
             
-            // Calculate how far the item is in the viewport (0 to 1)
-            const viewportProgress = Math.min(
-              Math.max(0, 1 - (rect.top / (windowHeight * 0.7))), 
-              1
-            );
-            
-            // Apply 3D transform based on scroll position - staggered effect
-            const depth = 0.5 + (index % 3) * 0.2; // Vary the depth effect
-            const rotationDirection = index % 2 === 0 ? 1 : -1; // Alternate rotation direction
-            const translateY = viewportProgress * -10;
-            const scale = 1 + viewportProgress * 0.03;
-            const rotateX = viewportProgress * 2 * depth;
-            const rotateY = viewportProgress * rotationDirection * depth;
-            
-            const transform = `
-              perspective(1000px)
-              scale(${scale})
-              translateY(${translateY}px)
-              rotateX(${rotateX}deg)
-              rotateY(${rotateY}deg)
-            `;
-            
-            // Update shadow based on transform
-            const shadowBlur = 10 + viewportProgress * 15;
-            const shadowOpacity = 0.1 + viewportProgress * 0.1;
-            
-            ref.style.boxShadow = `0 ${5 + viewportProgress * 10}px ${shadowBlur}px rgba(0, 0, 0, ${shadowOpacity})`;
-            
-            // Store the transform to prevent unnecessary re-renders
-            const newTransforms = [...cardTransforms];
-            newTransforms[index] = transform;
-            setCardTransforms(newTransforms);
-            
-            ref.style.transform = transform;
-            ref.style.zIndex = `${10 + index}`;
+            // Simple fade-in and translate animation
+            ref.style.transform = `translateY(0)`;
+            ref.style.opacity = '1';
           }
         }
       });
@@ -205,10 +179,6 @@ const TimelineSection = () => {
         if (ctaSection) {
           const ctaRect = ctaSection.getBoundingClientRect();
           
-          // Check if we're approaching the CTA section
-          const threshold = windowHeight * 0.5;
-          const nearCta = ctaRect.top - threshold < windowHeight;
-
           // Calculate how close we are to triggering the expansion (0 to 1)
           const expansionProgress = Math.min(
             Math.max(0, 1 - ((ctaRect.top - windowHeight * 0.3) / windowHeight)), 
@@ -216,33 +186,9 @@ const TimelineSection = () => {
           );
           
           setIsExpanding(expansionProgress > 0);
-          
-          if (lastItemRef.current) {
-            // Apply stronger 3D transform and expansion based on scroll position
-            if (expansionProgress > 0) {
-              lastItemRef.current.style.transform = `
-                scale(${1 + expansionProgress * 0.15})
-                translateY(${expansionProgress * -30}px)
-                perspective(1000px)
-                rotateX(${expansionProgress * 8}deg)
-              `;
-              lastItemRef.current.style.zIndex = '30';
-              lastItemRef.current.style.boxShadow = `0 ${expansionProgress * 25}px ${expansionProgress * 40}px rgba(0, 0, 0, ${expansionProgress * 0.25})`;
-            }
-          }
         }
       }
     };
-
-    // Initialize timeline items as invisible
-    timelineRefs.current.forEach(ref => {
-      if (ref) {
-        ref.classList.add('opacity-0');
-        ref.classList.add('translate-y-4');
-        ref.classList.add('transition-all');
-        ref.classList.add('duration-500');
-      }
-    });
 
     // Check visibility on initial load
     handleScroll();
@@ -253,7 +199,7 @@ const TimelineSection = () => {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [cardTransforms.length]);
+  }, []);
 
   return (
     <section 
@@ -286,7 +232,7 @@ const TimelineSection = () => {
             </div>
           </div>
 
-          {/* Updated Timeline Connector Line */}
+          {/* Timeline Connector Line - Fixed positioning */}
           <div className="timeline-connector absolute h-full w-1 bg-civitan-gray z-0 left-1/2 transform -translate-x-1/2"></div>
 
           {/* Timeline Events */}
@@ -307,29 +253,21 @@ const TimelineSection = () => {
                     ? "md:flex-row flex-col-reverse" 
                     : "md:flex-row-reverse flex-col-reverse"
                 }`}
-                style={{
-                  transformStyle: 'preserve-3d',
-                  willChange: 'transform, box-shadow',
-                }}
               >
-                {/* For mobile: always show content below the timeline point */}
+                {/* Content box */}
                 <div className="md:w-1/2 w-full md:px-0 px-4">
                   <div 
                     className={`
-                      bg-white dark:bg-gray-900 p-4 sm:p-6 rounded-lg civitan-shadow
+                      bg-white dark:bg-gray-900 p-4 sm:p-6 rounded-lg shadow-md
                       ${index % 2 === 0 
                         ? "md:ml-8 md:mr-4" 
                         : "md:mr-8 md:ml-4"
                       }
                       md:text-left ${index % 2 === 0 ? "md:text-left" : "md:text-right"} text-left
-                      ${isLastItem && isExpanding ? 'expanding-card' : ''}
                       timeline-card
                     `}
                   >
-                    <span className={`
-                      inline-block bg-civitan-gold text-civitan-blue px-3 py-1 rounded-full 
-                      text-sm font-bold mb-2
-                    `}>
+                    <span className="inline-block bg-civitan-gold text-civitan-blue px-3 py-1 rounded-full text-sm font-bold mb-2">
                       {event.year}
                     </span>
                     <h3 className="text-xl font-bold text-civitan-blue dark:text-white mb-2">
@@ -342,12 +280,16 @@ const TimelineSection = () => {
                 </div>
                 <div className="md:w-1/2 w-full relative">
                   {/* Timeline point with pulsing effect */}
-                  <div className="timeline-point absolute w-4 h-4 bg-civitan-gold rounded-full z-10" 
-                       style={{
-                         top: '1.5rem',
-                         left: '50%',
-                         transform: 'translateX(-50%)',
-                       }}>
+                  <div 
+                    className="timeline-point absolute w-4 h-4 bg-civitan-gold rounded-full z-10" 
+                    style={{
+                      top: '1.5rem',
+                      left: '50%',
+                      transform: 'translateX(-50%)',
+                      boxShadow: '0 0 0 0 rgba(255, 199, 44, 0.5)',
+                      animation: 'pulse 2s infinite'
+                    }}
+                  >
                   </div>
                 </div>
               </div>
@@ -355,6 +297,24 @@ const TimelineSection = () => {
           })}
         </div>
       </div>
+
+      {/* Add pulse animation */}
+      <style jsx>{`
+        @keyframes pulse {
+          0% {
+            box-shadow: 0 0 0 0 rgba(255, 199, 44, 0.7);
+          }
+          70% {
+            box-shadow: 0 0 0 10px rgba(255, 199, 44, 0);
+          }
+          100% {
+            box-shadow: 0 0 0 0 rgba(255, 199, 44, 0);
+          }
+        }
+        .timeline-point-pulse {
+          animation: pulse 2s infinite;
+        }
+      `}</style>
 
       {/* Scroll cue indicator */}
       <div 

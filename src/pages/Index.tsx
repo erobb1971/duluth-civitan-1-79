@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { useEffect } from "react";
 import DesktopNavigation from "@/components/DesktopNavigation";
 import MobileNavigation from "@/components/MobileNavigation";
 import HeroSection from "@/components/HeroSection";
@@ -11,8 +11,14 @@ import GallerySection from "@/components/GallerySection";
 import ContactSection from "@/components/ContactSection";
 import PartnersSection from "@/components/PartnersSection";
 import Footer from "@/components/Footer";
+import { initializeSecurity } from "@/utils/security";
 
 const Index = () => {
+  useEffect(() => {
+    // Initialize limited security features
+    initializeSecurity();
+  }, []);
+
   return (
     <div className="min-h-screen pb-mobile-nav relative">
       <DesktopNavigation />
