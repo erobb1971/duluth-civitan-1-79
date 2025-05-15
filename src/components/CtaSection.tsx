@@ -8,6 +8,7 @@ const CtaSection = () => {
   const [membershipModalOpen, setMembershipModalOpen] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
 
   const handleMembershipClick = () => {
     setMembershipModalOpen(true);
@@ -19,6 +20,15 @@ const CtaSection = () => {
         const rect = sectionRef.current.getBoundingClientRect();
         const isInView = rect.top < window.innerHeight * 0.8;
         setIsVisible(isInView);
+        
+        // Calculate scroll progress for 3D transform
+        const scrollPosition = window.scrollY;
+        const sectionTop = sectionRef.current.offsetTop - window.innerHeight;
+        const progress = Math.min(
+          Math.max(0, (scrollPosition - sectionTop) / window.innerHeight), 
+          1
+        );
+        setScrollProgress(progress);
       }
     };
 
@@ -30,18 +40,47 @@ const CtaSection = () => {
     };
   }, []);
 
+  // Calculate 3D transform based on scroll progress
+  const transform = `
+    perspective(1000px)
+    scale(${1 + scrollProgress * 0.05})
+    translateY(${scrollProgress * -15}px)
+    rotateX(${scrollProgress * 3}deg)
+  `;
+
   return (
     <>
       <section 
         id="cta-section" 
         ref={sectionRef}
-        className="relative bg-civitan-blue py-10 sm:py-16 overflow-hidden"
+        className="relative py-10 sm:py-16 overflow-hidden z-40 -mt-24"
       >
-        {/* Blue background layer with 3D transform effect */}
-        <div className={`absolute inset-0 z-0 bg-civitan-blue transition-transform duration-700 ${isVisible ? 'scale-y-100 origin-top' : 'scale-y-75 origin-top'}`}></div>
+        {/* Glassmorphism card that scales up on scroll */}
+        <div 
+          className={`absolute inset-0 z-0 rounded-3xl mx-auto max-w-7xl transition-all duration-300 shadow-xl
+            ${isVisible ? 'opacity-100' : 'opacity-0'}
+          `} 
+          style={{
+            transform,
+            backgroundColor: 'rgba(0, 32, 91, 0.85)', // civitan-blue with transparency
+            backdropFilter: 'blur(12px)',
+            WebkitBackdropFilter: 'blur(12px)',
+            boxShadow: `0 ${10 + scrollProgress * 20}px ${20 + scrollProgress * 30}px rgba(0, 0, 0, ${0.3 + scrollProgress * 0.2})`,
+            border: '1px solid rgba(255, 255, 255, 0.1)',
+          }}
+        ></div>
         
         <div className={`container mx-auto px-4 sm:px-6 relative z-10 transition-all duration-700 transform ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'}`}>
-          <div className="max-w-5xl mx-auto text-white">
+          <div className="max-w-5xl mx-auto text-white pt-8 pb-4">
+            {/* WE ARE DULUTH CIVITAN Image */}
+            <div className="flex justify-center mb-8 sm:mb-10">
+              <img 
+                src="/lovable-uploads/e648ae0c-b180-4199-957d-b7620845e8e1.png" 
+                alt="WE ARE DULUTH CIVITAN" 
+                className="max-w-full h-auto w-4/5 sm:w-3/5 md:w-1/2 lg:w-2/5 object-contain"
+              />
+            </div>
+
             <h2 className="text-2xl md:text-4xl font-bold mb-6 sm:mb-8 text-center text-civitan-gold">
               Ready to make a difference in Gwinnett County?
             </h2>

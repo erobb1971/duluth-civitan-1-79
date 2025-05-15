@@ -118,12 +118,16 @@ const TimelineSection = () => {
   const [isVisible, setIsVisible] = useState(false);
   const [showScrollCue, setShowScrollCue] = useState(true);
   const [isExpanding, setIsExpanding] = useState(false);
+  const [cardTransforms, setCardTransforms] = useState<string[]>([]);
   
   useEffect(() => {
+    // Initialize card transforms array
+    setCardTransforms(Array(timelineEvents.length).fill(''));
+
     const handleScroll = () => {
       const windowHeight = window.innerHeight;
       
-      // Handle timeline items animation
+      // Handle timeline items animation with 3D effects
       timelineRefs.current.forEach((ref, index) => {
         if (ref) {
           const rect = ref.getBoundingClientRect();
@@ -132,6 +136,42 @@ const TimelineSection = () => {
           if (isItemVisible) {
             ref.classList.add('animate-fade-in');
             ref.classList.add('opacity-100');
+            
+            // Calculate how far the item is in the viewport (0 to 1)
+            const viewportProgress = Math.min(
+              Math.max(0, 1 - (rect.top / (windowHeight * 0.7))), 
+              1
+            );
+            
+            // Apply 3D transform based on scroll position - staggered effect
+            const depth = 0.5 + (index % 3) * 0.2; // Vary the depth effect
+            const rotationDirection = index % 2 === 0 ? 1 : -1; // Alternate rotation direction
+            const translateY = viewportProgress * -10;
+            const scale = 1 + viewportProgress * 0.03;
+            const rotateX = viewportProgress * 2 * depth;
+            const rotateY = viewportProgress * rotationDirection * depth;
+            
+            const transform = `
+              perspective(1000px)
+              scale(${scale})
+              translateY(${translateY}px)
+              rotateX(${rotateX}deg)
+              rotateY(${rotateY}deg)
+            `;
+            
+            // Update shadow based on transform
+            const shadowBlur = 10 + viewportProgress * 15;
+            const shadowOpacity = 0.1 + viewportProgress * 0.1;
+            
+            ref.style.boxShadow = `0 ${5 + viewportProgress * 10}px ${shadowBlur}px rgba(0, 0, 0, ${shadowOpacity})`;
+            
+            // Store the transform to prevent unnecessary re-renders
+            const newTransforms = [...cardTransforms];
+            newTransforms[index] = transform;
+            setCardTransforms(newTransforms);
+            
+            ref.style.transform = transform;
+            ref.style.zIndex = `${10 + index}`;
           }
         }
       });
@@ -152,7 +192,7 @@ const TimelineSection = () => {
         setShowScrollCue(!scrolledIntoSection);
       }
 
-      // Handle last item expansion animation
+      // Handle last item special animation for transition to CTA section
       if (lastItemRef.current) {
         const lastItemRect = lastItemRef.current.getBoundingClientRect();
         const ctaSection = document.getElementById('cta-section');
@@ -173,20 +213,16 @@ const TimelineSection = () => {
           setIsExpanding(expansionProgress > 0);
           
           if (lastItemRef.current) {
-            // Apply 3D transform and expansion based on scroll position
+            // Apply stronger 3D transform and expansion based on scroll position
             if (expansionProgress > 0) {
               lastItemRef.current.style.transform = `
-                scale(${1 + expansionProgress * 0.1})
-                translateY(${expansionProgress * -20}px)
+                scale(${1 + expansionProgress * 0.15})
+                translateY(${expansionProgress * -30}px)
                 perspective(1000px)
-                rotateX(${expansionProgress * 5}deg)
+                rotateX(${expansionProgress * 8}deg)
               `;
               lastItemRef.current.style.zIndex = '30';
-              lastItemRef.current.style.boxShadow = `0 ${expansionProgress * 20}px ${expansionProgress * 30}px rgba(0, 0, 0, ${expansionProgress * 0.2})`;
-            } else {
-              lastItemRef.current.style.transform = '';
-              lastItemRef.current.style.zIndex = '';
-              lastItemRef.current.style.boxShadow = '';
+              lastItemRef.current.style.boxShadow = `0 ${expansionProgress * 25}px ${expansionProgress * 40}px rgba(0, 0, 0, ${expansionProgress * 0.25})`;
             }
           }
         }
@@ -212,7 +248,7 @@ const TimelineSection = () => {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, []);
+  }, [cardTransforms.length]);
 
   return (
     <section 
@@ -227,7 +263,7 @@ const TimelineSection = () => {
           </h2>
           <div className="w-16 sm:w-24 h-1 bg-civitan-gold mx-auto mb-4 sm:mb-6"></div>
           <p className="text-sm sm:text-lg max-w-3xl mx-auto text-gray-700 dark:text-gray-300 px-2">
-            Explore the key milestones in Civitan Duluth's history since our founding in 2003
+            Explore the key milestones in Duluth Civitan's history since our founding in 2003
           </p>
         </div>
 
@@ -259,13 +295,17 @@ const TimelineSection = () => {
                   timelineRefs.current[index] = el;
                   if (isLastItem) lastItemRef.current = el;
                 }}
-                className={`timeline-item relative flex mb-12 ${
-                  isLastItem ? 'last-timeline-item transition-all duration-300 ease-out' : ''
+                className={`timeline-item relative flex mb-12 transition-all duration-500 ${
+                  isLastItem ? 'last-timeline-item' : ''
                 } ${
                   index % 2 === 0 
                     ? "md:flex-row flex-col-reverse" 
                     : "md:flex-row-reverse flex-col-reverse"
                 }`}
+                style={{
+                  transformStyle: 'preserve-3d',
+                  willChange: 'transform, box-shadow',
+                }}
               >
                 {/* For mobile: always show content below the timeline point */}
                 <div className="md:w-1/2 w-full md:px-0 px-4">
@@ -278,6 +318,7 @@ const TimelineSection = () => {
                       }
                       md:text-left ${index % 2 === 0 ? "md:text-left" : "md:text-right"} text-left
                       ${isLastItem && isExpanding ? 'expanding-card' : ''}
+                      timeline-card
                     `}
                   >
                     <span className={`
@@ -313,11 +354,6 @@ const TimelineSection = () => {
           <ChevronsDown size={20} />
         </div>
       </div>
-
-      {/* Transition overlay to CTA section */}
-      <div 
-        className={`absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-civitan-blue to-transparent z-20 transform transition-all duration-500 ${isExpanding ? 'opacity-100' : 'opacity-0'}`}
-      ></div>
     </section>
   );
 };

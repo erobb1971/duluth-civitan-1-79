@@ -14,17 +14,21 @@ import Footer from "@/components/Footer";
 
 const Index = () => {
   return (
-    <div className="min-h-screen pb-mobile-nav">
+    <div className="min-h-screen pb-mobile-nav relative">
       <DesktopNavigation />
       <HeroSection />
       <AboutSection />
-      <TimelineSection />
-      <CtaSection />
-      <PartnersSection />
-      <GallerySection />
-      <EventsSection />
-      <ContactSection />
-      <Footer />
+      <div className="relative z-10 overflow-visible">
+        <TimelineSection />
+        <CtaSection />
+      </div>
+      <div className="relative z-20">
+        <PartnersSection />
+        <GallerySection />
+        <EventsSection />
+        <ContactSection />
+        <Footer />
+      </div>
       <MobileNavigation />
     </div>
   );
