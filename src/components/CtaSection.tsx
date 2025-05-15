@@ -1,23 +1,46 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Mail } from "lucide-react";
 import MembershipApplicationModal from "./MembershipApplicationModal";
 
 const CtaSection = () => {
   const [membershipModalOpen, setMembershipModalOpen] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
 
   const handleMembershipClick = () => {
     setMembershipModalOpen(true);
   };
 
+  useEffect(() => {
+    const handleScroll = () => {
+      if (sectionRef.current) {
+        const rect = sectionRef.current.getBoundingClientRect();
+        const isInView = rect.top < window.innerHeight * 0.8;
+        setIsVisible(isInView);
+      }
+    };
+
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   return (
     <>
-      <section className="relative bg-civitan-blue py-10 sm:py-16 overflow-hidden">
-        {/* Blue background layer */}
-        <div className="absolute inset-0 z-0 bg-civitan-blue"></div>
+      <section 
+        id="cta-section" 
+        ref={sectionRef}
+        className="relative bg-civitan-blue py-10 sm:py-16 overflow-hidden"
+      >
+        {/* Blue background layer with 3D transform effect */}
+        <div className={`absolute inset-0 z-0 bg-civitan-blue transition-transform duration-700 ${isVisible ? 'scale-y-100 origin-top' : 'scale-y-75 origin-top'}`}></div>
         
-        <div className="container mx-auto px-4 sm:px-6 relative z-10">
+        <div className={`container mx-auto px-4 sm:px-6 relative z-10 transition-all duration-700 transform ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'}`}>
           <div className="max-w-5xl mx-auto text-white">
             <h2 className="text-2xl md:text-4xl font-bold mb-6 sm:mb-8 text-center text-civitan-gold">
               Ready to make a difference in Gwinnett County?
@@ -58,7 +81,7 @@ const CtaSection = () => {
             <div className="text-center">
               <Button 
                 onClick={handleMembershipClick}
-                className="bg-civitan-gold text-civitan-blue hover:bg-yellow-400 font-medium text-base sm:text-lg px-6 sm:px-8 py-2 sm:py-6 h-auto"
+                className="bg-civitan-gold text-civitan-blue hover:bg-yellow-400 font-medium text-base sm:text-lg px-6 sm:px-8 py-2 sm:py-6 h-auto transform transition-all duration-500 hover:scale-105"
               >
                 <Mail className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
                 Become a Member

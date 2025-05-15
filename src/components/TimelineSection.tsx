@@ -114,9 +114,11 @@ const timelineEvents = [
 const TimelineSection = () => {
   const timelineRefs = useRef<(HTMLDivElement | null)[]>([]);
   const sectionRef = useRef<HTMLElement>(null);
+  const lastItemRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
   const [showScrollCue, setShowScrollCue] = useState(true);
-
+  const [isExpanding, setIsExpanding] = useState(false);
+  
   useEffect(() => {
     const handleScroll = () => {
       const windowHeight = window.innerHeight;
@@ -148,6 +150,46 @@ const TimelineSection = () => {
         const sectionRect = sectionRef.current.getBoundingClientRect();
         const scrolledIntoSection = sectionRect.top < windowHeight * 0.3;
         setShowScrollCue(!scrolledIntoSection);
+      }
+
+      // Handle last item expansion animation
+      if (lastItemRef.current) {
+        const lastItemRect = lastItemRef.current.getBoundingClientRect();
+        const ctaSection = document.getElementById('cta-section');
+        
+        if (ctaSection) {
+          const ctaRect = ctaSection.getBoundingClientRect();
+          
+          // Check if we're approaching the CTA section
+          const threshold = windowHeight * 0.5;
+          const nearCta = ctaRect.top - threshold < windowHeight;
+
+          // Calculate how close we are to triggering the expansion (0 to 1)
+          const expansionProgress = Math.min(
+            Math.max(0, 1 - ((ctaRect.top - windowHeight * 0.3) / windowHeight)), 
+            1
+          );
+          
+          setIsExpanding(expansionProgress > 0);
+          
+          if (lastItemRef.current) {
+            // Apply 3D transform and expansion based on scroll position
+            if (expansionProgress > 0) {
+              lastItemRef.current.style.transform = `
+                scale(${1 + expansionProgress * 0.1})
+                translateY(${expansionProgress * -20}px)
+                perspective(1000px)
+                rotateX(${expansionProgress * 5}deg)
+              `;
+              lastItemRef.current.style.zIndex = '30';
+              lastItemRef.current.style.boxShadow = `0 ${expansionProgress * 20}px ${expansionProgress * 30}px rgba(0, 0, 0, ${expansionProgress * 0.2})`;
+            } else {
+              lastItemRef.current.style.transform = '';
+              lastItemRef.current.style.zIndex = '';
+              lastItemRef.current.style.boxShadow = '';
+            }
+          }
+        }
       }
     };
 
@@ -207,45 +249,55 @@ const TimelineSection = () => {
           <div className="timeline-connector"></div>
 
           {/* Timeline Events */}
-          {timelineEvents.map((event, index) => (
-            <div
-              key={index}
-              ref={el => timelineRefs.current[index] = el}
-              className={`timeline-item relative flex mb-12 ${
-                index % 2 === 0 
-                  ? "md:flex-row flex-col-reverse" 
-                  : "md:flex-row-reverse flex-col-reverse"
-              }`}
-            >
-              {/* For mobile: always show content below the timeline point */}
-              <div className="md:w-1/2 w-full md:px-0 px-4">
-                <div 
-                  className={`
-                    bg-white dark:bg-gray-900 p-4 sm:p-6 rounded-lg civitan-shadow
-                    ${index % 2 === 0 
-                      ? "md:ml-8 md:mr-4" 
-                      : "md:mr-8 md:ml-4"
-                    }
-                    md:text-left ${index % 2 === 0 ? "md:text-left" : "md:text-right"} text-left
-                  `}
-                >
-                  <span className={`
-                    inline-block bg-civitan-gold text-civitan-blue px-3 py-1 rounded-full 
-                    text-sm font-bold mb-2
-                  `}>
-                    {event.year}
-                  </span>
-                  <h3 className="text-xl font-bold text-civitan-blue dark:text-white mb-2">
-                    {event.title}
-                  </h3>
-                  <p className="text-gray-700 dark:text-gray-300 text-sm sm:text-base">
-                    {event.description}
-                  </p>
+          {timelineEvents.map((event, index) => {
+            const isLastItem = index === timelineEvents.length - 1;
+            
+            return (
+              <div
+                key={index}
+                ref={el => {
+                  timelineRefs.current[index] = el;
+                  if (isLastItem) lastItemRef.current = el;
+                }}
+                className={`timeline-item relative flex mb-12 ${
+                  isLastItem ? 'last-timeline-item transition-all duration-300 ease-out' : ''
+                } ${
+                  index % 2 === 0 
+                    ? "md:flex-row flex-col-reverse" 
+                    : "md:flex-row-reverse flex-col-reverse"
+                }`}
+              >
+                {/* For mobile: always show content below the timeline point */}
+                <div className="md:w-1/2 w-full md:px-0 px-4">
+                  <div 
+                    className={`
+                      bg-white dark:bg-gray-900 p-4 sm:p-6 rounded-lg civitan-shadow
+                      ${index % 2 === 0 
+                        ? "md:ml-8 md:mr-4" 
+                        : "md:mr-8 md:ml-4"
+                      }
+                      md:text-left ${index % 2 === 0 ? "md:text-left" : "md:text-right"} text-left
+                      ${isLastItem && isExpanding ? 'expanding-card' : ''}
+                    `}
+                  >
+                    <span className={`
+                      inline-block bg-civitan-gold text-civitan-blue px-3 py-1 rounded-full 
+                      text-sm font-bold mb-2
+                    `}>
+                      {event.year}
+                    </span>
+                    <h3 className="text-xl font-bold text-civitan-blue dark:text-white mb-2">
+                      {event.title}
+                    </h3>
+                    <p className="text-gray-700 dark:text-gray-300 text-sm sm:text-base">
+                      {event.description}
+                    </p>
+                  </div>
                 </div>
+                <div className="md:w-1/2 w-full"></div>
               </div>
-              <div className="md:w-1/2 w-full"></div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
 
@@ -262,8 +314,10 @@ const TimelineSection = () => {
         </div>
       </div>
 
-      {/* Transition overlay for smoother scroll to CTA section */}
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-civitan-blue to-transparent z-20"></div>
+      {/* Transition overlay to CTA section */}
+      <div 
+        className={`absolute bottom-0 left-0 right-0 h-48 bg-gradient-to-t from-civitan-blue to-transparent z-20 transform transition-all duration-500 ${isExpanding ? 'opacity-100' : 'opacity-0'}`}
+      ></div>
     </section>
   );
 };
