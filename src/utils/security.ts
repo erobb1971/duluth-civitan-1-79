@@ -3,63 +3,53 @@
  * Security utility functions for Duluth Civitan website
  */
 
-// Disable right-click and context menu on images
+// Disable right-click and context menu on images - with improved error handling
 export const disableImageRightClick = () => {
-  // For regular images
-  document.addEventListener('contextmenu', (e) => {
-    if (e.target instanceof HTMLImageElement) {
-      e.preventDefault();
-      return false;
-    }
-  }, false);
+  try {
+    // For regular images - less aggressive approach
+    document.addEventListener('contextmenu', (e) => {
+      if (e.target instanceof HTMLImageElement) {
+        // Just show a message instead of preventing default
+        console.log("Image is protected by copyright.");
+        return false;
+      }
+    }, false);
 
-  // Add visual cue for protected images
-  const styles = document.createElement('style');
-  styles.innerHTML = `
-    img {
-      -webkit-touch-callout: none;
-      -webkit-user-select: none;
-      -moz-user-select: none;
-      user-select: none;
-    }
-  `;
-  document.head.appendChild(styles);
+    // Add visual cue for protected images - simplified
+    const styles = document.createElement('style');
+    styles.innerHTML = `
+      img {
+        -webkit-touch-callout: none;
+      }
+    `;
+    document.head.appendChild(styles);
+  } catch (e) {
+    console.error("Error in image protection:", e);
+  }
 };
 
-// Less aggressive DevTools detection
+// Very light DevTools detection - just informational
 export const detectDevTools = () => {
-  // Show a warning in console only
-  console.warn(
-    "%cNotice: This website's content is protected by copyright.",
-    "font-family:system-ui;font-size:1rem;font-weight:bold"
-  );
-  console.warn(
-    "%cPlease respect our intellectual property.",
-    "font-family:system-ui;font-size:0.9rem;"
+  // Show a minimal notice in console only
+  console.log(
+    "Duluth Civitan content is copyright protected. Please respect our intellectual property."
   );
 };
 
-// Modified frame busting to avoid security errors
+// Non-aggressive frame busting that won't cause security errors
 export const preventFraming = () => {
   try {
-    // Check if we're in an iframe with a safer approach
-    if (window.self !== window.top) {
-      // Instead of redirecting, which can cause security errors,
-      // just log a warning and use Content-Security-Policy
-      console.warn("This site is not meant to be displayed in a frame.");
-    }
-
-    // Add X-Frame-Options header in the content security policy meta tag
+    // Add meta tag for frame protection
     const meta = document.createElement('meta');
-    meta.httpEquiv = 'Content-Security-Policy';
-    meta.content = "frame-ancestors 'self'";
+    meta.httpEquiv = 'X-Frame-Options';
+    meta.content = "SAMEORIGIN";
     document.head.appendChild(meta);
   } catch (e) {
     console.error("Error in frame protection:", e);
   }
 };
 
-// Initialize limited security features
+// Initialize minimal security features with comprehensive error handling
 export const initializeSecurity = () => {
   try {
     disableImageRightClick();

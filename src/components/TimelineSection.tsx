@@ -123,45 +123,49 @@ const TimelineSection = () => {
     // Initialize timeline items as invisible
     timelineRefs.current.forEach(ref => {
       if (ref) {
-        ref.classList.add('opacity-0');
-        ref.classList.add('translate-y-4');
-        ref.classList.add('transition-all');
-        ref.classList.add('duration-500');
+        ref.style.opacity = '0';
+        ref.style.transform = 'translateY(16px)'; // start slightly below final position
+        ref.style.transition = 'all 0.5s ease-out';
       }
     });
 
     const handleScroll = () => {
       const windowHeight = window.innerHeight;
       
-      // Handle timeline items animation with subtle effects
+      // Handle timeline items animation with progressive effect
       timelineRefs.current.forEach((ref, index) => {
         if (ref) {
           const rect = ref.getBoundingClientRect();
           const isItemVisible = rect.top < windowHeight * 0.85 && rect.bottom >= 0;
           
           if (isItemVisible) {
-            ref.classList.add('animate-fade-in');
-            ref.classList.add('opacity-100');
+            // Animate in the timeline item
+            ref.style.opacity = '1';
+            ref.style.transform = 'translateY(0)';
             
-            // Add pulsing effect to the timeline point
+            // Add pulsing effect only to the timeline point that's now in view
             const timelinePoint = ref.querySelector('.timeline-point');
             if (timelinePoint) {
               timelinePoint.classList.add('timeline-point-pulse');
             }
-            
-            // Simple fade-in and translate animation
-            ref.style.transform = `translateY(0)`;
-            ref.style.opacity = '1';
+          } else {
+            // Remove pulse if item is not visible
+            const timelinePoint = ref.querySelector('.timeline-point');
+            if (timelinePoint) {
+              timelinePoint.classList.remove('timeline-point-pulse');
+            }
           }
         }
       });
 
       // Check if the founders section is visible
-      const foundersSection = document.querySelector('.founders-section');
-      if (foundersSection) {
-        const rect = foundersSection.getBoundingClientRect();
-        if (rect.top < windowHeight * 0.85 && rect.bottom >= 0) {
-          setIsVisible(true);
+      if (sectionRef.current) {
+        const foundersSection = sectionRef.current.querySelector('.founders-section');
+        if (foundersSection) {
+          const rect = foundersSection.getBoundingClientRect();
+          if (rect.top < windowHeight * 0.85 && rect.bottom >= 0) {
+            setIsVisible(true);
+          }
         }
       }
       
@@ -192,7 +196,7 @@ const TimelineSection = () => {
     };
 
     // Check visibility on initial load
-    handleScroll();
+    setTimeout(handleScroll, 100);
 
     // Add scroll event listener
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -206,7 +210,7 @@ const TimelineSection = () => {
     <section 
       id="timeline" 
       ref={sectionRef}
-      className="section bg-gray-100 dark:bg-gray-800 py-10 md:py-16 overflow-hidden relative"
+      className="section bg-gray-100 dark:bg-gray-800 py-10 md:py-16 overflow-hidden relative w-full"
     >
       <div className="container mx-auto px-4 sm:px-6">
         <div className="text-center mb-8 sm:mb-16">
@@ -234,7 +238,7 @@ const TimelineSection = () => {
           </div>
 
           {/* Timeline Connector Line - Fixed positioning */}
-          <div className="timeline-connector absolute h-full w-1 bg-civitan-gray z-0 left-1/2 transform -translate-x-1/2"></div>
+          <div className="timeline-connector absolute h-full w-1 bg-civitan-gray z-0 left-1/2 transform -translate-x-1/2 top-0"></div>
 
           {/* Timeline Events */}
           {timelineEvents.map((event, index) => {
@@ -280,18 +284,15 @@ const TimelineSection = () => {
                   </div>
                 </div>
                 <div className="md:w-1/2 w-full relative">
-                  {/* Timeline point with pulsing effect */}
+                  {/* Timeline point with pulsing effect that only triggers on visibility */}
                   <div 
                     className="timeline-point absolute w-4 h-4 bg-civitan-gold rounded-full z-10" 
                     style={{
                       top: '1.5rem',
                       left: '50%',
                       transform: 'translateX(-50%)',
-                      boxShadow: '0 0 0 0 rgba(255, 199, 44, 0.5)',
-                      animation: 'pulse 2s infinite'
                     }}
-                  >
-                  </div>
+                  ></div>
                 </div>
               </div>
             );

@@ -54,7 +54,7 @@ const HeroSection = () => {
             Join the Duluth Civitan Today!
           </h2>
           <p className="text-sm sm:text-xl md:text-2xl mb-6 sm:mb-10 max-w-3xl mx-auto px-2 sm:px-4">
-            The Duluth Civitan Club is a civic volunteer group serving Duluth and Gwinnett County since 2002. We empower individuals with developmental disabilities through service, fundraising, and advocacy — building a more inclusive, caring community.
+            The Duluth Civitan Club is a civic volunteer group serving Duluth and Gwinnett County since 2003. We empower individuals with developmental disabilities through service, fundraising, and advocacy — building a more inclusive, caring community.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 mb-4 sm:mb-6 px-4">
             <Button

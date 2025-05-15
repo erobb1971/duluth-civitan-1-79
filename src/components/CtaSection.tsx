@@ -53,11 +53,11 @@ const CtaSection = () => {
       <section 
         id="cta-section" 
         ref={sectionRef}
-        className="relative py-10 sm:py-16 overflow-hidden z-40 -mt-24"
+        className="relative py-10 sm:py-16 overflow-hidden z-40 -mt-24 w-full"
       >
         {/* Glassmorphism card that scales up on scroll */}
         <div 
-          className={`absolute inset-0 z-0 rounded-3xl mx-auto max-w-7xl transition-all duration-300 shadow-xl
+          className={`absolute inset-0 z-0 rounded-3xl mx-auto max-w-[100vw] transition-all duration-300 shadow-xl
             ${isVisible ? 'opacity-100' : 'opacity-0'}
           `} 
           style={{
@@ -67,17 +67,34 @@ const CtaSection = () => {
             WebkitBackdropFilter: 'blur(12px)',
             boxShadow: `0 ${10 + scrollProgress * 20}px ${20 + scrollProgress * 30}px rgba(0, 0, 0, ${0.3 + scrollProgress * 0.2})`,
             border: '1px solid rgba(255, 255, 255, 0.1)',
+            width: '100vw',
+            left: '50%',
+            right: '50%',
+            marginLeft: '-50vw',
+            marginRight: '-50vw',
           }}
         ></div>
         
         <div className={`container mx-auto px-4 sm:px-6 relative z-10 transition-all duration-700 transform ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'}`}>
           <div className="max-w-5xl mx-auto text-white pt-8 pb-4">
-            {/* WE ARE DULUTH CIVITAN Image - Updated path */}
+            {/* WE ARE DULUTH CIVITAN Image - Fixed path and added error handling */}
             <div className="flex justify-center mb-8 sm:mb-10">
               <img 
                 src="/lovable-uploads/aee0f8ab-c08c-4902-8029-9185987b6644.png" 
                 alt="WE ARE DULUTH CIVITAN" 
                 className="max-w-full h-auto w-4/5 sm:w-3/5 md:w-1/2 lg:w-2/5 object-contain"
+                onError={(e) => {
+                  console.error("Image failed to load");
+                  // Provide a text fallback if image fails
+                  e.currentTarget.style.display = 'none';
+                  const container = e.currentTarget.parentElement;
+                  if (container) {
+                    const fallback = document.createElement('h2');
+                    fallback.className = 'text-2xl md:text-4xl font-bold text-civitan-gold';
+                    fallback.textContent = 'WE ARE DULUTH CIVITAN';
+                    container.appendChild(fallback);
+                  }
+                }}
               />
             </div>
 
