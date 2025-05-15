@@ -10,17 +10,17 @@ import GallerySection from "@/components/GallerySection";
 import ContactSection from "@/components/ContactSection";
 import PartnersSection from "@/components/PartnersSection";
 import Footer from "@/components/Footer";
-import { initializeSecurity } from "@/utils/security";
+// import { initializeSecurity } from "@/utils/security";
 
 const Index = () => {
-  useEffect(() => {
-    // Initialize limited security features with error handling
-    try {
-      initializeSecurity();
-    } catch (error) {
-      console.error("Error initializing security in Index component:", error);
-    }
-  }, []);
+  // Security initialization temporarily disabled for domain linking
+  // useEffect(() => {
+  //   try {
+  //     initializeSecurity();
+  //   } catch (error) {
+  //     console.error("Error initializing security in Index component:", error);
+  //   }
+  // }, []);
 
   return (
     <div className="min-h-screen pb-mobile-nav relative">

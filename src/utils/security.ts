@@ -36,14 +36,19 @@ export const detectDevTools = () => {
   );
 };
 
-// Non-aggressive frame busting that won't cause security errors
+// Non-aggressive frame busting that won't cause security errors or affect domain linking
 export const preventFraming = () => {
   try {
-    // Add meta tag for frame protection
+    // Commenting out frame protection to avoid domain linking issues
+    /* 
     const meta = document.createElement('meta');
     meta.httpEquiv = 'X-Frame-Options';
     meta.content = "SAMEORIGIN";
     document.head.appendChild(meta);
+    */
+    
+    // For now, just log that we're skipping frame protection during domain linking
+    console.log("Frame protection temporarily disabled for domain linking");
   } catch (e) {
     console.error("Error in frame protection:", e);
   }
@@ -54,7 +59,7 @@ export const initializeSecurity = () => {
   try {
     disableImageRightClick();
     detectDevTools();
-    preventFraming();
+    // preventFraming(); // Temporarily disabled for domain linking
   } catch (e) {
     console.error("Error initializing security features:", e);
   }

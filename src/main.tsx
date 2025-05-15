@@ -7,17 +7,10 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { initializeSecurity } from "./utils/security";
 
 // Only initialize security in browser context with robust error handling
+// Temporarily disabled for domain linking troubleshooting
 if (typeof window !== 'undefined') {
   try {
-    // Add URL parameter to hide Lovable branding
-    const url = new URL(window.location.href);
-    if (!url.searchParams.has('forceHideBadge')) {
-      url.searchParams.set('forceHideBadge', 'true');
-      // Use history API to avoid reload
-      window.history.replaceState({}, document.title, url.toString());
-    }
-    
-    // Enhanced badge removal function
+    // Add URL parameter to hide Lovable branding - temporarily simplified
     const removeLovableBadge = () => {
       const selectors = [
         '[data-lovable-brand]',
@@ -38,13 +31,12 @@ if (typeof window !== 'undefined') {
       });
     };
     
-    // Remove badge on load and periodically check
+    // Remove badge on load and periodically check - simplified
     removeLovableBadge();
     setTimeout(removeLovableBadge, 500);
-    setInterval(removeLovableBadge, 2000);
     
-    // Initialize minimal security features
-    initializeSecurity();
+    // Security initialization temporarily disabled
+    // initializeSecurity();
   } catch (error) {
     console.error("Error in main.tsx initialization:", error);
   }
