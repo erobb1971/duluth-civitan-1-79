@@ -16,6 +16,7 @@ const Index = () => {
   return (
     <div className="min-h-screen pb-mobile-nav relative">
       <DesktopNavigation />
+      <div id="home"></div>
       <HeroSection />
       <AboutSection />
       <div className="relative z-10 overflow-visible">

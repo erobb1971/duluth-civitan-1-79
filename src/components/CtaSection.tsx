@@ -72,10 +72,10 @@ const CtaSection = () => {
         
         <div className={`container mx-auto px-4 sm:px-6 relative z-10 transition-all duration-700 transform ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'}`}>
           <div className="max-w-5xl mx-auto text-white pt-8 pb-4">
-            {/* WE ARE DULUTH CIVITAN Image */}
+            {/* WE ARE DULUTH CIVITAN Image - Updated path */}
             <div className="flex justify-center mb-8 sm:mb-10">
               <img 
-                src="/lovable-uploads/e648ae0c-b180-4199-957d-b7620845e8e1.png" 
+                src="/lovable-uploads/aee0f8ab-c08c-4902-8029-9185987b6644.png" 
                 alt="WE ARE DULUTH CIVITAN" 
                 className="max-w-full h-auto w-4/5 sm:w-3/5 md:w-1/2 lg:w-2/5 object-contain"
               />

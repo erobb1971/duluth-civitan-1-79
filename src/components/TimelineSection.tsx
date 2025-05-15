@@ -1,4 +1,3 @@
-
 import React, { useRef, useEffect, useState } from "react";
 import { ChevronsDown } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -127,7 +126,7 @@ const TimelineSection = () => {
     const handleScroll = () => {
       const windowHeight = window.innerHeight;
       
-      // Handle timeline items animation with 3D effects
+      // Handle timeline items animation with enhanced 3D effects and pulsing
       timelineRefs.current.forEach((ref, index) => {
         if (ref) {
           const rect = ref.getBoundingClientRect();
@@ -136,6 +135,12 @@ const TimelineSection = () => {
           if (isItemVisible) {
             ref.classList.add('animate-fade-in');
             ref.classList.add('opacity-100');
+            
+            // Add pulsing effect to the timeline point
+            const timelinePoint = ref.querySelector('.timeline-point');
+            if (timelinePoint) {
+              timelinePoint.classList.add('timeline-point-pulse');
+            }
             
             // Calculate how far the item is in the viewport (0 to 1)
             const viewportProgress = Math.min(
@@ -281,8 +286,8 @@ const TimelineSection = () => {
             </div>
           </div>
 
-          {/* Timeline Connector Line */}
-          <div className="timeline-connector"></div>
+          {/* Updated Timeline Connector Line */}
+          <div className="timeline-connector absolute h-full w-1 bg-civitan-gray z-0 left-1/2 transform -translate-x-1/2"></div>
 
           {/* Timeline Events */}
           {timelineEvents.map((event, index) => {
@@ -335,7 +340,16 @@ const TimelineSection = () => {
                     </p>
                   </div>
                 </div>
-                <div className="md:w-1/2 w-full"></div>
+                <div className="md:w-1/2 w-full relative">
+                  {/* Timeline point with pulsing effect */}
+                  <div className="timeline-point absolute w-4 h-4 bg-civitan-gold rounded-full z-10" 
+                       style={{
+                         top: '1.5rem',
+                         left: '50%',
+                         transform: 'translateX(-50%)',
+                       }}>
+                  </div>
+                </div>
               </div>
             );
           })}

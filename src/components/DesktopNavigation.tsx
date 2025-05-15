@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import CivitanLogo from "./CivitanLogo";
 import { Button } from "@/components/ui/button";
@@ -31,10 +30,10 @@ const DesktopNavigation = () => {
   return (
     <header className="hidden lg:block sticky top-0 z-40 w-full bg-white border-b border-gray-200 shadow-sm">
       <div className="container mx-auto px-4">
-        <div className="flex h-16 items-center justify-between">
+        <div className="flex h-20 items-center justify-between">
           <div className="flex items-center">
             <a href="#" className="flex items-center">
-              <CivitanLogo size="md" className="p-1" />
+              <CivitanLogo size="md" className="p-2" />
             </a>
           </div>
 
