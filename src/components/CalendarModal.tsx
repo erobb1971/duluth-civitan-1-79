@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import {
   Dialog,
@@ -103,22 +102,7 @@ const CalendarModal = ({ open, onOpenChange }: CalendarModalProps) => {
           </DialogDescription>
         </DialogHeader>
         
-        {/* Mobile Close Button - More prominent for mobile */}
-        {isMobile && (
-          <DialogClose asChild>
-            <Button 
-              variant="outline" 
-              size="sm" 
-              className="absolute right-4 top-4 h-8 w-8 p-0 sm:hidden border-gray-300"
-              aria-label="Close calendar"
-            >
-              <X className="h-5 w-5" />
-              <span className="sr-only">Close</span>
-            </Button>
-          </DialogClose>
-        )}
-        
-        {/* Bottom Close Button for Mobile */}
+        {/* Bottom Close Button for Mobile Only */}
         {isMobile && (
           <div className="flex justify-center mt-4 mb-2 sm:hidden">
             <DialogClose asChild>

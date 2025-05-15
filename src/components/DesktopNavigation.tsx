@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import CivitanLogo from "./CivitanLogo";
 import { Button } from "@/components/ui/button";
@@ -12,12 +13,17 @@ const DesktopNavigation = () => {
   const [membershipModalOpen, setMembershipModalOpen] = useState(false);
   const [donationModalOpen, setDonationModalOpen] = useState(false);
 
+  // Updated scroll function that uses getBoundingClientRect for accurate positioning
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
     e.preventDefault();
     const section = document.getElementById(sectionId);
     if (section) {
+      const rect = section.getBoundingClientRect();
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      const headerHeight = 64; // Adjust for header height
+      
       window.scrollTo({
-        top: section.offsetTop - 64, // Adjust for header height
+        top: rect.top + scrollTop - headerHeight,
         behavior: "smooth",
       });
     }
