@@ -29,8 +29,38 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- Hide Lovable badge -->
+    <!-- Enhanced Hide Lovable badge settings -->
     <meta name="lovable:hide-badge" content="true" />
+    <meta name="lovable:disable-branding" content="true" />
+    <meta name="noedit" content="true" />
+    
+    <!-- Add CSS to hide the badge -->
+    <style>
+      [data-lovable-badge],
+      [data-lovable-brand],
+      .lovable-badge,
+      .lovable-branding,
+      #lovable-badge,
+      .lovable-editor-badge,
+      [class*="lovable-badge"],
+      [id*="lovable-badge"],
+      [class*="lovable-branding"],
+      [id*="lovable-branding"] {
+        display: none !important;
+        opacity: 0 !important;
+        visibility: hidden !important;
+        pointer-events: none !important;
+        width: 0 !important;
+        height: 0 !important;
+        max-width: 0 !important;
+        max-height: 0 !important;
+        overflow: hidden !important;
+        position: absolute !important;
+        top: -9999px !important;
+        left: -9999px !important;
+        z-index: -9999 !important;
+      }
+    </style>
 
     <!-- JSON-LD Schema -->
     <script type="application/ld+json">
@@ -67,20 +97,59 @@
     <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
     <script type="module" src="/src/main.tsx"></script>
     <script>
-      // Prevent any external branding
+      // Enhanced badge removal script with multiple techniques
       window.addEventListener('DOMContentLoaded', () => {
-        // Remove any Lovable branding elements
-        setTimeout(() => {
-          const brandElements = document.querySelectorAll('[data-lovable-brand]');
-          brandElements.forEach(el => el.remove());
+        // Function to remove Lovable branding elements
+        const removeBranding = () => {
+          // Target by data attribute
+          document.querySelectorAll('[data-lovable-brand], [data-lovable-badge]').forEach(el => el.remove());
           
-          // Add the URL parameter to force hide badge
-          if (!window.location.href.includes('forceHideBadge=true')) {
-            const url = new URL(window.location);
-            url.searchParams.set('forceHideBadge', 'true');
-            window.history.replaceState({}, document.title, url.toString());
-          }
-        }, 100);
+          // Target by class or id patterns
+          document.querySelectorAll('[class*="lovable"], [id*="lovable"]').forEach(el => {
+            if (el.className.includes('badge') || el.className.includes('branding') || 
+                el.id.includes('badge') || el.id.includes('branding')) {
+              el.remove();
+            }
+          });
+          
+          // Remove specific elements that might contain branding
+          const badgeSelectors = [
+            '.lovable-badge', 
+            '.lovable-branding', 
+            '#lovable-badge', 
+            '.lovable-editor-badge'
+          ];
+          
+          badgeSelectors.forEach(selector => {
+            const elements = document.querySelectorAll(selector);
+            elements.forEach(el => el.remove());
+          });
+        };
+        
+        // Run immediately
+        removeBranding();
+        
+        // Run after a short delay to catch dynamically added elements
+        setTimeout(removeBranding, 100);
+        
+        // Run periodically to catch any elements that might be added later
+        setInterval(removeBranding, 2000);
+        
+        // Add URL parameters to force hide badge
+        if (!window.location.href.includes('forceHideBadge=true')) {
+          const url = new URL(window.location);
+          url.searchParams.set('forceHideBadge', 'true');
+          // Use history API to avoid reload
+          window.history.replaceState({}, document.title, url.toString());
+        }
+      });
+      
+      // Override any attempts to add the badge back
+      window.addEventListener('load', () => {
+        // Attempt to remove the badge again after full page load
+        setTimeout(() => {
+          document.querySelectorAll('[data-lovable-brand], [data-lovable-badge], .lovable-badge, .lovable-branding').forEach(el => el.remove());
+        }, 500);
       });
     </script>
   </body>

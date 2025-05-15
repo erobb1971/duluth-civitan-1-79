@@ -17,6 +17,32 @@ if (typeof window !== 'undefined') {
       window.history.replaceState({}, document.title, url.toString());
     }
     
+    // Enhanced badge removal function
+    const removeLovableBadge = () => {
+      const selectors = [
+        '[data-lovable-brand]',
+        '[data-lovable-badge]',
+        '.lovable-badge',
+        '.lovable-branding',
+        '#lovable-badge',
+        '.lovable-editor-badge',
+        '[class*="lovable-badge"]',
+        '[id*="lovable-badge"]',
+      ];
+      
+      selectors.forEach(selector => {
+        const elements = document.querySelectorAll(selector);
+        elements.forEach(el => {
+          el.remove();
+        });
+      });
+    };
+    
+    // Remove badge on load and periodically check
+    removeLovableBadge();
+    setTimeout(removeLovableBadge, 500);
+    setInterval(removeLovableBadge, 2000);
+    
     // Initialize minimal security features
     initializeSecurity();
   } catch (error) {
