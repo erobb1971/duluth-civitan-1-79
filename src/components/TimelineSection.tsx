@@ -114,95 +114,96 @@ const timelineEvents = [
 const TimelineSection = () => {
   const timelineRefs = useRef<(HTMLDivElement | null)[]>([]);
   const sectionRef = useRef<HTMLElement>(null);
-  const lastItemRef = useRef<HTMLDivElement>(null);
-  const [isVisible, setIsVisible] = useState(false);
+  const foundersRef = useRef<HTMLDivElement>(null);
+  const [viewportItems, setViewportItems] = useState<boolean[]>([]);
+  const [passedItems, setPassedItems] = useState<boolean[]>([]);
+  const [foundersVisible, setFoundersVisible] = useState(false);
   const [showScrollCue, setShowScrollCue] = useState(true);
-  const [isExpanding, setIsExpanding] = useState(false);
   
+  // Initialize observed items state
   useEffect(() => {
-    // Initialize timeline items as invisible
-    timelineRefs.current.forEach(ref => {
-      if (ref) {
-        ref.style.opacity = '0';
-        ref.style.transform = 'translateY(16px)'; // start slightly below final position
-        ref.style.transition = 'all 0.5s ease-out';
-      }
-    });
+    setViewportItems(new Array(timelineEvents.length).fill(false));
+    setPassedItems(new Array(timelineEvents.length).fill(false));
+  }, []);
 
-    const handleScroll = () => {
-      const windowHeight = window.innerHeight;
-      
-      // Handle timeline items animation with progressive effect
-      timelineRefs.current.forEach((ref, index) => {
-        if (ref) {
-          const rect = ref.getBoundingClientRect();
-          const isItemVisible = rect.top < windowHeight * 0.85 && rect.bottom >= 0;
+  useEffect(() => {
+    // Set up Intersection Observer for timeline items
+    const itemObserverOptions = {
+      root: null,
+      rootMargin: "0px",
+      threshold: 0.5, // 50% of the element must be visible
+    };
+
+    const itemObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        const index = timelineRefs.current.findIndex(ref => ref === entry.target);
+        if (index !== -1) {
+          // Update viewportItems state for current viewport visibility
+          setViewportItems(prev => {
+            const newState = [...prev];
+            newState[index] = entry.isIntersecting;
+            return newState;
+          });
           
-          if (isItemVisible) {
-            // Animate in the timeline item
-            ref.style.opacity = '1';
-            ref.style.transform = 'translateY(0)';
-            
-            // Add pulsing effect only to the timeline point that's now in view
-            const timelinePoint = ref.querySelector('.timeline-point');
-            if (timelinePoint) {
-              timelinePoint.classList.add('timeline-point-pulse');
-            }
-          } else {
-            // Remove pulse if item is not visible
-            const timelinePoint = ref.querySelector('.timeline-point');
-            if (timelinePoint) {
-              timelinePoint.classList.remove('timeline-point-pulse');
-            }
+          // Update passedItems state for items that have been scrolled past
+          if (!entry.isIntersecting && entry.boundingClientRect.bottom < 0) {
+            setPassedItems(prev => {
+              const newState = [...prev];
+              newState[index] = true;
+              return newState;
+            });
+          } else if (!entry.isIntersecting && entry.boundingClientRect.bottom > window.innerHeight) {
+            // Reset when scrolling back up
+            setPassedItems(prev => {
+              const newState = [...prev];
+              newState[index] = false;
+              return newState;
+            });
           }
         }
       });
+    }, itemObserverOptions);
 
-      // Check if the founders section is visible
-      if (sectionRef.current) {
-        const foundersSection = sectionRef.current.querySelector('.founders-section');
-        if (foundersSection) {
-          const rect = foundersSection.getBoundingClientRect();
-          if (rect.top < windowHeight * 0.85 && rect.bottom >= 0) {
-            setIsVisible(true);
-          }
-        }
+    // Set up observer for the founders section
+    const foundersObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        setFoundersVisible(entry.isIntersecting);
+      });
+    }, { threshold: 0.6 });
+
+    // Set up observer for scroll cue visibility
+    const scrollObserver = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting && entries[0].intersectionRatio > 0.2) {
+        setShowScrollCue(false);
+      } else {
+        setShowScrollCue(true);
       }
-      
-      // Hide scroll cue when scrolled down enough
-      if (sectionRef.current) {
-        const sectionRect = sectionRef.current.getBoundingClientRect();
-        const scrolledIntoSection = sectionRect.top < windowHeight * 0.3;
-        setShowScrollCue(!scrolledIntoSection);
+    }, { threshold: [0.2, 0.5] });
+
+    // Observe timeline items
+    timelineRefs.current.forEach((ref) => {
+      if (ref) {
+        itemObserver.observe(ref);
       }
+    });
 
-      // Handle last item special animation for transition to CTA section
-      if (lastItemRef.current) {
-        const lastItemRect = lastItemRef.current.getBoundingClientRect();
-        const ctaSection = document.getElementById('cta-section');
-        
-        if (ctaSection) {
-          const ctaRect = ctaSection.getBoundingClientRect();
-          
-          // Calculate how close we are to triggering the expansion (0 to 1)
-          const expansionProgress = Math.min(
-            Math.max(0, 1 - ((ctaRect.top - windowHeight * 0.3) / windowHeight)), 
-            1
-          );
-          
-          setIsExpanding(expansionProgress > 0);
-        }
-      }
-    };
+    // Observe founders section
+    if (foundersRef.current) {
+      foundersObserver.observe(foundersRef.current);
+    }
 
-    // Check visibility on initial load
-    setTimeout(handleScroll, 100);
+    // Observe section for scroll cue
+    if (sectionRef.current) {
+      scrollObserver.observe(sectionRef.current);
+    }
 
-    // Add scroll event listener
-    window.addEventListener('scroll', handleScroll, { passive: true });
-
+    // Cleanup observers on unmount
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      timelineRefs.current.forEach((ref) => {
+        if (ref) itemObserver.unobserve(ref);
+      });
+      if (foundersRef.current) foundersObserver.unobserve(foundersRef.current);
+      if (sectionRef.current) scrollObserver.unobserve(sectionRef.current);
     };
   }, []);
 
@@ -225,7 +226,15 @@ const TimelineSection = () => {
 
         <div className="relative max-w-5xl mx-auto">
           {/* Founders Section with Enhanced Styling */}
-          <div className={`founders-section mb-12 text-center transition-all duration-700 ease-in-out ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+          <div 
+            ref={foundersRef}
+            className={cn(
+              "founders-section mb-12 text-center transition-all duration-700 ease-in-out transform",
+              foundersVisible 
+                ? "opacity-100 translate-y-0" 
+                : "opacity-0 translate-y-8"
+            )}
+          >
             <div className="inline-block bg-white dark:bg-gray-900 p-4 sm:p-6 rounded-lg shadow-md border-2 border-civitan-gold relative z-10 max-w-sm mx-auto">
               <h3 className="text-xl font-bold text-civitan-blue dark:text-white mb-3">Founders / Club Builders</h3>
               <ul className="text-gray-700 dark:text-gray-300 text-sm sm:text-base space-y-1">
@@ -237,40 +246,54 @@ const TimelineSection = () => {
             </div>
           </div>
 
-          {/* Timeline Connector Line - Fixed positioning */}
-          <div className="timeline-connector absolute h-full w-1 bg-civitan-gray z-0 left-1/2 transform -translate-x-1/2 top-0"></div>
+          {/* Timeline Connector Line */}
+          <div className="absolute h-full w-0.5 bg-civitan-gray dark:bg-gray-600 z-0 left-1/2 transform -translate-x-1/2 top-0"></div>
 
           {/* Timeline Events */}
           {timelineEvents.map((event, index) => {
-            const isLastItem = index === timelineEvents.length - 1;
+            const isEventVisible = viewportItems[index];
+            const isEventPassed = passedItems[index];
+            const isEvenIndex = index % 2 === 0;
             
             return (
               <div
                 key={index}
-                ref={el => {
-                  timelineRefs.current[index] = el;
-                  if (isLastItem) lastItemRef.current = el;
-                }}
-                className={`timeline-item relative flex mb-12 transition-all duration-500 ${
-                  isLastItem ? 'last-timeline-item' : ''
-                } ${
-                  index % 2 === 0 
-                    ? "md:flex-row flex-col-reverse" 
-                    : "md:flex-row-reverse flex-col-reverse"
-                }`}
+                ref={(el) => timelineRefs.current[index] = el}
+                className={cn(
+                  "timeline-item relative flex mb-12 md:mb-16",
+                  isEvenIndex ? "md:flex-row" : "md:flex-row-reverse",
+                  "flex-col-reverse"
+                )}
               >
                 {/* Content box */}
-                <div className="md:w-1/2 w-full md:px-0 px-4">
+                <div className="md:w-1/2 w-full">
                   <div 
-                    className={`
-                      bg-white dark:bg-gray-900 p-4 sm:p-6 rounded-lg shadow-md
-                      ${index % 2 === 0 
-                        ? "md:ml-8 md:mr-4" 
-                        : "md:mr-8 md:ml-4"
-                      }
-                      md:text-left ${index % 2 === 0 ? "md:text-left" : "md:text-right"} text-left
-                      timeline-card
-                    `}
+                    className={cn(
+                      "timeline-card bg-white dark:bg-gray-900 p-4 md:p-5 lg:p-6 rounded-lg shadow-md",
+                      isEvenIndex ? "md:mr-8 md:ml-0" : "md:ml-8 md:mr-0",
+                      "mx-auto md:mx-0 max-w-sm md:max-w-none",
+                      isEventVisible ? "timeline-card-visible" : "",
+                      isEventPassed ? "timeline-card-passed" : "",
+                      // 3D transformation classes for passed items
+                      "transition-all duration-700 ease-out will-change-transform",
+                      "transform-gpu perspective-1000",
+                      isEventPassed && !isEventVisible ? 
+                        "hover:scale-105 hover:shadow-lg" : 
+                        "hover:shadow-md"
+                    )}
+                    style={{
+                      // Apply 3D transformations when passed
+                      transformStyle: 'preserve-3d',
+                      transform: isEventPassed && !isEventVisible 
+                        ? `perspective(1000px) translateY(-8px) translateZ(20px) rotateX(${isEvenIndex ? '5deg' : '5deg'}) rotateY(${isEvenIndex ? '-2deg' : '2deg'})` 
+                        : 'perspective(1000px) translateY(0) translateZ(0) rotateX(0deg) rotateY(0deg)',
+                      boxShadow: isEventPassed && !isEventVisible 
+                        ? '0 15px 25px rgba(0, 0, 0, 0.1), 0 5px 10px rgba(0, 0, 0, 0.05)' 
+                        : '0 4px 6px rgba(0, 0, 0, 0.05)',
+                      opacity: isEventVisible || isEventPassed ? 1 : 0,
+                      // Adding a slight delay based on index for staggered appearance
+                      transitionDelay: `${index * 50}ms`,
+                    }}
                   >
                     <span className="inline-block bg-civitan-gold text-civitan-blue px-3 py-1 rounded-full text-sm font-bold mb-2">
                       {event.year}
@@ -283,16 +306,27 @@ const TimelineSection = () => {
                     </p>
                   </div>
                 </div>
+
+                {/* Timeline Point with Marker */}
                 <div className="md:w-1/2 w-full relative">
-                  {/* Timeline point with pulsing effect that only triggers on visibility */}
                   <div 
-                    className="timeline-point absolute w-4 h-4 bg-civitan-gold rounded-full z-10" 
+                    className={cn(
+                      "timeline-point absolute rounded-full z-10",
+                      isEventVisible ? "timeline-point-active" : "",
+                      "transition-all duration-500"
+                    )}
                     style={{
-                      top: '1.5rem',
+                      width: '16px',
+                      height: '16px',
+                      backgroundColor: isEventVisible || isEventPassed ? '#FFC72C' : '#D1D3D4',
+                      top: '24px',
                       left: '50%',
                       transform: 'translateX(-50%)',
+                      boxShadow: isEventVisible 
+                        ? '0 0 0 6px rgba(255, 199, 44, 0.3)' 
+                        : 'none',
                     }}
-                  ></div>
+                  />
                 </div>
               </div>
             );
@@ -300,25 +334,33 @@ const TimelineSection = () => {
         </div>
       </div>
 
-      {/* Add pulse animation */}
-      <style>
-        {`
+      {/* Add pulse animation and 3D effect styles */}
+      <style jsx>{`
         @keyframes pulse {
-          0% {
-            box-shadow: 0 0 0 0 rgba(255, 199, 44, 0.7);
-          }
-          70% {
-            box-shadow: 0 0 0 10px rgba(255, 199, 44, 0);
-          }
-          100% {
-            box-shadow: 0 0 0 0 rgba(255, 199, 44, 0);
-          }
+          0% { box-shadow: 0 0 0 0 rgba(255, 199, 44, 0.7); }
+          70% { box-shadow: 0 0 0 10px rgba(255, 199, 44, 0); }
+          100% { box-shadow: 0 0 0 0 rgba(255, 199, 44, 0); }
         }
-        .timeline-point-pulse {
+        
+        .timeline-point-active {
           animation: pulse 2s infinite;
         }
-        `}
-      </style>
+        
+        @keyframes float {
+          0% { transform: translateY(0px); }
+          50% { transform: translateY(-8px); }
+          100% { transform: translateY(0px); }
+        }
+
+        .timeline-card-passed:hover {
+          animation: float 3s ease-in-out infinite;
+        }
+        
+        .timeline-card-visible {
+          transform: translateY(0) !important;
+          opacity: 1 !important;
+        }
+      `}</style>
 
       {/* Scroll cue indicator */}
       <div 
