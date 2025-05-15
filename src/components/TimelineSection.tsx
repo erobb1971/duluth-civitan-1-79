@@ -1,3 +1,4 @@
+
 import React, { useRef, useEffect, useState } from "react";
 import { ChevronsDown } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -299,7 +300,8 @@ const TimelineSection = () => {
       </div>
 
       {/* Add pulse animation */}
-      <style jsx>{`
+      <style>
+        {`
         @keyframes pulse {
           0% {
             box-shadow: 0 0 0 0 rgba(255, 199, 44, 0.7);
@@ -314,7 +316,8 @@ const TimelineSection = () => {
         .timeline-point-pulse {
           animation: pulse 2s infinite;
         }
-      `}</style>
+        `}
+      </style>
 
       {/* Scroll cue indicator */}
       <div 

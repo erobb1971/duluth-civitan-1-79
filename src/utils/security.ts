@@ -39,23 +39,33 @@ export const detectDevTools = () => {
   );
 };
 
-// Frame busting only
+// Modified frame busting to avoid security errors
 export const preventFraming = () => {
-  // Check if we're in an iframe
-  if (window.self !== window.top) {
-    window.top.location = window.self.location;
-  }
+  try {
+    // Check if we're in an iframe with a safer approach
+    if (window.self !== window.top) {
+      // Instead of redirecting, which can cause security errors,
+      // just log a warning and use Content-Security-Policy
+      console.warn("This site is not meant to be displayed in a frame.");
+    }
 
-  // Add X-Frame-Options header in the content security policy meta tag
-  const meta = document.createElement('meta');
-  meta.httpEquiv = 'Content-Security-Policy';
-  meta.content = "frame-ancestors 'self'";
-  document.head.appendChild(meta);
+    // Add X-Frame-Options header in the content security policy meta tag
+    const meta = document.createElement('meta');
+    meta.httpEquiv = 'Content-Security-Policy';
+    meta.content = "frame-ancestors 'self'";
+    document.head.appendChild(meta);
+  } catch (e) {
+    console.error("Error in frame protection:", e);
+  }
 };
 
 // Initialize limited security features
 export const initializeSecurity = () => {
-  disableImageRightClick();
-  detectDevTools();
-  preventFraming();
+  try {
+    disableImageRightClick();
+    detectDevTools();
+    preventFraming();
+  } catch (e) {
+    console.error("Error initializing security features:", e);
+  }
 };

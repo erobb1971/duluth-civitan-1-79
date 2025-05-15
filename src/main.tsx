@@ -6,9 +6,13 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { initializeSecurity } from "./utils/security";
 
-// Initialize security features
+// Initialize security features safely
 if (typeof window !== 'undefined') {
-  initializeSecurity();
+  try {
+    initializeSecurity();
+  } catch (error) {
+    console.error("Error initializing security features:", error);
+  }
 }
 
 createRoot(document.getElementById("root")!).render(

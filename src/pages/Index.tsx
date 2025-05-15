@@ -15,8 +15,12 @@ import { initializeSecurity } from "@/utils/security";
 
 const Index = () => {
   useEffect(() => {
-    // Initialize limited security features
-    initializeSecurity();
+    // Initialize limited security features with error handling
+    try {
+      initializeSecurity();
+    } catch (error) {
+      console.error("Error initializing security in Index component:", error);
+    }
   }, []);
 
   return (
