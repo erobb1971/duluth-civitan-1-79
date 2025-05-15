@@ -6,14 +6,16 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
+  DialogClose
 } from "@/components/ui/dialog";
 import { Calendar } from "@/components/ui/calendar";
 import { format } from "date-fns";
 import { Event, EventType, getEventDots, eventsData, getGoogleCalendarUrl, getICalUrl } from "@/utils/events";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
-import { Calendar as CalendarIcon, Map, Mail, Info } from "lucide-react";
+import { Calendar as CalendarIcon, Map, Mail, Info, X } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
+import { useIsMobile } from "@/hooks/use-mobile";
 import { 
   DropdownMenu, 
   DropdownMenuContent, 
@@ -43,6 +45,7 @@ const EventDot = ({ type }: { type: EventType }) => {
 const CalendarModal = ({ open, onOpenChange }: CalendarModalProps) => {
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
+  const isMobile = useIsMobile();
 
   const handleEmailClick = (event: Event) => {
     // If noEmail is true, just show toast without triggering email
@@ -99,6 +102,36 @@ const CalendarModal = ({ open, onOpenChange }: CalendarModalProps) => {
             View our upcoming events
           </DialogDescription>
         </DialogHeader>
+        
+        {/* Mobile Close Button - More prominent for mobile */}
+        {isMobile && (
+          <DialogClose asChild>
+            <Button 
+              variant="outline" 
+              size="sm" 
+              className="absolute right-4 top-4 h-8 w-8 p-0 sm:hidden border-gray-300"
+              aria-label="Close calendar"
+            >
+              <X className="h-5 w-5" />
+              <span className="sr-only">Close</span>
+            </Button>
+          </DialogClose>
+        )}
+        
+        {/* Bottom Close Button for Mobile */}
+        {isMobile && (
+          <div className="flex justify-center mt-4 mb-2 sm:hidden">
+            <DialogClose asChild>
+              <Button 
+                variant="outline" 
+                className="w-full border-civitan-blue text-civitan-blue"
+              >
+                <X className="mr-1.5 h-4 w-4" />
+                Close Calendar
+              </Button>
+            </DialogClose>
+          </div>
+        )}
         
         <div className="flex flex-col items-center justify-center p-2">
           <Calendar

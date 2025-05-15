@@ -1,3 +1,4 @@
+
 import React, { useEffect } from "react";
 import DesktopNavigation from "@/components/DesktopNavigation";
 import MobileNavigation from "@/components/MobileNavigation";
@@ -25,8 +26,10 @@ const Index = () => {
   return (
     <div className="min-h-screen pb-mobile-nav relative">
       <DesktopNavigation />
-      <div id="home"></div>
+      <div id="home" className="scroll-mt-20"></div>
       <HeroSection />
+      
+      <div id="about" className="scroll-mt-20"></div>
       <AboutSection />
       
       {/* Timeline section with proper z-index */}
@@ -41,10 +44,18 @@ const Index = () => {
       
       {/* Rest of the sections */}
       <div className="relative z-10">
+        <div id="partners" className="scroll-mt-20"></div>
         <PartnersSection />
+        
+        <div id="gallery" className="scroll-mt-20"></div>
         <GallerySection />
+        
+        <div id="events" className="scroll-mt-20"></div>
         <EventsSection />
+        
+        <div id="contact" className="scroll-mt-20"></div>
         <ContactSection />
+        
         <Footer />
       </div>
       <MobileNavigation />
