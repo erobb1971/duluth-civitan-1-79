@@ -30,7 +30,7 @@ const AboutSection = () => {
           </h2>
           <div className="w-16 sm:w-24 h-1 bg-civitan-gold mx-auto mb-4 sm:mb-6"></div>
           <p className="text-sm sm:text-lg max-w-3xl mx-auto text-gray-700 px-2">
-            Since 2002, Duluth Civitan has been dedicated to improving the lives of children and adults with developmental disabilities in Gwinnett County through hands-on service, fundraising, and advocacy.
+            Since 2003, Duluth Civitan has been dedicated to improving the lives of children and adults with developmental disabilities in Gwinnett County through hands-on service, fundraising, and advocacy.
           </p>
         </div>
         
