@@ -13,9 +13,10 @@ import { format } from "date-fns";
 import { Event, EventType, getEventDots, eventsData, getGoogleCalendarUrl, getICalUrl } from "@/utils/events";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
-import { Calendar as CalendarIcon, Map, Mail, Info, X, ExternalLink } from "lucide-react";
+import { Calendar as CalendarIcon, Map, Mail, Info, X, ExternalLink, ChevronDown } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { 
   DropdownMenu, 
   DropdownMenuContent, 
@@ -106,10 +107,11 @@ const CalendarModal = ({ open, onOpenChange }: CalendarModalProps) => {
   };
 
   const selectedDateEvents = date ? getEventsForDate(date) : [];
+  const hasEvents = selectedDateEvents.length > 0;
   
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md md:max-w-lg lg:max-w-xl">
+      <DialogContent className="sm:max-w-md md:max-w-lg lg:max-w-xl p-4 sm:p-6">
         <DialogHeader>
           <DialogTitle className="text-center text-civitan-blue text-xl font-bold">
             Events Calendar
@@ -121,7 +123,7 @@ const CalendarModal = ({ open, onOpenChange }: CalendarModalProps) => {
         
         {/* Bottom Close Button for Mobile Only */}
         {isMobile && (
-          <div className="flex justify-center mt-4 mb-2 sm:hidden">
+          <div className="flex justify-center mb-2 sm:hidden">
             <DialogClose asChild>
               <Button 
                 variant="outline" 
@@ -134,7 +136,7 @@ const CalendarModal = ({ open, onOpenChange }: CalendarModalProps) => {
           </div>
         )}
         
-        <div className="flex flex-col items-center justify-center p-2">
+        <div className="flex flex-col items-center justify-center">
           <Calendar
             mode="single"
             selected={date}
@@ -181,110 +183,122 @@ const CalendarModal = ({ open, onOpenChange }: CalendarModalProps) => {
             </div>
           </div>
           
-          <div className="w-full mt-6 mb-2 p-3 bg-gray-50 rounded-lg border border-gray-200 text-sm">
+          <div className="w-full mt-4 mb-2 p-3 bg-gray-50 rounded-lg border border-gray-200 text-sm">
             <div className="font-medium mb-1">🗓️ Regular Meeting Schedule:</div>
             <p>2nd Monday: 11:45 AM at Chamber's 1818 Club</p>
             <p>4th Monday: 12:00 PM at rotating locations</p>
             <div className="text-xs text-gray-500 mt-1 italic">Note: No meetings on holidays</div>
           </div>
           
-          {selectedDateEvents.length > 0 ? (
-            <div className="w-full mt-4 max-h-64 overflow-y-auto">
+          {hasEvents ? (
+            <div className="w-full mt-4 relative">
               <h3 className="text-lg font-semibold text-center mb-2">
                 {date && format(date, "MMMM d, yyyy")} Events
               </h3>
-              <div className="space-y-3">
-                {selectedDateEvents.map((event) => (
-                  <Card key={event.id} className="w-full shadow-sm">
-                    <CardHeader className="p-3 pb-1.5">
-                      <h4 className="text-sm font-medium">{event.title}</h4>
-                      {event.location && (
-                        <div className="flex items-start mt-1">
-                          <Map className="w-3 h-3 text-civitan-gold mr-1 flex-shrink-0 mt-0.5" />
-                          <p className="text-xs text-gray-600">{event.location}</p>
-                        </div>
-                      )}
-                      {event.time && (
-                        <p className="text-xs text-gray-600 mt-1">{event.time}</p>
-                      )}
-                    </CardHeader>
-                    <CardContent className="p-3 py-1">
-                      <p className="text-xs">
-                        {event.description || (event.isNoMeeting 
-                          ? `We will not be having a meeting due to ${event.title.split('(')[0].trim()}, but our next meeting is on ${event.nextMeetingDate ? format(new Date(event.nextMeetingDate), "MMMM d, yyyy") : 'the next scheduled date'} and we would love for you to come, bring a friend!` 
-                          : "Join us for this exciting event!")}
-                      </p>
-                    </CardContent>
-                    {event.buttonText && (
-                      <CardFooter className="p-3 pt-1.5 flex flex-col gap-2">
-                        <div className="flex gap-2 w-full">
-                          <Button 
-                            className={`flex-1 bg-civitan-blue hover:bg-blue-900 text-white text-xs py-2 ${event.externalUrl ? 'group' : ''}`}
-                            onClick={() => handleEmailClick(event)}
-                          >
-                            {event.externalUrl ? (
-                              <>
-                                <ExternalLink className="mr-1.5 h-3 w-3 group-hover:animate-pulse" />
-                                {event.buttonText}
-                              </>
-                            ) : (
-                              <>
-                                <Mail className="mr-1.5 h-3 w-3" />
-                                {event.buttonText}
-                              </>
-                            )}
-                          </Button>
-                          
-                          <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                              <Button variant="outline" size="sm" className="h-8 border-civitan-blue text-civitan-blue dark:text-white dark:border-white">
-                                <CalendarIcon className="h-3 w-3" />
-                              </Button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end">
-                              <DropdownMenuLabel>Add to Calendar</DropdownMenuLabel>
-                              <DropdownMenuSeparator />
-                              <DropdownMenuItem asChild>
-                                <a 
-                                  href={getGoogleCalendarUrl(event)} 
-                                  target="_blank" 
-                                  rel="noopener noreferrer" 
-                                  className="cursor-pointer"
-                                >
-                                  Google Calendar
-                                </a>
-                              </DropdownMenuItem>
-                              <DropdownMenuItem asChild>
-                                <a 
-                                  href={getICalUrl(event)} 
-                                  download={`civitan-event-${event.id}.ics`}
-                                  className="cursor-pointer"
-                                >
-                                  Apple/Outlook (.ics)
-                                </a>
-                              </DropdownMenuItem>
-                            </DropdownMenuContent>
-                          </DropdownMenu>
-                        </div>
-                        
-                        {event.googleMapsUrl && (
-                          <Button 
-                            variant="outline" 
-                            className="w-full border-civitan-blue text-civitan-blue dark:text-white dark:border-white text-xs"
-                            asChild
-                            size="sm"
-                          >
-                            <a href={event.googleMapsUrl} target="_blank" rel="noopener noreferrer">
-                              <Map className="mr-1.5 h-3 w-3" />
-                              Get Directions
-                            </a>
-                          </Button>
+              
+              {/* ScrollArea for better mobile scrolling */}
+              <ScrollArea className="max-h-[calc(50vh)] sm:max-h-[350px] pr-2 rounded-lg mb-1 relative">
+                <div className="space-y-3 pb-1">
+                  {selectedDateEvents.map((event) => (
+                    <Card key={event.id} className="w-full shadow-sm">
+                      <CardHeader className="p-3 pb-1.5">
+                        <h4 className="text-sm font-medium">{event.title}</h4>
+                        {event.location && (
+                          <div className="flex items-start mt-1">
+                            <Map className="w-3 h-3 text-civitan-gold mr-1 flex-shrink-0 mt-0.5" />
+                            <p className="text-xs text-gray-600">{event.location}</p>
+                          </div>
                         )}
-                      </CardFooter>
-                    )}
-                  </Card>
-                ))}
-              </div>
+                        {event.time && (
+                          <p className="text-xs text-gray-600 mt-1">{event.time}</p>
+                        )}
+                      </CardHeader>
+                      <CardContent className="p-3 py-1">
+                        <p className="text-xs">
+                          {event.description || (event.isNoMeeting 
+                            ? `We will not be having a meeting due to ${event.title.split('(')[0].trim()}, but our next meeting is on ${event.nextMeetingDate ? format(new Date(event.nextMeetingDate), "MMMM d, yyyy") : 'the next scheduled date'} and we would love for you to come, bring a friend!` 
+                            : "Join us for this exciting event!")}
+                        </p>
+                      </CardContent>
+                      {event.buttonText && (
+                        <CardFooter className="p-3 pt-1.5 flex flex-col gap-2">
+                          <div className="flex gap-2 w-full">
+                            <Button 
+                              className={`flex-1 bg-civitan-blue hover:bg-blue-900 text-white text-xs py-2 ${event.externalUrl ? 'group' : ''}`}
+                              onClick={() => handleEmailClick(event)}
+                            >
+                              {event.externalUrl ? (
+                                <>
+                                  <ExternalLink className="mr-1.5 h-3 w-3 group-hover:animate-pulse" />
+                                  {event.buttonText}
+                                </>
+                              ) : (
+                                <>
+                                  <Mail className="mr-1.5 h-3 w-3" />
+                                  {event.buttonText}
+                                </>
+                              )}
+                            </Button>
+                            
+                            <DropdownMenu>
+                              <DropdownMenuTrigger asChild>
+                                <Button variant="outline" size="sm" className="h-8 border-civitan-blue text-civitan-blue dark:text-white dark:border-white">
+                                  <CalendarIcon className="h-3 w-3" />
+                                </Button>
+                              </DropdownMenuTrigger>
+                              <DropdownMenuContent align="end">
+                                <DropdownMenuLabel>Add to Calendar</DropdownMenuLabel>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuItem asChild>
+                                  <a 
+                                    href={getGoogleCalendarUrl(event)} 
+                                    target="_blank" 
+                                    rel="noopener noreferrer" 
+                                    className="cursor-pointer"
+                                  >
+                                    Google Calendar
+                                  </a>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem asChild>
+                                  <a 
+                                    href={getICalUrl(event)} 
+                                    download={`civitan-event-${event.id}.ics`}
+                                    className="cursor-pointer"
+                                  >
+                                    Apple/Outlook (.ics)
+                                  </a>
+                                </DropdownMenuItem>
+                              </DropdownMenuContent>
+                            </DropdownMenu>
+                          </div>
+                          
+                          {event.googleMapsUrl && (
+                            <Button 
+                              variant="outline" 
+                              className="w-full border-civitan-blue text-civitan-blue dark:text-white dark:border-white text-xs"
+                              asChild
+                              size="sm"
+                            >
+                              <a href={event.googleMapsUrl} target="_blank" rel="noopener noreferrer">
+                                <Map className="mr-1.5 h-3 w-3" />
+                                Get Directions
+                              </a>
+                            </Button>
+                          )}
+                        </CardFooter>
+                      )}
+                    </Card>
+                  ))}
+                </div>
+              </ScrollArea>
+              
+              {/* Scroll indicator for mobile */}
+              {isMobile && selectedDateEvents.length > 1 && (
+                <div className="flex justify-center mt-2 text-gray-400 animate-pulse">
+                  <ChevronDown className="h-5 w-5" />
+                  <span className="text-xs ml-1">Scroll for more events</span>
+                </div>
+              )}
             </div>
           ) : (
             <p className="mt-4 text-center text-gray-600">

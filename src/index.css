@@ -339,7 +339,41 @@
     display: none;
   }
   
-  /* Enhanced Mobile spacing fixes */
+  .calendar-scroll-area {
+    scrollbar-width: thin;
+    -ms-overflow-style: none;
+    position: relative;
+  }
+  
+  .calendar-scroll-area::-webkit-scrollbar {
+    width: 4px;
+  }
+  
+  .calendar-scroll-area::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+  }
+  
+  .calendar-scroll-indicator {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 24px;
+    background: linear-gradient(to top, rgba(255,255,255,0.9), rgba(255,255,255,0));
+    pointer-events: none;
+  }
+  
+  .momentum-scroll {
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+  }
+  
+  .mobile-touch-target {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
   @media (max-width: 768px) {
     .pb-mobile-nav {
       padding-bottom: 60px;
@@ -364,16 +398,24 @@
       padding-left: 0.75rem;
       padding-right: 0.75rem;
     }
+    
+    .calendar-modal-mobile {
+      max-height: calc(100vh - 80px);
+      padding: 16px 12px;
+    }
+    
+    .events-list-mobile {
+      max-height: 60vh;
+      padding-bottom: 8px;
+    }
   }
   
-  /* Enhanced image protection */
   .protected-image {
     pointer-events: none;
     user-select: none;
     -webkit-user-drag: none;
   }
   
-  /* Additional security-related styles */
   .no-select {
     user-select: none;
     -webkit-user-select: none;
