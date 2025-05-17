@@ -18,6 +18,7 @@ export interface Event {
   googleMapsUrl?: string; // URL for directions
   isNoMeeting?: boolean; // Flag to indicate this is a "no meeting" event
   nextMeetingDate?: string; // Next meeting date after a holiday or no-meeting event
+  externalUrl?: string; // URL for external registration/information
 }
 
 const today = startOfDay(new Date());
@@ -95,8 +96,33 @@ export const getICalUrl = (event: Event): string => {
   return `data:text/calendar;charset=utf8,${encodeURIComponent(icalData)}`;
 };
 
-// All events data - Updated to remove "- USA" from Memorial Day
+// All events data - Updated to include new Spectrum events
 export const eventsData: Event[] = [
+  {
+    id: "spectrum-garden-tour-2025",
+    title: "🌿 Spectrum Sensory & Harvest Gardens Tour",
+    description: "Tour the sensory and harvest gardens at Spectrum Autism Support Center",
+    location: "Spectrum Autism Support Center, 2997 Main Street, Duluth, GA 30096",
+    startDate: "2025-06-05",
+    time: "2:00 PM - 4:00 PM",
+    type: "civitan",
+    buttonText: "RSVP",
+    emailSubject: "RSVP for Spectrum Gardens Tour on June 5",
+    googleMapsUrl: "https://maps.google.com/?q=2997+Main+Street+Duluth+GA+30096"
+  },
+  {
+    id: "spectrum-fishing-day-2025",
+    title: "🎣 Spectrum Family Fishing Fun Day",
+    description: "Family fishing event sponsored by Kyo Autism Therapy",
+    location: "Wayne's Hill Pond, Suwanee",
+    startDate: "2025-06-07",
+    time: "9:30 AM - 12:30 PM",
+    type: "civitan",
+    buttonText: "Register",
+    emailSubject: "Registration for Family Fishing Fun Day on June 7",
+    externalUrl: "https://SpectrumAutism.org", 
+    googleMapsUrl: "https://maps.google.com/?q=Wayne's+Hill+Pond+Suwanee+GA"
+  },
   {
     id: "cocktail-reception-2025",
     title: "🥂 Cocktail Reception: Meet the Mayor of Duluth, GA Greg Whitlock",

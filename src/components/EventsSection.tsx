@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -49,7 +48,23 @@ const EventsSection = () => {
   // Get the next 3 upcoming events
   const upcomingEvents = getNextEvents(3);
   
-  const handleEmailClick = (event: { emailSubject?: string, noEmail?: boolean, rsvpMessage?: string }) => {
+  const handleEmailClick = (event: { emailSubject?: string, noEmail?: boolean, rsvpMessage?: string, externalUrl?: string, id?: string }) => {
+    // If there's an external URL, open it
+    if (event.externalUrl) {
+      window.open(event.externalUrl, "_blank", "noopener,noreferrer");
+      return;
+    }
+
+    // Special email handling for Spectrum Garden Tour
+    if (event.id === "spectrum-garden-tour-2025") {
+      window.location.href = `mailto:claire@spectrumautism.org?subject=${event.emailSubject || "RSVP for Garden Tour"}&body=I would like to RSVP for the Spectrum Sensory & Harvest Gardens Tour on June 5, 2025. Please provide any additional information needed.`;
+      toast({
+        title: "Thank you!",
+        description: "Your RSVP has been sent to claire@spectrumautism.org.",
+      });
+      return;
+    }
+    
     // If noEmail is true, just show toast without triggering email
     if (event.noEmail) {
       toast({
@@ -203,11 +218,20 @@ const EventsSection = () => {
                 <CardFooter className="p-4 sm:p-6 pt-2 flex flex-col gap-2 mt-auto">
                   <div className="flex gap-2 w-full">
                     <Button 
-                      className="flex-1 bg-civitan-blue hover:bg-blue-900 text-white text-xs sm:text-sm py-2"
+                      className={`flex-1 bg-civitan-blue hover:bg-blue-900 text-white text-xs sm:text-sm py-2 ${event.externalUrl ? 'group' : ''}`}
                       onClick={() => handleEmailClick(event)}
                     >
-                      <Mail className="mr-2 h-3 w-3 sm:h-4 sm:w-4" />
-                      {event.buttonText || "RSVP"}
+                      {event.externalUrl ? (
+                        <>
+                          <ExternalLink className="mr-2 h-3 w-3 sm:h-4 sm:w-4 group-hover:animate-pulse" />
+                          {event.buttonText || "Register"}
+                        </>
+                      ) : (
+                        <>
+                          <Mail className="mr-2 h-3 w-3 sm:h-4 sm:w-4" />
+                          {event.buttonText || "RSVP"}
+                        </>
+                      )}
                     </Button>
                     
                     <Tooltip>

@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import {
   Dialog,
@@ -12,7 +13,7 @@ import { format } from "date-fns";
 import { Event, EventType, getEventDots, eventsData, getGoogleCalendarUrl, getICalUrl } from "@/utils/events";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
-import { Calendar as CalendarIcon, Map, Mail, Info, X } from "lucide-react";
+import { Calendar as CalendarIcon, Map, Mail, Info, X, ExternalLink } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { 
@@ -47,6 +48,22 @@ const CalendarModal = ({ open, onOpenChange }: CalendarModalProps) => {
   const isMobile = useIsMobile();
 
   const handleEmailClick = (event: Event) => {
+    // If there's an external URL, open it
+    if (event.externalUrl) {
+      window.open(event.externalUrl, "_blank", "noopener,noreferrer");
+      return;
+    }
+
+    // Special email handling for Spectrum Garden Tour
+    if (event.id === "spectrum-garden-tour-2025") {
+      window.location.href = `mailto:claire@spectrumautism.org?subject=${event.emailSubject || "RSVP for Garden Tour"}&body=I would like to RSVP for the Spectrum Sensory & Harvest Gardens Tour on June 5, 2025. Please provide any additional information needed.`;
+      toast({
+        title: "Thank you!",
+        description: "Your RSVP has been sent to claire@spectrumautism.org.",
+      });
+      return;
+    }
+    
     // If noEmail is true, just show toast without triggering email
     if (event.noEmail) {
       toast({
@@ -202,11 +219,20 @@ const CalendarModal = ({ open, onOpenChange }: CalendarModalProps) => {
                       <CardFooter className="p-3 pt-1.5 flex flex-col gap-2">
                         <div className="flex gap-2 w-full">
                           <Button 
-                            className="flex-1 bg-civitan-blue hover:bg-blue-900 text-white text-xs py-2"
+                            className={`flex-1 bg-civitan-blue hover:bg-blue-900 text-white text-xs py-2 ${event.externalUrl ? 'group' : ''}`}
                             onClick={() => handleEmailClick(event)}
                           >
-                            <Mail className="mr-1.5 h-3 w-3" />
-                            {event.buttonText}
+                            {event.externalUrl ? (
+                              <>
+                                <ExternalLink className="mr-1.5 h-3 w-3 group-hover:animate-pulse" />
+                                {event.buttonText}
+                              </>
+                            ) : (
+                              <>
+                                <Mail className="mr-1.5 h-3 w-3" />
+                                {event.buttonText}
+                              </>
+                            )}
                           </Button>
                           
                           <DropdownMenu>
