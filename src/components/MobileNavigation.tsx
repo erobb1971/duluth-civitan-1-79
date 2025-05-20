@@ -59,8 +59,8 @@ const MobileNavigation = () => {
 
   return (
     <>
-      <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-civitan-gray z-50">
-        <div className="flex items-center justify-around px-1 py-1.5">
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-900 border-t border-civitan-gray dark:border-gray-700 z-50">
+        <div className="flex items-center justify-around px-1 py-2">
           {navItems.map((item, index) => (
             <button
               key={index}
@@ -68,11 +68,11 @@ const MobileNavigation = () => {
                 e.preventDefault();
                 item.action ? item.action() : window.location.href = item.href;
               }}
-              className="flex flex-col items-center text-civitan-blue hover:text-civitan-gold transition-colors duration-300 px-2 py-0.5"
+              className="flex flex-col items-center text-civitan-blue hover:text-civitan-gold transition-colors duration-300 px-2 py-1 mobile-touch-target"
               aria-label={item.title}
             >
               {item.icon}
-              <span className="text-[10px] mt-0.5">{item.title}</span>
+              <span className="text-xs mt-1">{item.title}</span>
             </button>
           ))}
         </div>

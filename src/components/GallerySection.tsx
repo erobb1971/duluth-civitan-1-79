@@ -7,6 +7,9 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import { ChevronsRight } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const galleryImages = [
   {
@@ -56,9 +59,22 @@ const galleryImages = [
 ];
 
 const GallerySection = () => {
+  const isMobile = useIsMobile();
+  const [showSwipeHint, setShowSwipeHint] = React.useState(true);
+
+  // Hide swipe hint after 5 seconds on mobile
+  React.useEffect(() => {
+    if (isMobile) {
+      const timer = setTimeout(() => {
+        setShowSwipeHint(false);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [isMobile]);
+
   return (
-    <section className="py-4 sm:py-8 bg-white dark:bg-gray-900">
-      <div className="container mx-auto px-4 sm:px-6">
+    <section className="py-4 sm:py-8 bg-white dark:bg-gray-900 overflow-hidden">
+      <div className="container mx-auto px-3 sm:px-6">
         <div className="text-center mb-5 sm:mb-6">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-civitan-blue dark:text-civitan-gold mb-3">
             Our Community Impact
@@ -69,17 +85,31 @@ const GallerySection = () => {
           </p>
         </div>
         
+        {/* Mobile swipe indicator */}
+        {isMobile && (
+          <div className={cn(
+            "flex items-center justify-center mb-4 text-sm text-civitan-blue dark:text-civitan-gold gap-1",
+            "transition-opacity duration-300",
+            showSwipeHint ? "opacity-100" : "opacity-0"
+          )}>
+            <span className="font-medium">Swipe</span> 
+            <ChevronsRight size={16} className="animate-pulse" /> 
+            <span>to browse photos</span>
+          </div>
+        )}
+        
         <div className="relative px-1 sm:px-4 my-2 sm:my-4">
           <Carousel
             opts={{
               align: "start",
               loop: true,
+              containScroll: "trimSnaps",
             }}
             className="w-full"
           >
             <CarouselContent className="-ml-1">
               {galleryImages.map((image, index) => (
-                <CarouselItem key={index} className="pl-1 basis-1/2 sm:basis-1/3 md:basis-1/3 lg:basis-1/4">
+                <CarouselItem key={index} className="pl-1 xs:basis-4/5 sm:basis-1/2 md:basis-1/3 lg:basis-1/4">
                   <div className="p-1 h-full">
                     <div className="overflow-hidden rounded-md h-full aspect-square civitan-shadow">
                       <img

@@ -130,11 +130,11 @@ const TimelineSection = () => {
     setShowScrollCue(false);
   };
 
-  // Auto-hide scroll cue after 5 seconds
+  // Auto-hide scroll cue after a longer time (10 seconds) to ensure users see it
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowScrollCue(false);
-    }, 5000);
+    }, 10000);
     
     return () => clearTimeout(timer);
   }, []);
@@ -142,9 +142,9 @@ const TimelineSection = () => {
   return (
     <section 
       id="timeline" 
-      className="section bg-gray-100 dark:bg-gray-800 py-12 md:py-16 relative w-full"
+      className="section bg-gray-100 dark:bg-gray-800 py-10 md:py-16 relative w-full overflow-hidden"
     >
-      <div className="container mx-auto px-4 sm:px-6 overflow-hidden">
+      <div className="container mx-auto px-3 sm:px-6">
         <div className="text-center mb-6 md:mb-10">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-civitan-blue dark:text-civitan-gold mb-3">
             Our Journey Through Time
@@ -173,14 +173,14 @@ const TimelineSection = () => {
           {/* Timeline connector line */}
           <div className="absolute h-0.5 bg-civitan-gray dark:bg-gray-600 left-0 right-0 top-1/2 transform -translate-y-1/2 z-0"></div>
 
-          {/* Enhanced mobile scroll instructions with icon animation */}
+          {/* Mobile swipe indicator - Always visible on mobile */}
           <div className={cn(
             "flex items-center justify-center mb-4 text-sm text-civitan-blue dark:text-civitan-gold gap-1",
             "md:hidden transition-opacity duration-300",
-            showScrollCue ? "opacity-100" : "opacity-0"
+            "sticky z-10"
           )}>
-            <span>Swipe</span> 
-            <ChevronsRight size={16} className="animate-bounce" /> 
+            <span className="font-medium">Swipe</span> 
+            <ChevronsRight size={16} className="animate-pulse" /> 
             <span>to explore our history</span>
           </div>
           
@@ -216,7 +216,7 @@ const TimelineSection = () => {
               {timelineEvents.map((event, index) => (
                 <CarouselItem 
                   key={index} 
-                  className="pl-1 md:pl-4 sm:basis-1/2 md:basis-1/3 lg:basis-1/4"
+                  className="pl-1 md:pl-4 xs:basis-4/5 sm:basis-1/2 md:basis-1/3 lg:basis-1/4"
                   onMouseEnter={() => setHoveredYear(event.year)}
                   onMouseLeave={() => setHoveredYear(null)}
                 >
@@ -264,15 +264,16 @@ const TimelineSection = () => {
         </div>
       </div>
       
-      {/* Enhanced timeline scroll indicator with animated directional cue */}
+      {/* Persistent swipe indicator at bottom of timeline */}
       <div className={cn(
         "absolute bottom-4 w-full flex justify-center",
-        "transition-opacity duration-500",
-        showScrollCue ? "opacity-90" : "opacity-0 pointer-events-none"
+        "md:transition-opacity md:duration-500",
+        "md:" + (showScrollCue ? "opacity-90" : "opacity-0 pointer-events-none")
       )}>
-        <div className="bg-white dark:bg-gray-800 rounded-full px-4 py-1.5 shadow-md flex items-center gap-2 text-xs text-gray-600 dark:text-gray-400 border border-gray-200 dark:border-gray-700">
-          <span className="font-medium">Swipe for timeline</span>
-          <ChevronsRight size={14} className="animate-bounce" />
+        <div className="bg-white dark:bg-gray-800 rounded-full px-4 py-2 shadow-md flex items-center gap-2 text-xs sm:text-sm text-gray-600 dark:text-gray-400 border border-gray-200 dark:border-gray-700">
+          <span className="font-medium">Swipe</span>
+          <ChevronsRight size={16} className="animate-pulse" />
+          <span>for more history</span>
         </div>
       </div>
     </section>

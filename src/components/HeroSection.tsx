@@ -26,10 +26,10 @@ const HeroSection = () => {
   };
 
   // Calculate parallax effect with a gentler multiplier for mobile
-  const parallaxOffset = scrollPosition * (isMobile ? 0.15 : 0.4);
+  const parallaxOffset = scrollPosition * (isMobile ? 0.1 : 0.35);
 
   return (
-    <section id="home" className="relative h-[85vh] sm:h-screen w-screen flex flex-col items-center justify-center text-white overflow-hidden">
+    <section id="home" className="relative min-h-[80vh] sm:h-screen w-full flex flex-col items-center justify-center text-white overflow-hidden">
       {/* Blue background layer */}
       <div className="absolute inset-0 z-0 bg-civitan-blue"></div>
       
@@ -46,7 +46,7 @@ const HeroSection = () => {
       />
       
       {/* Content container with padding adjustments */}
-      <div className="container mx-auto px-4 sm:px-6 z-10 text-center py-6 sm:py-16">
+      <div className="container mx-auto px-3 sm:px-6 z-10 text-center flex flex-col justify-center h-full py-12">
         <div className="animate-fade-in py-3 sm:py-8 max-w-4xl mx-auto">
           <CivitanLogo size="lg" className="mx-auto mb-4 sm:mb-6" />
           <h1 className="text-shine text-xl sm:text-3xl md:text-5xl">Make A Lasting Impact!</h1>
@@ -58,7 +58,7 @@ const HeroSection = () => {
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 mb-4 sm:mb-6 px-4">
             <Button
-              className="bg-civitan-gold text-civitan-blue hover:bg-civitan-gold hover:text-white font-bold px-4 sm:px-8 py-3 sm:py-6 text-sm sm:text-lg shadow-md"
+              className="bg-civitan-gold text-civitan-blue hover:bg-civitan-gold hover:text-white font-bold px-4 sm:px-8 py-3 sm:py-6 text-sm sm:text-lg shadow-md mobile-touch-target"
               onClick={handleOpenModal}
             >
               Become A Member

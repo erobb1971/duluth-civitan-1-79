@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -95,10 +96,11 @@
 
   html {
     scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
   }
 
   .section {
-    @apply py-10 md:py-16 lg:py-24;
+    @apply py-10 md:py-16 lg:py-24 overflow-x-hidden;
   }
 
   /* Improved timeline styles with pulsing effect */
@@ -374,9 +376,17 @@
     min-width: 44px;
   }
   
+  .xs\:basis-4\/5 {
+    flex-basis: 80%;
+  }
+  
+  .overflow-x-hidden {
+    overflow-x: hidden;
+  }
+  
   @media (max-width: 768px) {
     .pb-mobile-nav {
-      padding-bottom: 60px;
+      padding-bottom: 64px;
     }
     
     .gallery-spacing {
@@ -427,4 +437,21 @@
 /* Apply no-select to all images by default */
 img {
   @apply protected-image;
+}
+
+/* New mobile-specific utilities */
+@media (max-width: 480px) {
+  .xs\:text-xs {
+    font-size: 0.75rem;
+    line-height: 1rem;
+  }
+  
+  .xs\:p-2 {
+    padding: 0.5rem;
+  }
+  
+  .xs\:my-1 {
+    margin-top: 0.25rem;
+    margin-bottom: 0.25rem;
+  }
 }

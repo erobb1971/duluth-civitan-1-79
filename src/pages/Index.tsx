@@ -1,5 +1,4 @@
-
-import React, { useEffect } from "react";
+import React from "react";
 import DesktopNavigation from "@/components/DesktopNavigation";
 import MobileNavigation from "@/components/MobileNavigation";
 import HeroSection from "@/components/HeroSection";
@@ -11,6 +10,7 @@ import GallerySection from "@/components/GallerySection";
 import ContactSection from "@/components/ContactSection";
 import PartnersSection from "@/components/PartnersSection";
 import Footer from "@/components/Footer";
+import MembershipSection from "@/components/MembershipSection";
 // import { initializeSecurity } from "@/utils/security";
 
 const Index = () => {
@@ -24,7 +24,7 @@ const Index = () => {
   // }, []);
 
   return (
-    <div className="min-h-screen pb-mobile-nav relative">
+    <div className="min-h-screen pb-mobile-nav relative overflow-x-hidden">
       <DesktopNavigation />
       <div id="home" className="scroll-mt-20"></div>
       <HeroSection />
@@ -43,9 +43,12 @@ const Index = () => {
       </div>
       
       {/* Rest of the sections */}
-      <div className="relative z-10">
+      <div className="relative z-10 overflow-x-hidden">
         <div id="partners" className="scroll-mt-20"></div>
         <PartnersSection />
+        
+        <div id="membership" className="scroll-mt-20"></div>
+        <MembershipSection />
         
         <div id="gallery" className="scroll-mt-20"></div>
         <GallerySection />
