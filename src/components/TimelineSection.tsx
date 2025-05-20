@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { ChevronLeft, ChevronRight, ChevronsRight } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -10,6 +10,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const timelineEvents = [
   {
@@ -122,11 +123,21 @@ const timelineEvents = [
 const TimelineSection = () => {
   const [showScrollCue, setShowScrollCue] = useState(true);
   const [hoveredYear, setHoveredYear] = useState<string | number | null>(null);
+  const isMobile = useIsMobile();
   
   // Hide scroll cue after user has interacted with timeline
   const handleInteraction = () => {
     setShowScrollCue(false);
   };
+
+  // Auto-hide scroll cue after 5 seconds
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowScrollCue(false);
+    }, 5000);
+    
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <section 
@@ -162,7 +173,7 @@ const TimelineSection = () => {
           {/* Timeline connector line */}
           <div className="absolute h-0.5 bg-civitan-gray dark:bg-gray-600 left-0 right-0 top-1/2 transform -translate-y-1/2 z-0"></div>
 
-          {/* Mobile scroll instructions */}
+          {/* Enhanced mobile scroll instructions with icon animation */}
           <div className={cn(
             "flex items-center justify-center mb-4 text-sm text-civitan-blue dark:text-civitan-gold gap-1",
             "md:hidden transition-opacity duration-300",
@@ -190,7 +201,8 @@ const TimelineSection = () => {
             opts={{ 
               align: "start",
               loop: false,
-              dragFree: true,
+              containScroll: "trimSnaps",
+              dragFree: false,
             }}
             className="w-full"
           >
@@ -252,14 +264,14 @@ const TimelineSection = () => {
         </div>
       </div>
       
-      {/* Timeline scroll indicator */}
+      {/* Enhanced timeline scroll indicator with animated directional cue */}
       <div className={cn(
         "absolute bottom-4 w-full flex justify-center",
         "transition-opacity duration-500",
-        showScrollCue ? "opacity-80" : "opacity-0 pointer-events-none"
+        showScrollCue ? "opacity-90" : "opacity-0 pointer-events-none"
       )}>
-        <div className="bg-white dark:bg-gray-800 rounded-full px-4 py-1 shadow-md flex items-center gap-2 text-xs text-gray-600 dark:text-gray-400">
-          <span>Scroll for more</span>
+        <div className="bg-white dark:bg-gray-800 rounded-full px-4 py-1.5 shadow-md flex items-center gap-2 text-xs text-gray-600 dark:text-gray-400 border border-gray-200 dark:border-gray-700">
+          <span className="font-medium">Swipe for timeline</span>
           <ChevronsRight size={14} className="animate-bounce" />
         </div>
       </div>
