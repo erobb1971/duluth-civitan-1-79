@@ -45,13 +45,21 @@ const MembershipSection = () => {
                       <span>Business sponsorship opportunities</span>
                     </li>
                   </ul>
+                  
+                  <h3 className="text-2xl font-bold text-white mt-8 mb-4">Membership Dues</h3>
+                  <ul className="space-y-3 text-white">
+                    <li className="text-base">Dues include lunch at 1818 Club events</li>
+                    <li className="text-base">$95 per quarter</li>
+                    <li className="text-base">$375 per Year</li>
+                    <li className="text-base">$125 per Year support individual (no meals included)</li>
+                  </ul>
                 </div>
                 
                 <div className="flex items-center justify-center">
                   <img 
-                    src="/lovable-uploads/7771749b-f5ad-4949-8f0b-1d321a504737.png" 
-                    alt="Civitan Member Card" 
-                    className="max-w-full rounded-lg shadow-xl" 
+                    src="/lovable-uploads/aee0f8ab-c08c-4902-8029-9185987b6644.png" 
+                    alt="We Are Civitan" 
+                    className="max-w-full h-auto rounded-lg shadow-xl" 
                   />
                 </div>
               </div>
