@@ -194,6 +194,12 @@ const TimelineSection = () => {
             }}
             className="w-full"
           >
+            {/* Navigation arrows positioned above timeline */}
+            <div className="hidden sm:block mb-12">
+              <CarouselPrevious className="absolute left-0 top-0 transform -translate-y-14 bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 border-civitan-gold" />
+              <CarouselNext className="absolute right-0 top-0 transform -translate-y-14 bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 border-civitan-gold" />
+            </div>
+
             <CarouselContent className="-ml-1 md:-ml-4">
               {timelineEvents.map((event, index) => (
                 <CarouselItem 
@@ -224,16 +230,17 @@ const TimelineSection = () => {
                       </span>
                     </div>
                     
-                    {/* Card content */}
+                    {/* Card content - Fixed height removed to prevent content from being cut off */}
                     <div className={cn(
                       "bg-white dark:bg-gray-900 p-4 rounded-lg shadow-md",
-                      "h-44 md:h-48 flex flex-col transition-all duration-300",
+                      "mb-6 flex flex-col transition-all duration-300", /* removed fixed height */
+                      "min-h-[150px]", /* minimum height instead of fixed height */
                       hoveredYear === event.year ? "transform -translate-y-2" : ""
                     )}>
                       <h3 className="text-lg md:text-xl font-bold text-civitan-blue dark:text-white mb-2 line-clamp-2">
                         {event.title}
                       </h3>
-                      <p className="text-gray-700 dark:text-gray-300 text-sm flex-grow overflow-y-auto scrollbar-hide">
+                      <p className="text-gray-700 dark:text-gray-300 text-sm flex-grow">
                         {event.description}
                       </p>
                     </div>
@@ -241,12 +248,6 @@ const TimelineSection = () => {
                 </CarouselItem>
               ))}
             </CarouselContent>
-
-            {/* Navigation arrows with custom styling */}
-            <div className="hidden sm:block">
-              <CarouselPrevious className="left-0 bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 border-civitan-gold" />
-              <CarouselNext className="right-0 bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 border-civitan-gold" />
-            </div>
           </Carousel>
         </div>
       </div>
