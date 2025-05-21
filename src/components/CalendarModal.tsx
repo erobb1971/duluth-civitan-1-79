@@ -47,11 +47,6 @@ const CalendarModal = ({ open, onOpenChange }: CalendarModalProps) => {
   const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
   const isMobile = useIsMobile();
 
-  // Updated formatter to simply return the event title as-is
-  const formatEventTitle = (event: Event) => {
-    return event.title;
-  };
-
   const handleEmailClick = (event: Event) => {
     // If there's an external URL, open it
     if (event.externalUrl) {
