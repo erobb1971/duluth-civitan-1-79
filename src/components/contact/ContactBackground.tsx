@@ -24,7 +24,7 @@ const BackgroundOverlay: React.FC<BackgroundOverlayProps> = ({
       {/* Image overlay with parallax effect when scrolling */}
       {image && (
         <div 
-          className="absolute inset-0 z-0 bg-no-repeat bg-cover bg-center bg-fixed"
+          className="absolute inset-0 z-0 bg-no-repeat bg-cover bg-left-top bg-fixed"
           style={{ 
             backgroundImage: `url(${image})`,
             opacity: opacity,

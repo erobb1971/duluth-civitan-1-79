@@ -36,7 +36,7 @@ const TimelineSection = () => {
       {/* Historical train image overlay with parallax */}
       <BackgroundOverlay 
         image="/lovable-uploads/9af4fff5-7215-4b66-9430-1dc86a7d9a58.png" 
-        opacity={0.25} 
+        opacity={0.35} 
         gradient={false} 
       />
       
