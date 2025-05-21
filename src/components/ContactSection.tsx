@@ -1,69 +1,202 @@
 
 import React from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Mail, MapPin, Phone } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { Button } from "@/components/ui/button";
+import { Mail, Phone, MapPin, PiggyBank, UserPlus } from "lucide-react";
+import { motion } from "framer-motion";
+import { useState } from "react";
+import DonationModal from "./DonationModal";
+import MembershipApplicationModal from "./MembershipApplicationModal";
 
 const ContactSection = () => {
   const isMobile = useIsMobile();
+  const [donationModalOpen, setDonationModalOpen] = useState(false);
+  const [membershipModalOpen, setMembershipModalOpen] = useState(false);
 
   // Don't render the section on mobile devices
   if (isMobile) return null;
 
+  const handleDonateClick = () => {
+    setDonationModalOpen(true);
+  };
+
+  const handleMembershipClick = () => {
+    setMembershipModalOpen(true);
+  };
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { y: 20, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        type: "spring",
+        stiffness: 100,
+      },
+    },
+  };
+
+  const buttonVariants = {
+    hover: { scale: 1.05, y: -5 },
+    tap: { scale: 0.95 },
+  };
+
   return (
     <section id="contact" className="section relative overflow-hidden pt-16 pb-20">
-      {/* Blue background layer with improved gradient */}
+      {/* Modern gradient background with blur effect */}
       <div className="absolute inset-0 z-0 bg-gradient-to-b from-civitan-blue to-[#0a1428]"></div>
+      <div className="absolute inset-0 z-0 opacity-20">
+        <div className="absolute top-0 left-0 w-full h-64 bg-civitan-gold opacity-10 blur-3xl rounded-full -translate-x-1/2 -translate-y-1/2"></div>
+        <div className="absolute bottom-0 right-0 w-full h-64 bg-civitan-gold opacity-10 blur-3xl rounded-full translate-x-1/2 translate-y-1/2"></div>
+      </div>
       
       <div className="container mx-auto px-4 sm:px-6 relative z-10">
-        <div className="text-center mb-12 sm:mb-14">
+        <div className="text-center mb-14">
           <h2 className="text-3xl md:text-5xl font-bold text-white mb-5">
             Contact Us
           </h2>
           <div className="w-24 h-1 bg-civitan-gold mx-auto mb-8"></div>
           <p className="text-lg max-w-2xl mx-auto text-gray-200">
-            Have questions or want to get involved? Reach out to us through any of these channels:
+            Ready to connect with Duluth Civitan? Reach out or get involved through any of these channels.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-          <Card className="civitan-shadow bg-white/95 backdrop-blur-sm border border-white/20 transform transition-all duration-300 hover:-translate-y-2">
-            <CardContent className="pt-6 p-8 flex flex-col items-center text-center">
-              <a href="tel:678-242-0445" className="group" aria-label="Call us at 678-242-0445">
-                <div className="bg-civitan-gold p-4 rounded-full mb-6 transform transition-transform duration-300 group-hover:scale-110 shadow-lg">
-                  <Phone className="h-8 w-8 text-civitan-blue" />
+        <motion.div
+          className="flex flex-col md:flex-row justify-center items-center gap-6 max-w-4xl mx-auto"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+        >
+          {/* Call button */}
+          <motion.div className="w-full md:w-1/3" variants={itemVariants}>
+            <motion.div
+              className="group"
+              whileHover="hover"
+              whileTap="tap"
+              variants={buttonVariants}
+            >
+              <Button 
+                variant="outline" 
+                className="w-full py-8 h-auto bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/20 hover:border-white/30 text-white rounded-2xl transition-all duration-300"
+                onClick={() => window.location.href = 'tel:678-242-0445'}
+              >
+                <div className="flex flex-col items-center gap-3">
+                  <div className="bg-civitan-gold p-3 rounded-full group-hover:scale-110 transition-transform duration-300">
+                    <Phone className="h-6 w-6 text-civitan-blue" />
+                  </div>
+                  <span className="text-lg font-medium">Call Us</span>
                 </div>
-                <h3 className="text-xl font-semibold mb-2 text-civitan-blue">Give Us a Call</h3>
-                <p className="text-gray-600">678-242-0445</p>
-              </a>
-            </CardContent>
-          </Card>
+              </Button>
+            </motion.div>
+          </motion.div>
 
-          <Card className="civitan-shadow bg-white/95 backdrop-blur-sm border border-white/20 transform transition-all duration-300 hover:-translate-y-2">
-            <CardContent className="pt-6 p-8 flex flex-col items-center text-center">
-              <a href="mailto:info@duluthcivitanclub.org" className="group" aria-label="Email us at info@duluthcivitanclub.org">
-                <div className="bg-civitan-gold p-4 rounded-full mb-6 transform transition-transform duration-300 group-hover:scale-110 shadow-lg">
-                  <Mail className="h-8 w-8 text-civitan-blue" />
+          {/* Email button */}
+          <motion.div className="w-full md:w-1/3" variants={itemVariants}>
+            <motion.div
+              className="group"
+              whileHover="hover"
+              whileTap="tap"
+              variants={buttonVariants}
+            >
+              <Button 
+                variant="outline" 
+                className="w-full py-8 h-auto bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/20 hover:border-white/30 text-white rounded-2xl transition-all duration-300"
+                onClick={() => window.location.href = 'mailto:info@duluthcivitanclub.org'}
+              >
+                <div className="flex flex-col items-center gap-3">
+                  <div className="bg-civitan-gold p-3 rounded-full group-hover:scale-110 transition-transform duration-300">
+                    <Mail className="h-6 w-6 text-civitan-blue" />
+                  </div>
+                  <span className="text-lg font-medium">Email Us</span>
                 </div>
-                <h3 className="text-xl font-semibold mb-2 text-civitan-blue">Send an Email</h3>
-                <p className="text-gray-600">info@duluthcivitanclub.org</p>
-              </a>
-            </CardContent>
-          </Card>
+              </Button>
+            </motion.div>
+          </motion.div>
 
-          <Card className="civitan-shadow bg-white/95 backdrop-blur-sm border border-white/20 transform transition-all duration-300 hover:-translate-y-2">
-            <CardContent className="pt-6 p-8 flex flex-col items-center text-center">
-              <a href="https://www.google.com/maps/place/Downtown+Duluth,+Duluth,+GA/@34.0028474,-84.1484762,17z" target="_blank" rel="noopener noreferrer" className="group" aria-label="Find us in Downtown Duluth, Georgia">
-                <div className="bg-civitan-gold p-4 rounded-full mb-6 transform transition-transform duration-300 group-hover:scale-110 shadow-lg">
-                  <MapPin className="h-8 w-8 text-civitan-blue" />
+          {/* Location button */}
+          <motion.div className="w-full md:w-1/3" variants={itemVariants}>
+            <motion.div
+              className="group"
+              whileHover="hover"
+              whileTap="tap"
+              variants={buttonVariants}
+            >
+              <Button 
+                variant="outline" 
+                className="w-full py-8 h-auto bg-white/10 backdrop-blur-sm border border-white/20 hover:bg-white/20 hover:border-white/30 text-white rounded-2xl transition-all duration-300"
+                onClick={() => window.open('https://www.google.com/maps/place/Downtown+Duluth,+Duluth,+GA/@34.0028474,-84.1484762,17z', '_blank')}
+              >
+                <div className="flex flex-col items-center gap-3">
+                  <div className="bg-civitan-gold p-3 rounded-full group-hover:scale-110 transition-transform duration-300">
+                    <MapPin className="h-6 w-6 text-civitan-blue" />
+                  </div>
+                  <span className="text-lg font-medium">Visit Us</span>
                 </div>
-                <h3 className="text-xl font-semibold mb-2 text-civitan-blue">Visit Us</h3>
-                <p className="text-gray-600">Downtown Duluth, GA</p>
-              </a>
-            </CardContent>
-          </Card>
-        </div>
+              </Button>
+            </motion.div>
+          </motion.div>
+        </motion.div>
+
+        {/* Get Involved Buttons */}
+        <motion.div 
+          className="mt-12 text-center"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3, duration: 0.5 }}
+          viewport={{ once: true }}
+        >
+          <h3 className="text-2xl font-bold text-white mb-6">Get Involved</h3>
+          <div className="flex flex-col sm:flex-row justify-center gap-4 max-w-md mx-auto">
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="w-full"
+            >
+              <Button 
+                className="w-full bg-civitan-gold text-civitan-blue hover:bg-yellow-400 font-semibold py-6 h-auto text-lg rounded-xl shadow-lg"
+                onClick={handleDonateClick}
+              >
+                <PiggyBank className="mr-2 h-5 w-5" />
+                Donate
+              </Button>
+            </motion.div>
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="w-full"
+            >
+              <Button 
+                className="w-full bg-white text-civitan-blue hover:bg-gray-100 font-semibold py-6 h-auto text-lg rounded-xl shadow-lg"
+                onClick={handleMembershipClick}
+              >
+                <UserPlus className="mr-2 h-5 w-5" />
+                Become a Member
+              </Button>
+            </motion.div>
+          </div>
+        </motion.div>
       </div>
+
+      {/* Modals */}
+      <DonationModal
+        open={donationModalOpen}
+        onOpenChange={setDonationModalOpen}
+      />
+      <MembershipApplicationModal
+        open={membershipModalOpen}
+        onOpenChange={setMembershipModalOpen}
+      />
     </section>
   );
 };
