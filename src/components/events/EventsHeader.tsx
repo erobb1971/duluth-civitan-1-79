@@ -3,7 +3,7 @@ import React from "react";
 
 const EventsHeader: React.FC = () => {
   return (
-    <div className="text-center mb-8 sm:mb-12">
+    <div className="text-center mb-8 sm:mb-12 hidden lg:block">
       <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-civitan-blue dark:text-civitan-gold mb-3 sm:mb-4">
         Upcoming Events
       </h2>
