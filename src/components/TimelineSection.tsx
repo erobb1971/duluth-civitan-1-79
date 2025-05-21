@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { ChevronLeft, ChevronRight, ChevronsRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, ChevronsRight, History } from "lucide-react";
 import { cn } from "@/lib/utils";
 import {
   Carousel,
@@ -123,6 +123,7 @@ const timelineEvents = [
 const TimelineSection = () => {
   const [showScrollCue, setShowScrollCue] = useState(true);
   const [hoveredYear, setHoveredYear] = useState<string | number | null>(null);
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const isMobile = useIsMobile();
   
   // Hide scroll cue after user has interacted with timeline
@@ -142,25 +143,30 @@ const TimelineSection = () => {
   return (
     <section 
       id="timeline" 
-      className="section bg-gray-100 dark:bg-gray-800 py-10 md:py-16 relative w-full overflow-hidden"
+      className="section py-12 md:py-20 relative w-full overflow-hidden bg-gradient-to-b from-gray-100 to-white dark:from-gray-800 dark:to-gray-900"
     >
+      <div className="absolute top-0 left-0 w-full h-20 bg-gradient-to-b from-gray-100 dark:from-gray-800 opacity-70"></div>
       <div className="container mx-auto px-3 sm:px-6">
-        <div className="text-center mb-6 md:mb-10">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-civitan-blue dark:text-civitan-gold mb-3">
+        <div className="text-center mb-10 md:mb-14 relative z-10">
+          <div className="inline-flex items-center justify-center gap-2 mb-3 text-civitan-blue dark:text-civitan-gold">
+            <History className="h-5 w-5 animate-pulse" />
+            <span className="text-sm font-medium uppercase tracking-wide">History</span>
+          </div>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-civitan-blue dark:text-civitan-gold mb-4">
             Our Journey Through Time
           </h2>
-          <div className="w-16 sm:w-24 h-1 bg-civitan-gold mx-auto mb-4 sm:mb-6"></div>
+          <div className="w-24 h-1 bg-civitan-gold mx-auto mb-6"></div>
           <p className="text-sm sm:text-lg max-w-3xl mx-auto text-gray-700 dark:text-gray-300 px-2">
             Explore the key milestones in Duluth Civitan's history since our founding in 2003
           </p>
         </div>
 
-        {/* Founders Section */}
-        <div className="mb-8 md:mb-12 text-center">
-          <div className="inline-block bg-white dark:bg-gray-900 p-4 sm:p-6 rounded-lg shadow-md border-2 border-civitan-gold relative z-10 max-w-sm mx-auto">
-            <h3 className="text-xl font-bold text-civitan-blue dark:text-white mb-3">Founders / Club Builders</h3>
-            <ul className="text-gray-700 dark:text-gray-300 text-sm sm:text-base space-y-1">
-              <li className="font-medium">Terry Crouch (Founder)</li>
+        {/* Founders Section with improved styling */}
+        <div className="mb-12 md:mb-16 text-center">
+          <div className="inline-block bg-white dark:bg-gray-900 p-6 sm:p-8 rounded-xl shadow-lg border-2 border-civitan-gold relative z-10 max-w-sm mx-auto transform transition-all hover:-translate-y-1 hover:shadow-xl duration-300">
+            <h3 className="text-2xl font-bold text-civitan-blue dark:text-white mb-4">Founders / Club Builders</h3>
+            <ul className="text-gray-700 dark:text-gray-300 text-sm sm:text-base space-y-2">
+              <li className="font-medium text-civitan-blue dark:text-civitan-gold">Terry Crouch (Founder)</li>
               <li>Cheryl Crouch</li>
               <li>Terry Swaim</li>
               <li>Chuck Hartman</li>
@@ -168,14 +174,15 @@ const TimelineSection = () => {
           </div>
         </div>
         
-        {/* Horizontal Timeline */}
-        <div className="relative mt-8" onClick={handleInteraction} onTouchStart={handleInteraction}>
-          {/* Timeline connector line */}
-          <div className="absolute h-0.5 bg-civitan-gray dark:bg-gray-600 left-0 right-0 top-1/2 transform -translate-y-1/2 z-0"></div>
+        {/* Horizontal Timeline with enhanced styling */}
+        <div className="relative mt-14 mb-10" onClick={handleInteraction} onTouchStart={handleInteraction}>
+          {/* Timeline connector line with gradient and shimmer effect */}
+          <div className="absolute h-1 bg-gradient-to-r from-civitan-blue/30 via-civitan-gold to-civitan-blue/30 left-0 right-0 top-1/2 transform -translate-y-1/2 z-0 rounded-full shadow-sm"></div>
+          <div className="absolute h-0.5 left-0 right-0 top-1/2 transform -translate-y-1/2 z-1 rounded-full bg-white/50 dark:bg-gray-600/50 animate-pulse"></div>
 
           {/* Mobile swipe indicator - Always visible on mobile */}
           <div className={cn(
-            "flex items-center justify-center mb-4 text-sm text-civitan-blue dark:text-civitan-gold gap-1",
+            "flex items-center justify-center mb-6 text-sm text-civitan-blue dark:text-civitan-gold gap-1",
             "md:hidden transition-opacity duration-300",
             "sticky z-10"
           )}>
@@ -186,7 +193,7 @@ const TimelineSection = () => {
           
           {/* Desktop scroll instructions */}
           <div className={cn(
-            "hidden md:flex items-center justify-center mb-4 text-sm text-civitan-blue dark:text-civitan-gold gap-1",
+            "hidden md:flex items-center justify-center mb-6 text-sm text-civitan-blue dark:text-civitan-gold gap-1",
             "transition-opacity duration-300",
             showScrollCue ? "opacity-100" : "opacity-0"
           )}>
@@ -196,7 +203,7 @@ const TimelineSection = () => {
             <span>to explore our history</span>
           </div>
           
-          {/* Timeline Carousel */}
+          {/* Timeline Carousel with enhanced styling */}
           <Carousel 
             opts={{ 
               align: "start",
@@ -205,11 +212,15 @@ const TimelineSection = () => {
               dragFree: false,
             }}
             className="w-full"
+            onSelect={(index) => {
+              setActiveIndex(index);
+              handleInteraction();
+            }}
           >
             {/* Navigation arrows positioned above timeline */}
             <div className="hidden sm:block mb-12">
-              <CarouselPrevious className="absolute left-0 top-0 transform -translate-y-14 bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 border-civitan-gold" />
-              <CarouselNext className="absolute right-0 top-0 transform -translate-y-14 bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 border-civitan-gold" />
+              <CarouselPrevious className="absolute left-0 top-0 transform -translate-y-14 bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 border-civitan-gold text-civitan-blue dark:text-civitan-gold" />
+              <CarouselNext className="absolute right-0 top-0 transform -translate-y-14 bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 border-civitan-gold text-civitan-blue dark:text-civitan-gold" />
             </div>
 
             <CarouselContent className="-ml-1 md:-ml-4">
@@ -221,35 +232,39 @@ const TimelineSection = () => {
                   onMouseLeave={() => setHoveredYear(null)}
                 >
                   <div className="relative h-full">
-                    {/* Timeline point */}
+                    {/* Enhanced timeline point */}
                     <div className={cn(
                       "absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10",
-                      "w-4 h-4 rounded-full bg-civitan-gold transition-all duration-300",
-                      hoveredYear === event.year ? "scale-150" : ""
+                      "w-5 h-5 rounded-full bg-civitan-gold border-2 border-white dark:border-gray-800 shadow-md transition-all duration-300",
+                      (hoveredYear === event.year || activeIndex === index) ? "scale-150" : ""
                     )}>
-                      {/* Pulsing effect */}
+                      {/* Enhanced pulsing effect */}
                       <span className={cn(
                         "absolute inset-0 rounded-full",
-                        "animate-pulse bg-civitan-gold/30"
+                        "animate-pulse bg-civitan-gold/60"
                       )}></span>
                     </div>
                     
-                    {/* Year indicator */}
+                    {/* Year indicator with enhanced styling */}
                     <div className="flex flex-col items-center mb-8">
                       <div className="h-8"></div> {/* Spacer for timeline points */}
-                      <span className="inline-block bg-civitan-blue dark:bg-civitan-gold text-white dark:text-civitan-blue px-3 py-1 rounded-full text-sm font-bold mb-2">
+                      <span className={cn(
+                        "inline-block bg-civitan-blue dark:bg-civitan-gold text-white dark:text-civitan-blue px-4 py-1.5 rounded-full text-sm font-bold mb-3 shadow-md transition-transform duration-300",
+                        (hoveredYear === event.year || activeIndex === index) ? "transform scale-110" : ""
+                      )}>
                         {event.year}
                       </span>
                     </div>
                     
-                    {/* Card content - Fixed height removed to prevent content from being cut off */}
+                    {/* Card content with enhanced styling */}
                     <div className={cn(
-                      "bg-white dark:bg-gray-900 p-4 rounded-lg shadow-md",
-                      "mb-6 flex flex-col transition-all duration-300", /* removed fixed height */
-                      "min-h-[150px]", /* minimum height instead of fixed height */
-                      hoveredYear === event.year ? "transform -translate-y-2" : ""
+                      "bg-white dark:bg-gray-900 p-5 rounded-xl shadow-md",
+                      "mb-6 flex flex-col transition-all duration-300",
+                      "min-h-[170px] border border-gray-100 dark:border-gray-700",
+                      (hoveredYear === event.year || activeIndex === index) ? 
+                        "transform -translate-y-2 shadow-lg border-civitan-gold dark:border-civitan-gold" : ""
                     )}>
-                      <h3 className="text-lg md:text-xl font-bold text-civitan-blue dark:text-white mb-2 line-clamp-2">
+                      <h3 className="text-lg md:text-xl font-bold text-civitan-blue dark:text-civitan-gold mb-3 line-clamp-2">
                         {event.title}
                       </h3>
                       <p className="text-gray-700 dark:text-gray-300 text-sm flex-grow">
@@ -264,18 +279,21 @@ const TimelineSection = () => {
         </div>
       </div>
       
-      {/* Persistent swipe indicator at bottom of timeline */}
+      {/* Enhanced persistent swipe indicator at bottom of timeline */}
       <div className={cn(
         "absolute bottom-4 w-full flex justify-center",
         "md:transition-opacity md:duration-500",
         "md:" + (showScrollCue ? "opacity-90" : "opacity-0 pointer-events-none")
       )}>
-        <div className="bg-white dark:bg-gray-800 rounded-full px-4 py-2 shadow-md flex items-center gap-2 text-xs sm:text-sm text-gray-600 dark:text-gray-400 border border-gray-200 dark:border-gray-700">
+        <div className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-full px-5 py-2.5 shadow-lg flex items-center gap-2 text-xs sm:text-sm text-gray-700 dark:text-gray-300 border border-gray-200 dark:border-gray-700">
           <span className="font-medium">Swipe</span>
-          <ChevronsRight size={16} className="animate-pulse" />
+          <ChevronsRight size={16} className="animate-pulse text-civitan-gold" />
           <span>for more history</span>
         </div>
       </div>
+
+      {/* Bottom gradient fade */}
+      <div className="absolute bottom-0 left-0 w-full h-20 bg-gradient-to-t from-gray-100 to-transparent dark:from-gray-900 dark:to-transparent opacity-70"></div>
     </section>
   );
 };
