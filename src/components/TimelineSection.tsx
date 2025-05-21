@@ -32,12 +32,14 @@ const TimelineSection = () => {
     <section 
       id="timeline" 
       className="section py-12 md:py-20 relative w-full overflow-hidden"
+      aria-label="Duluth Civitan History Timeline"
     >
-      {/* Historical train image overlay with parallax */}
+      {/* Historical train image overlay with parallax - optimized with descriptive alt text */}
       <BackgroundOverlay 
         image="/lovable-uploads/9af4fff5-7215-4b66-9430-1dc86a7d9a58.png" 
         opacity={0.5} 
         gradient={false} 
+        altText="Historical Duluth train depot - symbolic of Duluth GA heritage"
       />
       
       {/* Semi-transparent overlay to ensure text readability */}
@@ -48,14 +50,14 @@ const TimelineSection = () => {
         <div className="text-center mb-10 md:mb-14">
           <div className="inline-flex items-center justify-center gap-2 mb-3 text-civitan-blue dark:text-civitan-gold">
             <History className="h-5 w-5 animate-pulse" />
-            <span className="text-sm font-medium uppercase tracking-wide">History</span>
+            <span className="text-sm font-medium uppercase tracking-wide">History in Gwinnett County</span>
           </div>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-civitan-blue dark:text-civitan-gold mb-4">
-            Our Journey Through Time
+            Our Journey Through Time in Duluth
           </h2>
           <div className="w-24 h-1 bg-civitan-gold mx-auto mb-6"></div>
           <p className="text-sm sm:text-lg max-w-3xl mx-auto text-gray-700 dark:text-gray-300 px-2">
-            Explore the key milestones in Duluth Civitan's history since our founding in 2003
+            Explore the key milestones in Duluth Civitan's history since our founding in 2003, serving the Gwinnett County community
           </p>
         </div>
 

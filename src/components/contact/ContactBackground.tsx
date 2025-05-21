@@ -6,13 +6,15 @@ interface BackgroundOverlayProps {
   image?: string;
   opacity?: number;
   blurAmount?: string;
+  altText?: string;
 }
 
 const BackgroundOverlay: React.FC<BackgroundOverlayProps> = ({ 
   gradient = true, 
   image,
   opacity = 0.2,
-  blurAmount = "blur-3xl"
+  blurAmount = "blur-3xl",
+  altText
 }) => {
   return (
     <>
@@ -29,6 +31,8 @@ const BackgroundOverlay: React.FC<BackgroundOverlayProps> = ({
             backgroundImage: `url(${image})`,
             opacity: opacity,
           }}
+          role="img" 
+          aria-label={altText || "Background image"}
         ></div>
       )}
       
