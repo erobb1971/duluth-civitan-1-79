@@ -29,23 +29,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- Enhanced Hide Lovable badge settings - simplified -->
-    <meta name="lovable:hide-badge" content="true" />
-    <meta name="lovable:disable-branding" content="true" />
-    <meta name="noedit" content="true" />
-    
-    <!-- Add CSS to hide the badge - kept simple -->
-    <style>
-      [data-lovable-badge],
-      [data-lovable-brand],
-      .lovable-badge,
-      .lovable-branding,
-      #lovable-badge,
-      .lovable-editor-badge {
-        display: none !important;
-      }
-    </style>
-
     <!-- JSON-LD Schema -->
     <script type="application/ld+json">
     {
@@ -78,20 +61,6 @@
 
   <body>
     <div id="root"></div>
-    <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
     <script type="module" src="/src/main.tsx"></script>
-    <!-- Simplified badge removal script -->
-    <script>
-      // Simple badge removal function
-      window.addEventListener('DOMContentLoaded', () => {
-        const removeBranding = () => {
-          document.querySelectorAll('[data-lovable-brand], [data-lovable-badge], .lovable-badge, .lovable-branding, #lovable-badge, .lovable-editor-badge').forEach(el => el.remove());
-        };
-        
-        // Run once on load and again after a short delay
-        removeBranding();
-        setTimeout(removeBranding, 500);
-      });
-    </script>
   </body>
 </html>
