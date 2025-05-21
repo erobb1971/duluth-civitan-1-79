@@ -1,3 +1,4 @@
+
 import React from "react";
 import DesktopNavigation from "@/components/DesktopNavigation";
 import MobileNavigation from "@/components/MobileNavigation";
@@ -23,7 +24,7 @@ const Index = () => {
   // }, []);
 
   return (
-    <div className="min-h-screen pb-mobile-nav relative overflow-x-hidden">
+    <div className="min-h-screen pb-mobile-nav relative overflow-x-hidden pt-20 lg:pt-20">
       <DesktopNavigation />
       <div id="home" className="scroll-mt-20"></div>
       <HeroSection />

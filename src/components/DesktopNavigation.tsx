@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import CivitanLogo from "./CivitanLogo";
 import { Button } from "@/components/ui/button";
 import MembershipApplicationModal from "./MembershipApplicationModal";
@@ -12,6 +12,23 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 const DesktopNavigation = () => {
   const [membershipModalOpen, setMembershipModalOpen] = useState(false);
   const [donationModalOpen, setDonationModalOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  // Add scroll event listener to detect scrolling for header styling
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 10) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   // Updated scroll function that uses getBoundingClientRect for accurate positioning
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
@@ -20,7 +37,7 @@ const DesktopNavigation = () => {
     if (section) {
       const rect = section.getBoundingClientRect();
       const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-      const headerHeight = 64; // Adjust for header height
+      const headerHeight = 80; // Adjust for header height
       
       window.scrollTo({
         top: rect.top + scrollTop - headerHeight,
@@ -34,7 +51,9 @@ const DesktopNavigation = () => {
   };
 
   return (
-    <header className="hidden lg:block sticky top-0 z-40 w-full bg-white border-b border-gray-200 shadow-sm">
+    <header className={`hidden lg:block fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300 ${
+      isScrolled ? "bg-white/95 backdrop-blur-sm shadow-md" : "bg-white border-b border-gray-200"
+    }`}>
       <div className="container mx-auto px-4">
         <div className="flex h-20 items-center justify-between">
           <div className="flex items-center">

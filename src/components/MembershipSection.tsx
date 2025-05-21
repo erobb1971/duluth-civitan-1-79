@@ -81,18 +81,24 @@ const MembershipSection = () => {
                 </p>
               </div>
               
-              {/* Logo Column - FIXED with correct image path */}
+              {/* Logo Column with white background and micro-interactions */}
               <div className="flex flex-col items-center justify-center">
-                <div className="rounded-xl shadow-lg p-6 bg-white/5 backdrop-blur-sm border border-white/10 transform hover:scale-105 transition-all duration-300">
-                  <img 
-                    src="/lovable-uploads/fa18658d-e5c5-46a4-bd9c-2da8a9133237.png" 
-                    alt="We Are Civitan" 
-                    className="max-w-full h-auto rounded-lg"
-                    style={{ width: '220px' }}
-                  />
+                <div className="rounded-xl shadow-lg bg-white p-6 transform hover:scale-105 transition-all duration-300 group">
+                  <div className="relative overflow-hidden rounded-lg">
+                    <img 
+                      src="/lovable-uploads/fa18658d-e5c5-46a4-bd9c-2da8a9133237.png" 
+                      alt="We Are Civitan" 
+                      className="max-w-full h-auto rounded-lg group-hover:brightness-110 transition-all duration-500"
+                      style={{ width: '220px' }}
+                    />
+                    <div className="absolute inset-0 bg-civitan-gold/0 group-hover:bg-civitan-gold/10 transition-all duration-300 rounded-lg"></div>
+                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity duration-500">
+                      <div className="w-full h-full bg-gradient-to-t from-civitan-blue/30 to-transparent"></div>
+                    </div>
+                  </div>
                 </div>
                 <div className="mt-6 text-center">
-                  <span className="text-civitan-gold font-medium">Serving Together</span>
+                  <span className="text-civitan-gold font-medium group-hover:text-yellow-400 transition-colors duration-300">Serving Together</span>
                 </div>
               </div>
             </div>
