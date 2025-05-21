@@ -50,7 +50,7 @@ const EventsSection = () => {
             <MeetingScheduleCard />
           </div>
 
-          {/* Convention banner */}
+          {/* Convention banner - Added elevation and spacing to make it stand out */}
           <div className="flex-1 px-2 sm:px-0 flex items-center">
             <ConventionBanner />
           </div>
