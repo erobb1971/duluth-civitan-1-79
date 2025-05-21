@@ -33,10 +33,31 @@ const MembershipSection = () => {
           </p>
         </div>
 
-        {/* Three column layout */}
-        <div className="max-w-6xl mx-auto">
+        {/* Logo and Serving Together - Now at the top */}
+        <div className="max-w-6xl mx-auto mb-8">
+          <div className="flex flex-col items-center justify-center mb-8">
+            <div className="rounded-xl shadow-lg bg-white p-6 transform hover:scale-105 transition-all duration-300 group">
+              <div className="relative overflow-hidden rounded-lg">
+                <img 
+                  src="/lovable-uploads/fa18658d-e5c5-46a4-bd9c-2da8a9133237.png" 
+                  alt="We Are Civitan" 
+                  className="max-w-full h-auto rounded-lg group-hover:brightness-110 transition-all duration-500"
+                  style={{ width: '220px' }}
+                />
+                <div className="absolute inset-0 bg-civitan-gold/0 group-hover:bg-civitan-gold/10 transition-all duration-300 rounded-lg"></div>
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity duration-500">
+                  <div className="w-full h-full bg-gradient-to-t from-civitan-blue/30 to-transparent"></div>
+                </div>
+              </div>
+            </div>
+            <div className="mt-4 text-center">
+              <span className="text-civitan-gold font-medium group-hover:text-yellow-400 transition-colors duration-300">Serving Together</span>
+            </div>
+          </div>
+
+          {/* Two column layout - removed the logo column */}
           <div className="bg-[#1c223a] border border-civitan-gold/40 rounded-2xl p-6 md:p-10 shadow-2xl">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {/* Why Join Column */}
               <div className="glassmorphism-card bg-white/5 p-6 rounded-xl backdrop-blur-sm border border-white/10 shadow-xl">
                 <h3 className="text-xl md:text-2xl font-bold mb-4 text-civitan-gold">Why Join Duluth Civitan?</h3>
@@ -80,30 +101,9 @@ const MembershipSection = () => {
                   more compassionate community.
                 </p>
               </div>
-              
-              {/* Logo Column with white background and micro-interactions */}
-              <div className="flex flex-col items-center justify-center">
-                <div className="rounded-xl shadow-lg bg-white p-6 transform hover:scale-105 transition-all duration-300 group">
-                  <div className="relative overflow-hidden rounded-lg">
-                    <img 
-                      src="/lovable-uploads/fa18658d-e5c5-46a4-bd9c-2da8a9133237.png" 
-                      alt="We Are Civitan" 
-                      className="max-w-full h-auto rounded-lg group-hover:brightness-110 transition-all duration-500"
-                      style={{ width: '220px' }}
-                    />
-                    <div className="absolute inset-0 bg-civitan-gold/0 group-hover:bg-civitan-gold/10 transition-all duration-300 rounded-lg"></div>
-                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity duration-500">
-                      <div className="w-full h-full bg-gradient-to-t from-civitan-blue/30 to-transparent"></div>
-                    </div>
-                  </div>
-                </div>
-                <div className="mt-6 text-center">
-                  <span className="text-civitan-gold font-medium group-hover:text-yellow-400 transition-colors duration-300">Serving Together</span>
-                </div>
-              </div>
             </div>
             
-            {/* CTA Button with enhanced styling */}
+            {/* CTA Button with enhanced styling - now below the grid and centered */}
             <div className="text-center mt-12">
               <Button 
                 onClick={handleMembershipClick}
