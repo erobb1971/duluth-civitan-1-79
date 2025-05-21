@@ -15,15 +15,19 @@ const MembershipSection = () => {
   };
 
   return (
-    <section id="membership" className="section bg-[#121628] text-white py-16 relative overflow-hidden">
-      <div className="container mx-auto px-4">
-        {/* Header */}
-        <div className="text-center mb-10">
-          <h2 className="text-3xl md:text-5xl font-bold text-civitan-gold mb-4">
+    <section id="membership" className="section bg-[#121628] text-white py-16 md:py-24 relative overflow-hidden">
+      {/* Gold accent elements */}
+      <div className="absolute top-0 left-0 w-32 h-32 bg-civitan-gold/10 rounded-full -translate-x-1/2 -translate-y-1/2 blur-3xl"></div>
+      <div className="absolute bottom-0 right-0 w-64 h-64 bg-civitan-gold/5 rounded-full translate-x-1/3 translate-y-1/3 blur-3xl"></div>
+      
+      <div className="container mx-auto px-4 relative z-10">
+        {/* Header with enhanced styling */}
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-5xl lg:text-6xl font-bold text-civitan-gold mb-6 tracking-tight">
             WE ARE DULUTH CIVITAN
           </h2>
-          <div className="w-24 h-1 bg-civitan-gold mx-auto mb-6"></div>
-          <p className="text-2xl font-bold mb-2">Ready to make a difference in Gwinnett County?</p>
+          <div className="w-32 h-1 bg-civitan-gold mx-auto mb-8"></div>
+          <p className="text-2xl font-bold mb-3 text-white">Ready to make a difference in Gwinnett County?</p>
           <p className="text-xl max-w-3xl mx-auto text-gray-300">
             Become a Civitan today and join our network of community leaders.
           </p>
@@ -77,23 +81,26 @@ const MembershipSection = () => {
                 </p>
               </div>
               
-              {/* Logo Column */}
+              {/* Logo Column - Fixed with correct image path */}
               <div className="flex flex-col items-center justify-center">
-                <div className="rounded-xl shadow-lg p-4 bg-white/5 backdrop-blur-sm border border-white/10">
+                <div className="rounded-xl shadow-lg p-6 bg-white/5 backdrop-blur-sm border border-white/10 transform hover:scale-105 transition-all duration-300">
                   <img 
                     src="/lovable-uploads/aee0f8ab-c08c-4902-8029-9185987b6644.png" 
                     alt="We Are Civitan" 
-                    className="max-w-full h-auto rounded-lg shadow-xl" 
+                    className="max-w-full h-auto rounded-lg shadow-xl"
                   />
+                </div>
+                <div className="mt-6 text-center">
+                  <span className="text-civitan-gold font-medium">Serving Together</span>
                 </div>
               </div>
             </div>
             
-            {/* CTA Button */}
+            {/* CTA Button with enhanced styling */}
             <div className="text-center mt-12">
               <Button 
                 onClick={handleMembershipClick}
-                className="bg-civitan-gold text-civitan-blue hover:bg-yellow-400 font-medium text-lg px-8 py-6 h-auto transform transition-all duration-500 hover:scale-105"
+                className="bg-civitan-gold text-civitan-blue hover:bg-yellow-400 font-bold text-lg px-8 py-6 h-auto rounded-xl shadow-lg transform transition-all duration-500 hover:scale-105 hover:shadow-xl"
               >
                 <Mail className="mr-2 h-5 w-5" />
                 Become a Member
