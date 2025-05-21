@@ -26,7 +26,7 @@ const ConventionBanner: React.FC = () => {
           
           {/* Event Badge */}
           <div className="absolute top-3 left-3 z-20">
-            <div className="bg-civitan-blue/90 text-white text-xs font-bold py-1 px-3 rounded-full flex items-center gap-1.5 animate-pulse">
+            <div className="bg-civitan-blue/90 text-white text-xs font-bold py-1 px-3 rounded-full flex items-center gap-1.5">
               <BadgeCheck size={14} />
               <span>REGISTRATION OPEN</span>
             </div>
@@ -46,9 +46,8 @@ const ConventionBanner: React.FC = () => {
                 className={cn(
                   "w-full bg-civitan-gold hover:bg-civitan-gold/90 text-civitan-blue font-bold",
                   "text-sm sm:text-base border-2 border-white/30",
-                  "animate-[pulse_2s_cubic-bezier(0.4,0,0.6,1)_infinite]",
-                  "shadow-[0_0_15px_rgba(255,199,44,0.6)]",
-                  "transform transition-all duration-300 hover:scale-105"
+                  "shadow-md",
+                  "transform transition-all duration-300"
                 )}
                 onClick={(e) => {
                   e.preventDefault();
@@ -64,9 +63,6 @@ const ConventionBanner: React.FC = () => {
           </Tooltip>
         </TooltipProvider>
       </div>
-      
-      {/* Glow effect around the banner on hover */}
-      <div className="absolute -inset-0.5 bg-civitan-gold/30 rounded-lg blur opacity-0 group-hover:opacity-100 transition-all duration-500 z-0"></div>
     </div>
   );
 };
