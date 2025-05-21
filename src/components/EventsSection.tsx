@@ -202,7 +202,7 @@ const EventsSection = () => {
                     </time>
                   </div>
                   <CardTitle className="text-lg sm:text-xl text-civitan-blue dark:text-white">
-                    {formatEventTitle(event)}
+                    {event.title}
                   </CardTitle>
                   {event.location && (
                     <div className="flex items-start mt-2">

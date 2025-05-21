@@ -206,7 +206,7 @@ const CalendarModal = ({ open, onOpenChange }: CalendarModalProps) => {
                   {selectedDateEvents.map((event) => (
                     <Card key={event.id} className="w-full shadow-sm">
                       <CardHeader className="p-3 pb-1.5">
-                        <h4 className="text-sm font-medium">{formatEventTitle(event)}</h4>
+                        <h4 className="text-sm font-medium">{event.title}</h4>
                         {event.location && (
                           <div className="flex items-start mt-1">
                             <Map className="w-3 h-3 text-civitan-gold mr-1 flex-shrink-0 mt-0.5" />

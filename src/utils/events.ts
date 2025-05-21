@@ -97,7 +97,7 @@ export const getICalUrl = (event: Event): string => {
   return `data:text/calendar;charset=utf8,${encodeURIComponent(icalData)}`;
 };
 
-// All events data - All instances of US are now properly replaced with USA
+// All events data
 export const eventsData: Event[] = [
   // April 2025 Events
   {
