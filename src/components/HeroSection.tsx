@@ -29,7 +29,7 @@ const HeroSection = () => {
   const parallaxOffset = scrollPosition * (isMobile ? 0.1 : 0.35);
 
   return (
-    <section id="home" className="relative min-h-[80vh] sm:h-screen w-full flex flex-col items-center justify-center text-white overflow-hidden">
+    <section id="home" className={`relative min-h-[80vh] sm:h-screen w-full flex flex-col items-center justify-center text-white overflow-hidden ${isMobile ? 'mt-0' : ''}`}>
       {/* Blue background layer */}
       <div className="absolute inset-0 z-0 bg-civitan-blue"></div>
       
@@ -46,7 +46,7 @@ const HeroSection = () => {
       />
       
       {/* Content container with padding adjustments */}
-      <div className="container mx-auto px-3 sm:px-6 z-10 text-center flex flex-col justify-center h-full py-12">
+      <div className={`container mx-auto px-3 sm:px-6 z-10 text-center flex flex-col justify-center h-full py-12 ${isMobile ? 'pt-16' : ''}`}>
         <div className="animate-fade-in py-3 sm:py-8 max-w-4xl mx-auto">
           <CivitanLogo size="lg" className="mx-auto mb-4 sm:mb-6" />
           <h1 className="text-shine text-xl sm:text-3xl md:text-5xl">Make A Lasting Impact!</h1>

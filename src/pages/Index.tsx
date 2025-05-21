@@ -11,6 +11,7 @@ import ContactSection from "@/components/ContactSection";
 import PartnersSection from "@/components/PartnersSection";
 import Footer from "@/components/Footer";
 import MembershipSection from "@/components/MembershipSection";
+import { useIsMobile } from "@/hooks/use-mobile";
 // import { initializeSecurity } from "@/utils/security";
 
 const Index = () => {
@@ -22,11 +23,13 @@ const Index = () => {
   //     console.error("Error initializing security in Index component:", error);
   //   }
   // }, []);
+  
+  const isMobile = useIsMobile();
 
   return (
-    <div className="min-h-screen pb-mobile-nav relative overflow-x-hidden pt-20 lg:pt-20">
+    <div className={`min-h-screen pb-mobile-nav relative overflow-x-hidden ${isMobile ? '' : 'pt-20 lg:pt-20'}`}>
       <DesktopNavigation />
-      <div id="home" className="scroll-mt-20"></div>
+      <div id="home" className={`${isMobile ? '' : 'scroll-mt-20'}`}></div>
       <HeroSection />
       
       <div id="about" className="scroll-mt-20"></div>
@@ -52,8 +55,12 @@ const Index = () => {
         <div id="events" className="scroll-mt-20"></div>
         <EventsSection />
         
-        <div id="contact" className="scroll-mt-20"></div>
-        <ContactSection />
+        {!isMobile && (
+          <>
+            <div id="contact" className="scroll-mt-20"></div>
+            <ContactSection />
+          </>
+        )}
         
         <Footer />
       </div>
