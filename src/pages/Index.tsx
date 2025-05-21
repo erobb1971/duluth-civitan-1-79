@@ -35,8 +35,8 @@ const Index = () => {
       <div id="about" className="scroll-mt-20"></div>
       <AboutSection />
       
-      {/* Timeline section with proper z-index */}
-      <div className="relative z-10 bg-gray-100 dark:bg-gray-800">
+      {/* Timeline section - removed background color as it now has its own background */}
+      <div className="relative z-10">
         <TimelineSection />
       </div>
       

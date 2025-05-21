@@ -11,6 +11,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { BackgroundOverlay } from "@/components/contact";
 
 const timelineEvents = [
   {
@@ -143,11 +144,21 @@ const TimelineSection = () => {
   return (
     <section 
       id="timeline" 
-      className="section py-12 md:py-20 relative w-full overflow-hidden bg-gradient-to-b from-gray-100 to-white dark:from-gray-800 dark:to-gray-900"
+      className="section py-12 md:py-20 relative w-full overflow-hidden"
     >
-      <div className="absolute top-0 left-0 w-full h-20 bg-gradient-to-b from-gray-100 dark:from-gray-800 opacity-70"></div>
-      <div className="container mx-auto px-3 sm:px-6">
-        <div className="text-center mb-10 md:mb-14 relative z-10">
+      {/* Historical train image overlay with parallax */}
+      <BackgroundOverlay 
+        image="/lovable-uploads/9af4fff5-7215-4b66-9430-1dc86a7d9a58.png" 
+        opacity={0.25} 
+        gradient={false} 
+      />
+      
+      {/* Semi-transparent overlay to ensure text readability */}
+      <div className="absolute inset-0 bg-gradient-to-b from-gray-100 to-white dark:from-gray-800/90 dark:to-gray-900/90 opacity-85 z-0"></div>
+      
+      <div className="absolute top-0 left-0 w-full h-20 bg-gradient-to-b from-gray-100 dark:from-gray-800 opacity-70 z-0"></div>
+      <div className="container mx-auto px-3 sm:px-6 relative z-10">
+        <div className="text-center mb-10 md:mb-14">
           <div className="inline-flex items-center justify-center gap-2 mb-3 text-civitan-blue dark:text-civitan-gold">
             <History className="h-5 w-5 animate-pulse" />
             <span className="text-sm font-medium uppercase tracking-wide">History</span>
@@ -296,7 +307,7 @@ const TimelineSection = () => {
       </div>
 
       {/* Bottom gradient fade */}
-      <div className="absolute bottom-0 left-0 w-full h-20 bg-gradient-to-t from-gray-100 to-transparent dark:from-gray-900 dark:to-transparent opacity-70"></div>
+      <div className="absolute bottom-0 left-0 w-full h-20 bg-gradient-to-t from-gray-100 to-transparent dark:from-gray-900 dark:to-transparent opacity-70 z-0"></div>
     </section>
   );
 };
