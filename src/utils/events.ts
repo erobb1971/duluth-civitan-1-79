@@ -1,4 +1,3 @@
-
 import { format, isAfter, isBefore, isEqual, parseISO, startOfDay } from "date-fns";
 
 export type EventType = "civitan" | "national" | "international";
@@ -117,7 +116,7 @@ export const eventsData: Event[] = [
   {
     id: "town-center-main-suwanee-tour-2025",
     title: "🏙️ Tour: Town Center on Main in Suwanee",
-    description: "Town Center on Main is a roughly 13-acre urban park that expands upon the popular Town Center Park, providing even more opportunities for residents to enjoy outdoor activities and connect with nature. This development has been thoughtfully planned and designed to offer a vibrant mix of recreation, relaxation, and entertainment options.",
+    description: "Town Center on Main is a roughly 13-acre urban park that expands upon the popular Town Center Park, providing even more opportunities for residents to enjoy outdoor activities and connect with nature. This development has been thoughtfully planned and designed to offer a vibrant mix of recreation, relaxation, and entertainment options. This space is designed for everyone—from families enjoying a picnic to athletes on the volleyball courts, walkers traversing the 1,200-foot-long park-spanning bridge to art enthusiasts admiring Greater Good, the Veterans Memorial.",
     location: "421 Main St, Suwanee, GA",
     startDate: "2025-04-28",
     time: "12:00 PM",
