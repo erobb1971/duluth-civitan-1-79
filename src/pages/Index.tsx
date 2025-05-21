@@ -4,7 +4,6 @@ import MobileNavigation from "@/components/MobileNavigation";
 import HeroSection from "@/components/HeroSection";
 import AboutSection from "@/components/AboutSection";
 import TimelineSection from "@/components/TimelineSection";
-import CtaSection from "@/components/CtaSection";
 import EventsSection from "@/components/EventsSection";
 import GallerySection from "@/components/GallerySection";
 import ContactSection from "@/components/ContactSection";
@@ -37,18 +36,14 @@ const Index = () => {
         <TimelineSection />
       </div>
       
-      {/* CTA section with modified z-index */}
-      <div className="relative z-20 bg-transparent">
-        <CtaSection />
-      </div>
+      {/* Membership section (which now includes CTA) */}
+      <div id="membership" className="scroll-mt-20"></div>
+      <MembershipSection />
       
       {/* Rest of the sections */}
       <div className="relative z-10 overflow-x-hidden">
         <div id="partners" className="scroll-mt-20"></div>
         <PartnersSection />
-        
-        <div id="membership" className="scroll-mt-20"></div>
-        <MembershipSection />
         
         <div id="gallery" className="scroll-mt-20"></div>
         <GallerySection />
