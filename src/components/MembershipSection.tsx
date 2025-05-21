@@ -81,13 +81,14 @@ const MembershipSection = () => {
                 </p>
               </div>
               
-              {/* Logo Column - Fixed with correct image path */}
+              {/* Logo Column - FIXED with correct image path */}
               <div className="flex flex-col items-center justify-center">
                 <div className="rounded-xl shadow-lg p-6 bg-white/5 backdrop-blur-sm border border-white/10 transform hover:scale-105 transition-all duration-300">
                   <img 
-                    src="/lovable-uploads/aee0f8ab-c08c-4902-8029-9185987b6644.png" 
+                    src="/lovable-uploads/fa18658d-e5c5-46a4-bd9c-2da8a9133237.png" 
                     alt="We Are Civitan" 
-                    className="max-w-full h-auto rounded-lg shadow-xl"
+                    className="max-w-full h-auto rounded-lg"
+                    style={{ width: '220px' }}
                   />
                 </div>
                 <div className="mt-6 text-center">
