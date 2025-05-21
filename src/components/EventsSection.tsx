@@ -90,6 +90,15 @@ const EventsSection = () => {
     window.open(shareUrl, '_blank', 'width=550,height=435');
   };
 
+  // Format event title for national holidays - change US to USA and keep font size consistent
+  const formatEventTitle = (event: any) => {
+    if (event.type === "national" && event.title.includes("(No Meeting)")) {
+      // Replace "US" or "U.S." with "USA" for national holidays
+      return event.title.replace(/\b(US|U\.S\.)\s/, "USA ");
+    }
+    return event.title;
+  };
+
   // Add schema.org Event markup
   const eventSchema = {
     "@context": "https://schema.org",
@@ -197,7 +206,7 @@ const EventsSection = () => {
                     </time>
                   </div>
                   <CardTitle className="text-lg sm:text-xl text-civitan-blue dark:text-white">
-                    {event.title}
+                    {formatEventTitle(event)}
                   </CardTitle>
                   {event.location && (
                     <div className="flex items-start mt-2">

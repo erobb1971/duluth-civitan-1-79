@@ -96,7 +96,7 @@ export const getICalUrl = (event: Event): string => {
   return `data:text/calendar;charset=utf8,${encodeURIComponent(icalData)}`;
 };
 
-// All events data - Updated to include new Spectrum events
+// All events data - Updated to include new Spectrum events and fixed US to USA for national holidays
 export const eventsData: Event[] = [
   {
     id: "spectrum-garden-tour-2025",
@@ -138,7 +138,7 @@ export const eventsData: Event[] = [
   },
   {
     id: "memorial-day-2025",
-    title: "🇺🇸 Memorial Day (No Meeting)",
+    title: "🇺🇸 USA Memorial Day (No Meeting)",
     startDate: "2025-05-26",
     type: "national",
     buttonText: "More Info",
@@ -172,7 +172,7 @@ export const eventsData: Event[] = [
   },
   {
     id: "independence-day-2025",
-    title: "🇺🇸 Independence Day (No Meeting)",
+    title: "🇺🇸 USA Independence Day (No Meeting)",
     startDate: "2025-07-04",
     type: "national",
     buttonText: "More Info",
@@ -241,7 +241,7 @@ export const eventsData: Event[] = [
   },
   {
     id: "labor-day-2025",
-    title: "🇺🇸 Labor Day (No Meeting)",
+    title: "🇺🇸 USA Labor Day (No Meeting)",
     startDate: "2025-09-01",
     type: "national",
     buttonText: "More Info",

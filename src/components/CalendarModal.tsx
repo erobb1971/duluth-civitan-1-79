@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import {
   Dialog,
@@ -47,6 +46,15 @@ const CalendarModal = ({ open, onOpenChange }: CalendarModalProps) => {
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
   const isMobile = useIsMobile();
+
+  // Format event title for national holidays - change US to USA and keep font size consistent
+  const formatEventTitle = (event: Event) => {
+    if (event.type === "national" && event.title.includes("(No Meeting)")) {
+      // Replace "US" or "U.S." with "USA" for national holidays
+      return event.title.replace(/\b(US|U\.S\.)\s/, "USA ");
+    }
+    return event.title;
+  };
 
   const handleEmailClick = (event: Event) => {
     // If there's an external URL, open it
@@ -202,7 +210,7 @@ const CalendarModal = ({ open, onOpenChange }: CalendarModalProps) => {
                   {selectedDateEvents.map((event) => (
                     <Card key={event.id} className="w-full shadow-sm">
                       <CardHeader className="p-3 pb-1.5">
-                        <h4 className="text-sm font-medium">{event.title}</h4>
+                        <h4 className="text-sm font-medium">{formatEventTitle(event)}</h4>
                         {event.location && (
                           <div className="flex items-start mt-1">
                             <Map className="w-3 h-3 text-civitan-gold mr-1 flex-shrink-0 mt-0.5" />
