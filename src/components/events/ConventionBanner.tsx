@@ -1,7 +1,6 @@
 
 import React from "react";
 import { Button } from "@/components/ui/button";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { BadgeCheck } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -10,7 +9,7 @@ const ConventionBanner: React.FC = () => {
   const isMobile = useIsMobile();
   
   return (
-    <div className="relative overflow-hidden rounded-lg border-2 border-civitan-gold shadow-lg transition-all duration-300 hover:shadow-xl transform hover:-translate-y-1">
+    <div className="relative overflow-hidden rounded-lg border-2 border-civitan-gold shadow-lg">
       {/* Banner Image with Overlay */}
       <div className="relative">
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent z-10"></div>
@@ -45,9 +44,7 @@ const ConventionBanner: React.FC = () => {
           className={cn(
             "w-full bg-civitan-gold hover:bg-civitan-gold/90 text-civitan-blue font-bold",
             isMobile ? "text-xs py-1.5" : "text-base py-3",
-            "border-2 border-white/30",
-            "shadow-[0_0_15px_rgba(255,199,44,0.6)]",
-            "transform transition-all duration-300 hover:scale-105"
+            "border-2 border-white/30"
           )}
           onClick={() => window.open('https://civitan.org/convention/', '_blank')}
         >
