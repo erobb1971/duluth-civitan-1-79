@@ -47,12 +47,8 @@ const CalendarModal = ({ open, onOpenChange }: CalendarModalProps) => {
   const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
   const isMobile = useIsMobile();
 
-  // Format event title for national holidays - change US to USA and keep font size consistent
+  // Updated formatter to simply return the event title as-is
   const formatEventTitle = (event: Event) => {
-    if (event.type === "national" && event.title.includes("(No Meeting)")) {
-      // Replace "US" or "U.S." with "USA" for national holidays
-      return event.title.replace(/\b(US|U\.S\.)\s/, "USA ");
-    }
     return event.title;
   };
 

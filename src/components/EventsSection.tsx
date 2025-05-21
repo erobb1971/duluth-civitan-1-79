@@ -90,12 +90,8 @@ const EventsSection = () => {
     window.open(shareUrl, '_blank', 'width=550,height=435');
   };
 
-  // Format event title for national holidays - change US to USA and keep font size consistent
+  // Updated formatter to simply return the event title as-is
   const formatEventTitle = (event: any) => {
-    if (event.type === "national" && event.title.includes("(No Meeting)")) {
-      // Replace "US" or "U.S." with "USA" for national holidays
-      return event.title.replace(/\b(US|U\.S\.)\s/, "USA ");
-    }
     return event.title;
   };
 

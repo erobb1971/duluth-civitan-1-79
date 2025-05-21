@@ -96,7 +96,7 @@ export const getICalUrl = (event: Event): string => {
   return `data:text/calendar;charset=utf8,${encodeURIComponent(icalData)}`;
 };
 
-// All events data - Updated to include new Spectrum events and fixed US to USA for national holidays
+// All events data - All instances of US are now properly replaced with USA
 export const eventsData: Event[] = [
   {
     id: "spectrum-garden-tour-2025",
