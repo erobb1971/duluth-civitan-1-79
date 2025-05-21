@@ -1,7 +1,6 @@
-
 import React, { useState } from "react";
 import { ArrowUp, CalendarDays, Mail, PiggyBank } from "lucide-react";
-import CalendarModal from "./CalendarModal";
+import { CalendarModal } from "./calendar";
 import DonationModal from "./DonationModal";
 
 interface NavItem {

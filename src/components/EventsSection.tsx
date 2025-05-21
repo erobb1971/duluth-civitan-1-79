@@ -1,7 +1,7 @@
 
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
-import CalendarModal from "./CalendarModal";
+import { CalendarModal } from "./calendar";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { getNextEvents } from "@/utils/events";
 import { TooltipProvider } from "./ui/tooltip";
