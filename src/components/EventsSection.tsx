@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -231,7 +230,7 @@ const EventsSection = () => {
                 <CardContent className="px-4 sm:px-6 pb-2 flex-grow">
                   <p className="text-xs sm:text-sm text-gray-700 dark:text-gray-300">
                     {event.description || (event.isNoMeeting 
-                      ? `We will not be having a meeting due to ${event.title.split('(')[0].trim()}, but our next meeting is on ${event.nextMeetingDate ? formatEventDate(event.nextMeetingDate) : 'the next scheduled date'} and we would love for you to come, bring a friend!`
+                      ? `We will not be having a meeting due to ${event.title.replace(/^🇺🇸\s/, '').split('(')[0].trim()}, but our next meeting is on ${event.nextMeetingDate ? formatEventDate(event.nextMeetingDate) : 'the next scheduled date'} and we would love for you to come, bring a friend!`
                       : "Join us for this exciting event!")}
                   </p>
                 </CardContent>

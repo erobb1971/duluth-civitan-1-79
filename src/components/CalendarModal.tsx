@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import {
   Dialog,
@@ -215,7 +216,7 @@ const CalendarModal = ({ open, onOpenChange }: CalendarModalProps) => {
                       <CardContent className="p-3 py-1">
                         <p className="text-xs">
                           {event.description || (event.isNoMeeting 
-                            ? `We will not be having a meeting due to ${event.title.split('(')[0].trim()}, but our next meeting is on ${event.nextMeetingDate ? format(new Date(event.nextMeetingDate), "MMMM d, yyyy") : 'the next scheduled date'} and we would love for you to come, bring a friend!` 
+                            ? `We will not be having a meeting due to ${event.title.replace(/^🇺🇸\s/, '').split('(')[0].trim()}, but our next meeting is on ${event.nextMeetingDate ? format(new Date(event.nextMeetingDate), "MMMM d, yyyy") : 'the next scheduled date'} and we would love for you to come, bring a friend!` 
                             : "Join us for this exciting event!")}
                         </p>
                       </CardContent>
