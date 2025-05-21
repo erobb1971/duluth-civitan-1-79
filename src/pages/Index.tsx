@@ -40,30 +40,31 @@ const Index = () => {
         <TimelineSection />
       </div>
       
-      {/* Membership section (which now includes CTA) */}
+      {/* Membership section */}
       <div id="membership" className="scroll-mt-20"></div>
       <MembershipSection />
       
-      {/* Rest of the sections */}
-      <div className="relative z-10 overflow-x-hidden">
-        <div id="partners" className="scroll-mt-20"></div>
-        <PartnersSection />
-        
-        <div id="gallery" className="scroll-mt-20"></div>
-        <GallerySection />
-        
-        <div id="events" className="scroll-mt-20"></div>
-        <EventsSection />
-        
-        {!isMobile && (
-          <>
-            <div id="contact" className="scroll-mt-20"></div>
-            <ContactSection />
-          </>
-        )}
-        
-        <Footer />
-      </div>
+      {/* Partners section */}
+      <div id="partners" className="scroll-mt-20"></div>
+      <PartnersSection />
+      
+      {/* Gallery section */}
+      <div id="gallery" className="scroll-mt-20"></div>
+      <GallerySection />
+      
+      {/* Events section */}
+      <div id="events" className="scroll-mt-20"></div>
+      <EventsSection />
+      
+      {/* Contact section */}
+      {!isMobile && (
+        <>
+          <div id="contact" className="scroll-mt-20"></div>
+          <ContactSection />
+        </>
+      )}
+      
+      <Footer />
       <MobileNavigation />
     </div>
   );

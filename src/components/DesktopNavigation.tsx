@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import CivitanLogo from "./CivitanLogo";
 import { Button } from "@/components/ui/button";
@@ -83,6 +82,36 @@ const DesktopNavigation = () => {
                   About
                 </NavigationMenuLink>
               </NavigationMenuItem>
+              
+              <NavigationMenuItem>
+                <NavigationMenuLink 
+                  href="/#membership"
+                  className={navigationMenuTriggerStyle()}
+                  onClick={(e) => handleNavClick(e, "membership")}
+                >
+                  Membership
+                </NavigationMenuLink>
+              </NavigationMenuItem>
+
+              <NavigationMenuItem>
+                <NavigationMenuLink 
+                  href="/#partners"
+                  className={navigationMenuTriggerStyle()}
+                  onClick={(e) => handleNavClick(e, "partners")}
+                >
+                  Partners
+                </NavigationMenuLink>
+              </NavigationMenuItem>
+              
+              <NavigationMenuItem>
+                <NavigationMenuLink 
+                  href="/#gallery"
+                  className={navigationMenuTriggerStyle()}
+                  onClick={(e) => handleNavClick(e, "gallery")}
+                >
+                  Gallery
+                </NavigationMenuLink>
+              </NavigationMenuItem>
 
               <NavigationMenuItem>
                 <NavigationMenuLink 
@@ -96,51 +125,12 @@ const DesktopNavigation = () => {
 
               <NavigationMenuItem>
                 <NavigationMenuLink 
-                  href="/#partners"
-                  className={navigationMenuTriggerStyle()}
-                  onClick={(e) => handleNavClick(e, "partners")}
-                >
-                  Partners
-                </NavigationMenuLink>
-              </NavigationMenuItem>
-
-              <NavigationMenuItem>
-                <NavigationMenuLink 
                   href="/#contact"
                   className={navigationMenuTriggerStyle()}
                   onClick={(e) => handleNavClick(e, "contact")}
                 >
                   Contact
                 </NavigationMenuLink>
-              </NavigationMenuItem>
-
-              <NavigationMenuItem>
-                <NavigationMenuTrigger onClick={() => setMembershipModalOpen(true)}>
-                  Join Us
-                </NavigationMenuTrigger>
-                <NavigationMenuContent>
-                  <ul className="grid gap-3 p-4 md:w-[400px] lg:w-[500px]">
-                    <li className="row-span-3">
-                      <NavigationMenuLink asChild>
-                        <a
-                          className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-civitan-blue to-blue-700 p-6 no-underline outline-none focus:shadow-md"
-                          href="#"
-                          onClick={(e) => {
-                            e.preventDefault();
-                            setMembershipModalOpen(true);
-                          }}
-                        >
-                          <div className="mb-2 mt-4 text-lg font-medium text-white">
-                            Duluth Civitan Club Membership
-                          </div>
-                          <p className="text-sm leading-tight text-white/90">
-                            Join a service club dedicated to helping people in our local community.
-                          </p>
-                        </a>
-                      </NavigationMenuLink>
-                    </li>
-                  </ul>
-                </NavigationMenuContent>
               </NavigationMenuItem>
             </NavigationMenuList>
           </NavigationMenu>
