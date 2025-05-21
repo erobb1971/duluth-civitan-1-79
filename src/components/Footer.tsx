@@ -12,8 +12,15 @@ const Footer = () => {
   const [donationModalOpen, setDonationModalOpen] = useState(false);
 
   return (
-    <footer className="bg-civitan-blue text-white py-2.5 relative">
-      <div className="container mx-auto px-4">
+    <footer className="relative py-2.5 overflow-hidden">
+      {/* Modern gradient background with blur effect to match ContactSection */}
+      <div className="absolute inset-0 z-0 bg-gradient-to-b from-civitan-blue to-[#0a1428]"></div>
+      <div className="absolute inset-0 z-0 opacity-20">
+        <div className="absolute top-0 left-0 w-full h-64 bg-civitan-gold opacity-10 blur-3xl rounded-full -translate-x-1/2 -translate-y-1/2"></div>
+        <div className="absolute bottom-0 right-0 w-full h-64 bg-civitan-gold opacity-10 blur-3xl rounded-full translate-x-1/2 translate-y-1/2"></div>
+      </div>
+
+      <div className="container mx-auto px-4 relative z-10">
         {/* Social Media Icons */}
         <div className="flex justify-center items-center mb-4 pt-3">
           <TooltipProvider>
@@ -111,13 +118,13 @@ const Footer = () => {
           </TooltipProvider>
         </div>
 
-        <div className="border-t border-gray-800 pt-2">
+        <div className="border-t border-white/10 pt-2">
           <div className="flex flex-col md:flex-row justify-center items-center">
-            <p className="text-gray-400 text-center">&copy; 2025 Duluth Civitan. All rights reserved.</p>
+            <p className="text-gray-300 text-center">&copy; 2025 Duluth Civitan. All rights reserved.</p>
             <div className="mt-1 md:mt-0 md:ml-6 flex justify-center items-center">
               <button 
                 onClick={() => setPrivacyPolicyModalOpen(true)}
-                className="text-gray-400 hover:text-white mr-4 focus:outline-none"
+                className="text-gray-300 hover:text-white mr-4 focus:outline-none"
               >
                 Privacy Policy
               </button>
