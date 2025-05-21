@@ -46,7 +46,7 @@ const ConventionBanner: React.FC = () => {
                 className={cn(
                   "w-full bg-civitan-gold hover:bg-civitan-gold/90 text-civitan-blue font-bold",
                   "text-sm sm:text-base border-2 border-white/30",
-                  "animate-[pulse_3s_ease-in-out_infinite]", // Slowed down animation
+                  // Removed pulsing animation
                   "shadow-[0_0_15px_rgba(255,199,44,0.6)]",
                   "transform transition-all duration-300 hover:scale-105"
                 )}
