@@ -30,6 +30,13 @@ const MobileNavigation = () => {
     setDonationModalOpen(true);
   };
 
+  const handleScrollToEvents = () => {
+    const eventsSection = document.getElementById("events");
+    if (eventsSection) {
+      eventsSection.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
+
   const navItems: NavItem[] = [
     { 
       title: "Top", 
@@ -41,7 +48,7 @@ const MobileNavigation = () => {
       title: "Events", 
       href: "#", 
       icon: <CalendarDays className="w-4 h-4" />,
-      action: () => setCalendarModalOpen(true)
+      action: handleScrollToEvents
     },
     { 
       title: "Donate", 

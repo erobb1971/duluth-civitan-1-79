@@ -9,6 +9,7 @@ import EventsHeader from "./events/EventsHeader";
 import MeetingScheduleCard from "./events/MeetingScheduleCard";
 import ConventionBanner from "./events/ConventionBanner";
 import EventCard from "./events/EventCard";
+import { CalendarDays } from "lucide-react";
 
 const EventsSection = () => {
   const [calendarModalOpen, setCalendarModalOpen] = useState(false);
@@ -44,6 +45,15 @@ const EventsSection = () => {
         {/* Only render EventsHeader on desktop */}
         <EventsHeader />
         
+        {/* Mobile view title */}
+        {isMobile && (
+          <div className="text-center mb-6">
+            <h2 className="text-xl font-bold text-civitan-blue dark:text-civitan-gold">
+              Upcoming Events
+            </h2>
+          </div>
+        )}
+        
         {/* Flexbox container for meeting schedule and convention banner */}
         <div className="flex flex-col lg:flex-row gap-8 mb-8 sm:mb-12">
           {/* Meeting schedule information */}
@@ -65,8 +75,18 @@ const EventsSection = () => {
           </div>
         </TooltipProvider>
         
-        {!isMobile && (
-          <div className="text-center mt-8 sm:mt-12">
+        {/* View All Events button */}
+        <div className="text-center mt-8 sm:mt-12">
+          {isMobile ? (
+            <Button 
+              variant="outline"
+              className="border-civitan-blue text-civitan-blue dark:text-white dark:border-white"
+              onClick={() => setCalendarModalOpen(true)}
+            >
+              <CalendarDays className="mr-2 h-4 w-4" />
+              View Calendar
+            </Button>
+          ) : (
             <Button 
               variant="outline" 
               className="border-civitan-blue text-civitan-blue dark:text-white dark:border-white"
@@ -74,8 +94,8 @@ const EventsSection = () => {
             >
               View All Events
             </Button>
-          </div>
-        )}
+          )}
+        </div>
       </div>
       
       <CalendarModal
