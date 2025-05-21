@@ -1,3 +1,4 @@
+
 import { format, isAfter, isBefore, isEqual, parseISO, startOfDay } from "date-fns";
 
 export type EventType = "civitan" | "national" | "international";
@@ -19,6 +20,7 @@ export interface Event {
   isNoMeeting?: boolean; // Flag to indicate this is a "no meeting" event
   nextMeetingDate?: string; // Next meeting date after a holiday or no-meeting event
   externalUrl?: string; // URL for external registration/information
+  speakerBio?: string; // Biography information for speakers
 }
 
 const today = startOfDay(new Date());
@@ -98,6 +100,73 @@ export const getICalUrl = (event: Event): string => {
 
 // All events data - All instances of US are now properly replaced with USA
 export const eventsData: Event[] = [
+  // April 2025 Events
+  {
+    id: "joe-allen-gwinnett-cid-2025",
+    title: "🗣️ Speaker: Joe Allen, Gwinnett Place Community Improvement District",
+    description: "Topic: Update on Gwinnett Place",
+    speakerBio: "Joe Allen has been the Gwinnett Place CID executive director since 2006, holding a Master of Public Administration from Georgia State University. With more than 20 years of directing executive-level administrative operations, economic development initiatives, marketing and public relations, strategic planning, budgeting, and program management. He aspires to serve the board members and commercial property owners in advancing the shared vision that Gwinnett Place will be the model for an internationally diverse, livable urban community.",
+    location: "Chamber's 1818 Club",
+    startDate: "2025-04-14",
+    time: "11:45 AM",
+    type: "civitan",
+    buttonText: "RSVP",
+    emailSubject: "RSVP for Speaker Event: Joe Allen on April 14",
+    googleMapsUrl: "https://maps.google.com/?q=Chambers+1818+Club+Duluth+GA"
+  },
+  {
+    id: "town-center-main-suwanee-tour-2025",
+    title: "🏙️ Tour: Town Center on Main in Suwanee",
+    description: "Town Center on Main is a roughly 13-acre urban park that expands upon the popular Town Center Park, providing even more opportunities for residents to enjoy outdoor activities and connect with nature. This development has been thoughtfully planned and designed to offer a vibrant mix of recreation, relaxation, and entertainment options.",
+    location: "421 Main St, Suwanee, GA",
+    startDate: "2025-04-28",
+    time: "12:00 PM",
+    type: "civitan",
+    buttonText: "Register",
+    emailSubject: "Registration for Town Center on Main Tour on April 28",
+    googleMapsUrl: "https://maps.google.com/?q=421+Main+St+Suwanee+GA"
+  },
+  
+  // May 2025 Events
+  {
+    id: "mitun-chaudhuri-maka-maka-2025",
+    title: "🗣️ Speaker: Mitun Chaudhuri, Maka Maka Home",
+    description: "Topic: Transforming Recycled Materials into Fashion, Accessories, and Home Essentials",
+    speakerBio: "Mitun holds an MBA in E-Commerce from Georgia State University and a BBA in MIS from the University of Georgia. As a recipient of the Georgia Rotary Student Program Scholarship, she studied in the U.S. as an undergraduate. Driven by a passion for sustainability, she founded MAKA MAKA, a lifestyle brand inspired by global exploration. Her travels—from the remote beauty of Svalbard to the vibrant energy of India—shape the brand's artisan-focused collections, blending culture, craftsmanship, and sustainability.",
+    location: "Chamber's 1818 Club",
+    startDate: "2025-05-12",
+    time: "11:45 AM",
+    type: "civitan",
+    buttonText: "RSVP",
+    emailSubject: "RSVP for Speaker Event: Mitun Chaudhuri on May 12",
+    googleMapsUrl: "https://maps.google.com/?q=Chambers+1818+Club+Duluth+GA"
+  },
+  {
+    id: "memorial-day-2025",
+    title: "🇺🇸 Memorial Day (No Meeting)",
+    startDate: "2025-05-26",
+    type: "national",
+    buttonText: "More Info",
+    emailSubject: "Memorial Day Inquiry",
+    isNoMeeting: true,
+    description: "We will not be having a meeting due to Memorial Day, but our next meeting is on June 9th and we would love for you to come, bring a friend!",
+    nextMeetingDate: "2025-06-09",
+  },
+  {
+    id: "cocktail-reception-2025",
+    title: "🥂 Cocktail Reception: Meet the Mayor of Duluth, GA Greg Whitlock",
+    location: "Courtyard by Marriott, Downtown Duluth",
+    startDate: "2025-05-22",
+    time: "5:00 PM – 7:00 PM",
+    type: "civitan",
+    buttonText: "RSVP",
+    emailSubject: "RSVP for Cocktail Reception with Mayor on May 22",
+    noEmail: true,
+    rsvpMessage: "We have received your RSVP and look forward to seeing you there.",
+    googleMapsUrl: "https://maps.google.com/?q=Courtyard+by+Marriott+Downtown+Duluth+GA"
+  },
+  
+  // June 2025 Events
   {
     id: "spectrum-garden-tour-2025",
     title: "🌿 Spectrum Sensory & Harvest Gardens Tour",
@@ -124,33 +193,10 @@ export const eventsData: Event[] = [
     googleMapsUrl: "https://maps.google.com/?q=Wayne's+Hill+Pond+Suwanee+GA"
   },
   {
-    id: "cocktail-reception-2025",
-    title: "🥂 Cocktail Reception: Meet the Mayor of Duluth, GA Greg Whitlock",
-    location: "Courtyard by Marriott, Downtown Duluth",
-    startDate: "2025-05-22",
-    time: "5:00 PM – 7:00 PM",
-    type: "civitan",
-    buttonText: "RSVP",
-    emailSubject: "RSVP for Cocktail Reception with Mayor on May 22",
-    noEmail: true,
-    rsvpMessage: "We have received your RSVP and look forward to seeing you there.",
-    googleMapsUrl: "https://maps.google.com/?q=Courtyard+by+Marriott+Downtown+Duluth+GA"
-  },
-  {
-    id: "memorial-day-2025",
-    title: "🇺🇸 USA Memorial Day (No Meeting)",
-    startDate: "2025-05-26",
-    type: "national",
-    buttonText: "More Info",
-    emailSubject: "Memorial Day Inquiry",
-    isNoMeeting: true,
-    description: "We will not be having a meeting due to Memorial Day, but our next meeting is on June 9th and we would love for you to come, bring a friend!",
-    nextMeetingDate: "2025-06-09",
-  },
-  {
     id: "speaker-owens-baker",
     title: "🗣️ Speaker: Bethany Owens Baker, Senior Provisions",
-    description: "Topic: Dimensions of Wellness",
+    description: "Topic: Dimensions of Wellness: Wellness is derived from our ability to understand, accept, and act upon our capacity to lead a purpose-filled and engaged life.",
+    speakerBio: "Bethany Baker is the community liaison for Senior Provisions. She graduated from Kennesaw State University with a Bachelor's degree in Sociology, and she currently resides in Bethlehem, GA, with her husband, where they attend church and enjoy regular coffee dates.",
     location: "Chamber's 1818 Club",
     startDate: "2025-06-09",
     time: "11:45 AM",
@@ -162,17 +208,20 @@ export const eventsData: Event[] = [
   {
     id: "curiosity-lab-tour",
     title: "🧪 Tour: Curiosity Lab, Peachtree Corners",
-    location: "Curiosity Lab, Peachtree Corners",
+    description: "Curiosity Lab at Peachtree Corners is a 5G-enabled living laboratory for startups and established companies to deploy and test developing technologies in a real-world testing environment with no roadblocks, joined by the next generation of intelligent mobility and smart city technology.",
+    location: "147 Technology Parkway, Peachtree Corners, GA 30092",
     startDate: "2025-06-23",
     time: "12:00 PM",
     type: "civitan",
     buttonText: "Register",
     emailSubject: "Registration for Curiosity Lab Tour on June 23",
-    googleMapsUrl: "https://maps.google.com/?q=Curiosity+Lab+Peachtree+Corners+GA"
+    googleMapsUrl: "https://maps.google.com/?q=147+Technology+Parkway+Peachtree+Corners+GA+30092"
   },
+  
+  // July 2025 Events
   {
     id: "independence-day-2025",
-    title: "🇺🇸 USA Independence Day (No Meeting)",
+    title: "🇺🇸 Independence Day (No Meeting)",
     startDate: "2025-07-04",
     type: "national",
     buttonText: "More Info",
@@ -183,7 +232,8 @@ export const eventsData: Event[] = [
   {
     id: "author-talk-ben-cole",
     title: "📘 Author Talk: Ben Cole",
-    description: "Topic: Four Down on Old Peachtree Road",
+    description: "Topic: Four Down on Old Peachtree Road - A few minutes after midnight on December 6, 1953, a flight of Georgia Air National Guard jets preparing to land at Dobbins Air Base near Atlanta, Georgia, disappeared from radar screens. Soon afterwards, the worst fears were realized when the smoldering remains of the four planes were found at the site of a burned farmhouse near Suwanee, Georgia.",
+    speakerBio: "Biography information coming soon.",
     location: "Chamber's 1818 Club",
     startDate: "2025-07-14",
     time: "11:45 AM",
@@ -195,15 +245,17 @@ export const eventsData: Event[] = [
   {
     id: "parc-duluth-tour",
     title: "🏡 Tour: Parc @ Duluth, hosted by Rachel Sanders",
-    description: "Includes boxed lunch",
-    location: "Parc @ Duluth",
+    description: "Includes boxed lunch. Parc at Duluth Community specializes in developing and operating high-end senior independent living, assisted living, and memory care properties.",
+    location: "3315 Peachtree Industrial Blvd, Duluth, GA 30096",
     startDate: "2025-07-28",
     time: "12:00 PM",
     type: "civitan",
     buttonText: "Register",
     emailSubject: "Registration for Parc @ Duluth Tour on July 28",
-    googleMapsUrl: "https://maps.google.com/?q=Parc+at+Duluth+GA"
+    googleMapsUrl: "https://maps.google.com/?q=3315+Peachtree+Industrial+Blvd+Duluth+GA+30096"
   },
+  
+  // August 2025 Events
   {
     id: "civitan-international-conference",
     title: "🌍 Civitan International Conference",
@@ -230,18 +282,20 @@ export const eventsData: Event[] = [
   {
     id: "vox-pop-uli-tour",
     title: "🖨️ Tour: Vox Pop Uli, Peachtree Corners",
-    description: "Focus: Branding & production",
-    location: "Vox Pop Uli, Peachtree Corners",
+    description: "Vox Pop Uli is a marketing production company that helps companies grow their brand with print, apparel, and specialty engraving. From banners to shirts to engraved Yetis, we help you get your message out to your customers and associates. On a tour, we share our passion for helping customers grow their brand and see firsthand small and large printing.",
+    location: "5100 Peachtree Industrial Blvd Unit 600, Peachtree Corners, GA 30071",
     startDate: "2025-08-25",
     time: "12:00 PM",
     type: "civitan",
     buttonText: "Register",
     emailSubject: "Registration for Vox Pop Uli Tour on August 25",
-    googleMapsUrl: "https://maps.google.com/?q=Vox+Pop+Uli+Peachtree+Corners+GA"
+    googleMapsUrl: "https://maps.google.com/?q=5100+Peachtree+Industrial+Blvd+Unit+600+Peachtree+Corners+GA+30071"
   },
+  
+  // September 2025 Events
   {
     id: "labor-day-2025",
-    title: "🇺🇸 USA Labor Day (No Meeting)",
+    title: "🇺🇸 Labor Day (No Meeting)",
     startDate: "2025-09-01",
     type: "national",
     buttonText: "More Info",
@@ -253,7 +307,8 @@ export const eventsData: Event[] = [
   {
     id: "speaker-charel-aoun",
     title: "🎓 Speaker: Charel Aoun, GA First Generation Foundation",
-    description: "Topic: College access for first-gen students",
+    description: "Topic: The Georgia First Generation Foundation is a non-profit organization devoted to providing resources for high school students who cannot obtain a college education without these resources. These students must be first-generation students who are passionate about achieving academic success after high school. Unlike other leadership programs, the Georgia First Generation Foundation provides specific strategic plans for any college degree.",
+    speakerBio: "Biography information coming soon.",
     location: "Chamber's 1818 Club",
     startDate: "2025-09-08",
     time: "11:45 AM",
