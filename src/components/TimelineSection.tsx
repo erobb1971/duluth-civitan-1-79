@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { ChevronLeft, ChevronRight, ChevronsRight, History } from "lucide-react";
@@ -212,8 +213,11 @@ const TimelineSection = () => {
             }}
             className="w-full"
             onSelect={(index) => {
-              setActiveIndex(index);
-              handleInteraction();
+              // Fix: Ensure we're passing a number to setActiveIndex
+              if (typeof index === 'number') {
+                setActiveIndex(index);
+                handleInteraction();
+              }
             }}
           >
             {/* Navigation arrows positioned above timeline */}
