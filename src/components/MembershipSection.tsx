@@ -9,6 +9,7 @@ import CivitanLogo from "./CivitanLogo";
 
 const MembershipSection = () => {
   const [membershipModalOpen, setMembershipModalOpen] = useState(false);
+  const [isImageHovered, setIsImageHovered] = useState(false);
 
   const handleMembershipClick = () => {
     setMembershipModalOpen(true);
@@ -33,25 +34,72 @@ const MembershipSection = () => {
           </p>
         </div>
 
-        {/* Logo and Serving Together - Now at the top */}
+        {/* Logo and Serving Together - Now at the top with enhanced micro interactions */}
         <div className="max-w-6xl mx-auto mb-8">
           <div className="flex flex-col items-center justify-center mb-8">
-            <div className="rounded-xl shadow-lg bg-white p-6 transform hover:scale-105 transition-all duration-300 group">
-              <div className="relative overflow-hidden rounded-lg">
+            <div 
+              className="rounded-xl shadow-xl bg-white p-6 transform transition-all duration-500 hover:shadow-2xl relative overflow-hidden"
+              onMouseEnter={() => setIsImageHovered(true)}
+              onMouseLeave={() => setIsImageHovered(false)}
+              style={{
+                transform: isImageHovered ? 'scale(1.05) rotate(1deg)' : 'scale(1) rotate(0deg)',
+              }}
+            >
+              <div className={`relative overflow-hidden rounded-lg ${isImageHovered ? 'ring-4 ring-civitan-gold/70' : ''}`}>
+                <div className="absolute inset-0 bg-gradient-to-tr from-civitan-blue/20 via-transparent to-civitan-gold/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                
+                {/* Gold accents that appear on hover */}
+                <div 
+                  className="absolute -top-20 -right-20 w-40 h-40 bg-civitan-gold/20 rounded-full transition-all duration-500"
+                  style={{
+                    transform: isImageHovered ? 'translateY(15px) translateX(-15px)' : 'translateY(0) translateX(0)',
+                    opacity: isImageHovered ? '1' : '0'
+                  }}
+                ></div>
+                <div 
+                  className="absolute -bottom-20 -left-20 w-40 h-40 bg-civitan-gold/20 rounded-full transition-all duration-500" 
+                  style={{
+                    transform: isImageHovered ? 'translateY(-15px) translateX(15px)' : 'translateY(0) translateX(0)',
+                    opacity: isImageHovered ? '1' : '0'
+                  }}
+                ></div>
+                
                 <img 
                   src="/lovable-uploads/fa18658d-e5c5-46a4-bd9c-2da8a9133237.png" 
                   alt="We Are Civitan" 
-                  className="max-w-full h-auto rounded-lg group-hover:brightness-110 transition-all duration-500"
-                  style={{ width: '220px' }}
+                  className="max-w-full h-auto rounded-lg transition-all duration-500"
+                  style={{ 
+                    width: '220px',
+                    filter: isImageHovered ? 'brightness(1.1) contrast(1.05)' : 'brightness(1) contrast(1)'
+                  }}
                 />
-                <div className="absolute inset-0 bg-civitan-gold/0 group-hover:bg-civitan-gold/10 transition-all duration-300 rounded-lg"></div>
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity duration-500">
-                  <div className="w-full h-full bg-gradient-to-t from-civitan-blue/30 to-transparent"></div>
-                </div>
+                
+                {/* Shimmering effect overlay */}
+                <div 
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
+                  style={{
+                    transform: isImageHovered ? 'translateX(220px)' : 'translateX(-220px)',
+                    transition: 'transform 1s ease',
+                    opacity: '0.6'
+                  }}
+                ></div>
               </div>
             </div>
-            <div className="mt-4 text-center">
-              <span className="text-civitan-gold font-medium group-hover:text-yellow-400 transition-colors duration-300">Serving Together</span>
+            <div 
+              className="mt-4 text-center transition-all duration-500"
+              style={{
+                transform: isImageHovered ? 'translateY(5px)' : 'translateY(0)',
+              }}
+            >
+              <span 
+                className="text-civitan-gold font-medium transition-all duration-500"
+                style={{
+                  fontSize: isImageHovered ? '1.15rem' : '1rem',
+                  textShadow: isImageHovered ? '0 0 8px rgba(255, 199, 44, 0.7)' : 'none'
+                }}
+              >
+                Serving Together
+              </span>
             </div>
           </div>
 
