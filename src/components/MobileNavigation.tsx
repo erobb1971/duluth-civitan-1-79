@@ -23,6 +23,14 @@ const MobileNavigation = () => {
   };
 
   const handleContactClick = () => {
+    // First try to scroll to contact section
+    const contactSection = document.getElementById("contact");
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: "smooth", block: "start" });
+      return;
+    }
+    
+    // Fallback to email if section not found
     window.location.href = "mailto:info@duluthcivitanclub.org";
   };
   

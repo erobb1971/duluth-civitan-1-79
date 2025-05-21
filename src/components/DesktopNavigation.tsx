@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import CivitanLogo from "./CivitanLogo";
 import { Button } from "@/components/ui/button";
@@ -29,20 +30,26 @@ const DesktopNavigation = () => {
     };
   }, []);
 
-  // Updated scroll function that uses getBoundingClientRect for accurate positioning
+  // Improved scroll function with better handling of section targeting
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
     e.preventDefault();
-    const section = document.getElementById(sectionId);
-    if (section) {
-      const rect = section.getBoundingClientRect();
-      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-      const headerHeight = 80; // Adjust for header height
-      
-      window.scrollTo({
-        top: rect.top + scrollTop - headerHeight,
-        behavior: "smooth",
-      });
-    }
+    
+    // Wait a tiny bit for any pending DOM updates
+    setTimeout(() => {
+      const section = document.getElementById(sectionId);
+      if (section) {
+        const rect = section.getBoundingClientRect();
+        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+        const headerHeight = 80; // Adjust for header height
+        
+        window.scrollTo({
+          top: rect.top + scrollTop - headerHeight,
+          behavior: "smooth",
+        });
+      } else {
+        console.log(`Section with ID "${sectionId}" not found`);
+      }
+    }, 10);
   };
 
   const handleDonateClick = () => {

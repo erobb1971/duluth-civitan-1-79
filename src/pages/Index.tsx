@@ -56,13 +56,9 @@ const Index = () => {
       <div id="events" className="scroll-mt-20"></div>
       <EventsSection />
       
-      {/* Contact section */}
-      {!isMobile && (
-        <>
-          <div id="contact" className="scroll-mt-20"></div>
-          <ContactSection />
-        </>
-      )}
+      {/* Contact section - now correctly positioned for mobile and desktop */}
+      <div id="contact" className="scroll-mt-20"></div>
+      {!isMobile && <ContactSection />}
       
       <Footer />
       <MobileNavigation />
