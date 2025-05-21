@@ -7,10 +7,10 @@ export const handleExternalUrl = (url: string) => {
 };
 
 export const handleSpectrumGardenTourEmail = () => {
-  window.location.href = `mailto:claire@spectrumautism.org?subject=RSVP for Garden Tour&body=I would like to RSVP for the Spectrum Sensory & Harvest Gardens Tour on June 5, 2025. Please provide any additional information needed.`;
+  window.location.href = `mailto:info@duluthcivitanclub.org?subject=RSVP for Garden Tour&body=I would like to RSVP for the Spectrum Sensory & Harvest Gardens Tour on June 5, 2025. Please provide any additional information needed.`;
   toast({
     title: "Thank you!",
-    description: "Your RSVP has been sent to claire@spectrumautism.org.",
+    description: "Your RSVP has been sent to info@duluthcivitanclub.org.",
   });
 };
 
