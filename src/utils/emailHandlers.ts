@@ -1,0 +1,49 @@
+
+import { Event } from "@/utils/events";
+import { toast } from "@/hooks/use-toast";
+
+export const handleExternalUrl = (url: string) => {
+  window.open(url, "_blank", "noopener,noreferrer");
+};
+
+export const handleSpectrumGardenTourEmail = () => {
+  window.location.href = `mailto:claire@spectrumautism.org?subject=RSVP for Garden Tour&body=I would like to RSVP for the Spectrum Sensory & Harvest Gardens Tour on June 5, 2025. Please provide any additional information needed.`;
+  toast({
+    title: "Thank you!",
+    description: "Your RSVP has been sent to claire@spectrumautism.org.",
+  });
+};
+
+export const handleNoEmail = (message?: string) => {
+  toast({
+    title: "Thank you!",
+    description: message || "Your RSVP has been received.",
+  });
+};
+
+export const handleDefaultEmail = () => {
+  window.location.href = `mailto:info@duluthcivitanclub.org?subject=Event Inquiry&body=Thank you for your interest in this event. Please provide your contact information and we will get back to you shortly.`;
+  toast({
+    title: "Thank you!",
+    description: "Your interest has been submitted. We'll be in touch soon.",
+  });
+};
+
+export const handleEmailClick = (event: Event) => {
+  if (event.externalUrl) {
+    handleExternalUrl(event.externalUrl);
+    return;
+  }
+
+  if (event.id === "spectrum-garden-tour-2025") {
+    handleSpectrumGardenTourEmail();
+    return;
+  }
+
+  if (event.noEmail) {
+    handleNoEmail(event.rsvpMessage);
+    return;
+  }
+
+  handleDefaultEmail();
+};

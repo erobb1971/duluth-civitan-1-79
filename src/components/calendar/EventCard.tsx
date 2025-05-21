@@ -1,60 +1,15 @@
+
 import React from "react";
 import { Event } from "@/utils/events";
 import { Card, CardHeader, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Map, Mail, ExternalLink } from "lucide-react";
-import { toast } from "@/hooks/use-toast";
+import { handleEmailClick } from "@/utils/emailHandlers";
 import CalendarAddToButtons from "./CalendarAddToButtons";
 
 interface EventCardProps {
   event: Event;
 }
-
-const handleExternalUrl = (event: Event) => {
-  window.open(event.externalUrl, "_blank", "noopener,noreferrer");
-};
-
-const handleSpectrumGardenTourEmail = () => {
-  window.location.href = `mailto:claire@spectrumautism.org?subject=RSVP for Garden Tour&body=I would like to RSVP for the Spectrum Sensory & Harvest Gardens Tour on June 5, 2025. Please provide any additional information needed.`;
-  toast({
-    title: "Thank you!",
-    description: "Your RSVP has been sent to claire@spectrumautism.org.",
-  });
-};
-
-const handleNoEmail = (event: Event) => {
-  toast({
-    title: "Thank you!",
-    description: event.rsvpMessage || "Your RSVP has been received.",
-  });
-};
-
-const handleDefaultEmail = () => {
-  window.location.href = `mailto:info@duluthcivitanclub.org?subject=Event Inquiry&body=Thank you for your interest in this event. Please provide your contact information and we will get back to you shortly.`;
-  toast({
-    title: "Thank you!",
-    description: "Your interest has been submitted. We'll be in touch soon.",
-  });
-};
-
-const handleEmailClick = (event: Event) => {
-  if (event.externalUrl) {
-    handleExternalUrl(event);
-    return;
-  }
-
-  if (event.id === "spectrum-garden-tour-2025") {
-    handleSpectrumGardenTourEmail();
-    return;
-  }
-
-  if (event.noEmail) {
-    handleNoEmail(event);
-    return;
-  }
-
-  handleDefaultEmail();
-};
 
 const EventCard = ({ event }: EventCardProps) => {
   return (
