@@ -3,16 +3,22 @@ import React, { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Mail } from "lucide-react";
+import { Mail, HandHelping } from "lucide-react";
 import MembershipApplicationModal from "./MembershipApplicationModal";
+import VolunteerModal from "./VolunteerModal";
 import CivitanLogo from "./CivitanLogo";
 
 const MembershipSection = () => {
   const [membershipModalOpen, setMembershipModalOpen] = useState(false);
+  const [volunteerModalOpen, setVolunteerModalOpen] = useState(false);
   const [isImageHovered, setIsImageHovered] = useState(false);
 
   const handleMembershipClick = () => {
     setMembershipModalOpen(true);
+  };
+
+  const handleVolunteerClick = () => {
+    setVolunteerModalOpen(true);
   };
 
   return (
@@ -151,15 +157,24 @@ const MembershipSection = () => {
               </div>
             </div>
             
-            {/* CTA Button with enhanced styling - now below the grid and centered */}
+            {/* CTA Buttons with enhanced styling - now two buttons side by side */}
             <div className="text-center mt-12">
-              <Button 
-                onClick={handleMembershipClick}
-                className="bg-civitan-gold text-civitan-blue hover:bg-yellow-400 font-bold text-lg px-8 py-6 h-auto rounded-xl shadow-lg transform transition-all duration-500 hover:scale-105 hover:shadow-xl"
-              >
-                <Mail className="mr-2 h-5 w-5" />
-                Become a Member
-              </Button>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <Button 
+                  onClick={handleMembershipClick}
+                  className="bg-civitan-gold text-civitan-blue hover:bg-yellow-400 font-bold text-lg px-8 py-6 h-auto rounded-xl shadow-lg transform transition-all duration-500 hover:scale-105 hover:shadow-xl"
+                >
+                  <Mail className="mr-2 h-5 w-5" />
+                  Become a Member
+                </Button>
+                <Button 
+                  onClick={handleVolunteerClick}
+                  className="bg-white text-civitan-blue hover:bg-gray-100 font-bold text-lg px-8 py-6 h-auto rounded-xl shadow-lg transform transition-all duration-500 hover:scale-105 hover:shadow-xl"
+                >
+                  <HandHelping className="mr-2 h-5 w-5" />
+                  Volunteer
+                </Button>
+              </div>
             </div>
           </div>
         </div>
@@ -169,6 +184,12 @@ const MembershipSection = () => {
       <MembershipApplicationModal
         open={membershipModalOpen}
         onOpenChange={setMembershipModalOpen}
+      />
+      
+      {/* Volunteer Modal */}
+      <VolunteerModal
+        open={volunteerModalOpen}
+        onOpenChange={setVolunteerModalOpen}
       />
     </section>
   );
