@@ -1,15 +1,17 @@
 
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { ArrowUp, PiggyBank, Facebook, Instagram } from "lucide-react";
+import { ArrowUp, PiggyBank, Facebook, Instagram, HandHelping } from "lucide-react";
 import PrivacyPolicyModal from "./PrivacyPolicyModal";
 import DonationModal from "./DonationModal";
+import VolunteerModal from "./VolunteerModal";
 import BackToTop from "./BackToTop";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 const Footer = () => {
   const [privacyPolicyModalOpen, setPrivacyPolicyModalOpen] = useState(false);
   const [donationModalOpen, setDonationModalOpen] = useState(false);
+  const [volunteerModalOpen, setVolunteerModalOpen] = useState(false);
 
   return (
     <footer className="relative py-2.5 overflow-hidden">
@@ -130,6 +132,16 @@ const Footer = () => {
               </button>
               
               <Button 
+                variant="outline" 
+                onClick={() => setVolunteerModalOpen(true)}
+                className="bg-white/10 border-white/20 text-white hover:bg-white/20 font-bold mr-4 hidden md:flex"
+                size="sm"
+              >
+                <HandHelping className="h-4 w-4 mr-2" />
+                Volunteer
+              </Button>
+              
+              <Button 
                 variant="default" 
                 onClick={() => setDonationModalOpen(true)}
                 className="bg-civitan-gold hover:bg-yellow-500 text-civitan-blue font-bold ml-4 hidden md:flex"
@@ -151,6 +163,11 @@ const Footer = () => {
       <DonationModal
         open={donationModalOpen}
         onOpenChange={setDonationModalOpen}
+      />
+
+      <VolunteerModal
+        open={volunteerModalOpen}
+        onOpenChange={setVolunteerModalOpen}
       />
 
       {/* Desktop-only Back to Top button */}

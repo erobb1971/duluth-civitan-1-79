@@ -1,17 +1,18 @@
-
 import React, { useState, useEffect } from "react";
 import CivitanLogo from "./CivitanLogo";
 import { Button } from "@/components/ui/button";
 import MembershipApplicationModal from "./MembershipApplicationModal";
 import DonationModal from "./DonationModal";
+import VolunteerModal from "./VolunteerModal";
 import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger, navigationMenuTriggerStyle } from "./ui/navigation-menu";
 import { cn } from "@/lib/utils";
-import { PiggyBank, Facebook, Instagram } from "lucide-react";
+import { PiggyBank, Facebook, Instagram, HandHelping } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 const DesktopNavigation = () => {
   const [membershipModalOpen, setMembershipModalOpen] = useState(false);
   const [donationModalOpen, setDonationModalOpen] = useState(false);
+  const [volunteerModalOpen, setVolunteerModalOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
   // Add scroll event listener to detect scrolling for header styling
@@ -54,6 +55,10 @@ const DesktopNavigation = () => {
 
   const handleDonateClick = () => {
     setDonationModalOpen(true);
+  };
+
+  const handleVolunteerClick = () => {
+    setVolunteerModalOpen(true);
   };
 
   return (
@@ -234,6 +239,15 @@ const DesktopNavigation = () => {
             </TooltipProvider>
 
             <Button 
+              variant="outline"
+              onClick={handleVolunteerClick}
+              className="bg-white border-civitan-blue text-civitan-blue hover:bg-civitan-blue hover:text-white font-bold"
+            >
+              <HandHelping className="h-4 w-4 mr-2" />
+              Volunteer
+            </Button>
+
+            <Button 
               variant="default"
               onClick={handleDonateClick}
               className="bg-civitan-gold hover:bg-yellow-500 text-civitan-blue font-bold"
@@ -253,6 +267,11 @@ const DesktopNavigation = () => {
       <DonationModal
         open={donationModalOpen}
         onOpenChange={setDonationModalOpen}
+      />
+
+      <VolunteerModal
+        open={volunteerModalOpen}
+        onOpenChange={setVolunteerModalOpen}
       />
     </header>
   );

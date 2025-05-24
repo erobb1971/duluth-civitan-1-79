@@ -14,6 +14,35 @@ export const handleSpectrumGardenTourEmail = () => {
   });
 };
 
+export const handleVolunteerEmail = (formData: {
+  fullName: string;
+  email: string;
+  phone: string;
+  contactMethod: string;
+  volunteerInterest: string;
+  agreeToUpdates: boolean;
+}) => {
+  const emailBody = `
+New Volunteer Application:
+
+Full Name: ${formData.fullName}
+Email Address: ${formData.email}
+Cell Phone Number: ${formData.phone}
+Preferred Contact Method: ${formData.contactMethod}
+Volunteer Interest: ${formData.volunteerInterest}
+Agrees to receive updates: ${formData.agreeToUpdates ? 'Yes' : 'No'}
+
+Thank you for your interest in volunteering with Duluth Civitan Club!
+  `.trim();
+
+  window.location.href = `mailto:info@duluthcivitanclub.org?subject=I Want to Volunteer!&body=${encodeURIComponent(emailBody)}`;
+  
+  toast({
+    title: "Volunteer Application Sent!",
+    description: "Your volunteer application has been sent. We'll be in touch soon!",
+  });
+};
+
 export const handleNoEmail = (message?: string) => {
   toast({
     title: "Thank you!",

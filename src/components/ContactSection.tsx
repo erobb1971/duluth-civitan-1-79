@@ -1,10 +1,10 @@
-
 import React, { useState } from "react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Mail, Phone, MapPin } from "lucide-react";
 import { motion } from "framer-motion";
 import DonationModal from "./DonationModal";
 import MembershipApplicationModal from "./MembershipApplicationModal";
+import VolunteerModal from "./VolunteerModal";
 import ContactButton from "./contact/ContactButton";
 import GetInvolvedSection from "./contact/GetInvolvedSection";
 import ContactBackground from "./contact/ContactBackground";
@@ -27,8 +27,7 @@ const ContactSection = () => {
   };
 
   const handleVolunteerClick = () => {
-    // Using the same membership modal for volunteering
-    setMembershipModalOpen(true);
+    setVolunteerModalOpen(true);
   };
 
   const containerVariants = {
@@ -100,6 +99,10 @@ const ContactSection = () => {
       <MembershipApplicationModal
         open={membershipModalOpen}
         onOpenChange={setMembershipModalOpen}
+      />
+      <VolunteerModal
+        open={volunteerModalOpen}
+        onOpenChange={setVolunteerModalOpen}
       />
     </section>
   );

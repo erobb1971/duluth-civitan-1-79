@@ -1,8 +1,9 @@
 
 import React, { useState } from "react";
-import { ArrowUp, CalendarDays, Mail, PiggyBank } from "lucide-react";
+import { ArrowUp, CalendarDays, Mail, PiggyBank, HandHelping } from "lucide-react";
 import { CalendarModal } from "./calendar";
 import DonationModal from "./DonationModal";
+import VolunteerModal from "./VolunteerModal";
 
 interface NavItem {
   title: string;
@@ -14,6 +15,7 @@ interface NavItem {
 const MobileNavigation = () => {
   const [calendarModalOpen, setCalendarModalOpen] = useState(false);
   const [donationModalOpen, setDonationModalOpen] = useState(false);
+  const [volunteerModalOpen, setVolunteerModalOpen] = useState(false);
 
   const handleScrollToTop = () => {
     window.scrollTo({
@@ -38,6 +40,10 @@ const MobileNavigation = () => {
     setDonationModalOpen(true);
   };
 
+  const handleVolunteerClick = () => {
+    setVolunteerModalOpen(true);
+  };
+
   const handleScrollToEvents = () => {
     const eventsSection = document.getElementById("events");
     if (eventsSection) {
@@ -57,6 +63,12 @@ const MobileNavigation = () => {
       href: "#", 
       icon: <CalendarDays className="w-4 h-4" />,
       action: handleScrollToEvents
+    },
+    { 
+      title: "Volunteer", 
+      href: "#", 
+      icon: <HandHelping className="w-4 h-4" />,
+      action: handleVolunteerClick
     },
     { 
       title: "Donate", 
@@ -101,6 +113,11 @@ const MobileNavigation = () => {
       <DonationModal
         open={donationModalOpen}
         onOpenChange={setDonationModalOpen}
+      />
+
+      <VolunteerModal
+        open={volunteerModalOpen}
+        onOpenChange={setVolunteerModalOpen}
       />
     </>
   );
