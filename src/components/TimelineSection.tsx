@@ -42,8 +42,8 @@ const TimelineSection = () => {
         altText="Historical Duluth train depot - symbolic of Duluth GA heritage"
       />
       
-      {/* Semi-transparent overlay to ensure text readability */}
-      <div className="absolute inset-0 bg-gradient-to-b from-gray-100 to-white dark:from-gray-800/90 dark:to-gray-900/90 opacity-85 z-0"></div>
+      {/* Left-to-right gradient overlay - left side shows more background, right side fades it */}
+      <div className="absolute inset-0 bg-gradient-to-r from-gray-100/50 via-gray-100/70 to-white dark:from-gray-800/50 dark:via-gray-800/70 dark:to-gray-900 opacity-85 z-0"></div>
       
       <div className="absolute top-0 left-0 w-full h-20 bg-gradient-to-b from-gray-100 dark:from-gray-800 opacity-70 z-0"></div>
       <div className="container mx-auto px-3 sm:px-6 relative z-10">
