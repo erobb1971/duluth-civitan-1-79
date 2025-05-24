@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -17,14 +16,19 @@ interface GalleryModalProps {
 
 const GalleryModal = ({ open, onOpenChange, initialImageId }: GalleryModalProps) => {
   const [selectedCategory, setSelectedCategory] = useState("All");
-  const [selectedDate, setSelectedDate] = useState("");
+  const [selectedDate, setSelectedDate] = useState("all-dates");
   const [searchTerm, setSearchTerm] = useState("");
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [adminModalOpen, setAdminModalOpen] = useState(false);
   const [showFilters, setShowFilters] = useState(false);
 
-  const filteredImages = getFilteredImages(selectedCategory, selectedDate, searchTerm);
+  // Update the filtering function to handle the new "all-dates" value
+  const filteredImages = getFilteredImages(
+    selectedCategory, 
+    selectedDate === "all-dates" ? "" : selectedDate, 
+    searchTerm
+  );
   const uniqueDates = getUniqueDates();
 
   useEffect(() => {
@@ -71,7 +75,7 @@ const GalleryModal = ({ open, onOpenChange, initialImageId }: GalleryModalProps)
 
   const clearFilters = () => {
     setSelectedCategory("All");
-    setSelectedDate("");
+    setSelectedDate("all-dates");
     setSearchTerm("");
   };
 
@@ -176,7 +180,7 @@ const GalleryModal = ({ open, onOpenChange, initialImageId }: GalleryModalProps)
                     <SelectValue placeholder="Select date" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">All dates</SelectItem>
+                    <SelectItem value="all-dates">All dates</SelectItem>
                     {uniqueDates.map((date) => (
                       <SelectItem key={date} value={date}>
                         {date}
