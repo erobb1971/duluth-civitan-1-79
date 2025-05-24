@@ -70,6 +70,9 @@ const TimelineSection = () => {
           <div className="absolute h-1 bg-gradient-to-r from-civitan-blue/30 via-civitan-gold to-civitan-blue/30 left-0 right-0 top-1/2 transform -translate-y-1/2 z-0 rounded-full shadow-sm"></div>
           <div className="absolute h-0.5 left-0 right-0 top-1/2 transform -translate-y-1/2 z-1 rounded-full bg-white/50 dark:bg-gray-600/50 animate-pulse"></div>
 
+          {/* Diagonal gradient overlay - left visible to right transparent */}
+          <div className="absolute inset-0 z-5 pointer-events-none bg-gradient-to-br from-white/60 via-white/30 to-transparent dark:from-gray-900/60 dark:via-gray-900/30 dark:to-transparent"></div>
+
           {/* Mobile swipe indicator */}
           <SwipeIndicator showCue={showScrollCue} isMobile={true} />
           
@@ -77,7 +80,9 @@ const TimelineSection = () => {
           <ScrollInstructions showCue={showScrollCue} />
           
           {/* Timeline Carousel with enhanced styling */}
-          <TimelineCarousel events={timelineEvents} onInteraction={handleInteraction} />
+          <div className="relative z-10">
+            <TimelineCarousel events={timelineEvents} onInteraction={handleInteraction} />
+          </div>
         </div>
       </div>
       
