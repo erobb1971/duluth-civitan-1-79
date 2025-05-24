@@ -21,18 +21,87 @@ const AdminUploadForm = ({ onCancel }: AdminUploadFormProps) => {
     category: "",
   });
   const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null);
+  const [optimizedFiles, setOptimizedFiles] = useState<File[]>([]);
   const [isUploading, setIsUploading] = useState(false);
+  const [isOptimizing, setIsOptimizing] = useState(false);
 
-  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const optimizeImage = (file: File, maxWidth = 1920, maxHeight = 1080, quality = 0.8): Promise<File> => {
+    return new Promise((resolve) => {
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d')!;
+      const img = new Image();
+      
+      img.onload = () => {
+        // Calculate new dimensions
+        let { width, height } = img;
+        
+        if (width > maxWidth || height > maxHeight) {
+          const ratio = Math.min(maxWidth / width, maxHeight / height);
+          width *= ratio;
+          height *= ratio;
+        }
+        
+        canvas.width = width;
+        canvas.height = height;
+        
+        // Draw and compress
+        ctx.drawImage(img, 0, 0, width, height);
+        
+        canvas.toBlob((blob) => {
+          if (blob) {
+            const optimizedFile = new File([blob], file.name, {
+              type: 'image/jpeg',
+              lastModified: Date.now(),
+            });
+            resolve(optimizedFile);
+          }
+        }, 'image/jpeg', quality);
+      };
+      
+      img.src = URL.createObjectURL(file);
+    });
+  };
+
+  const handleFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (files && files.length > 0) {
       setSelectedFiles(files);
+      setIsOptimizing(true);
+      
+      try {
+        const optimized = await Promise.all(
+          Array.from(files).map(file => optimizeImage(file))
+        );
+        
+        setOptimizedFiles(optimized);
+        
+        const originalSize = Array.from(files).reduce((sum, file) => sum + file.size, 0);
+        const optimizedSize = optimized.reduce((sum, file) => sum + file.size, 0);
+        const savings = ((originalSize - optimizedSize) / originalSize * 100).toFixed(1);
+        
+        toast({
+          title: "Images Optimized",
+          description: `Reduced file size by ${savings}% (${(originalSize / 1024 / 1024).toFixed(1)}MB → ${(optimizedSize / 1024 / 1024).toFixed(1)}MB)`,
+        });
+        
+      } catch (error) {
+        toast({
+          title: "Optimization Failed",
+          description: "Using original files instead.",
+          variant: "destructive",
+        });
+        setOptimizedFiles(Array.from(files));
+      } finally {
+        setIsOptimizing(false);
+      }
     }
   };
 
   const handleUpload = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!selectedFiles || selectedFiles.length === 0) {
+    const filesToUpload = optimizedFiles.length > 0 ? optimizedFiles : (selectedFiles ? Array.from(selectedFiles) : []);
+    
+    if (filesToUpload.length === 0) {
       toast({
         title: "No Files Selected",
         description: "Please select at least one image to upload.",
@@ -46,14 +115,14 @@ const AdminUploadForm = ({ onCancel }: AdminUploadFormProps) => {
     try {
       toast({
         title: "Upload Started",
-        description: `Uploading ${selectedFiles.length} image(s)...`,
+        description: `Uploading ${filesToUpload.length} optimized image(s)...`,
       });
 
       await new Promise(resolve => setTimeout(resolve, 2000));
 
       toast({
         title: "Upload Successful",
-        description: `Successfully uploaded ${selectedFiles.length} image(s) to the gallery.`,
+        description: `Successfully uploaded ${filesToUpload.length} optimized image(s) to the gallery.`,
       });
 
       setUploadData({
@@ -63,6 +132,7 @@ const AdminUploadForm = ({ onCancel }: AdminUploadFormProps) => {
         category: "",
       });
       setSelectedFiles(null);
+      setOptimizedFiles([]);
       
       const fileInput = document.getElementById('file-upload') as HTMLInputElement;
       if (fileInput) fileInput.value = '';
@@ -104,18 +174,31 @@ const AdminUploadForm = ({ onCancel }: AdminUploadFormProps) => {
               </label>
               <p className="pl-1">or drag and drop</p>
             </div>
-            <p className="text-xs text-gray-500">PNG, JPG, GIF up to 10MB each</p>
+            <p className="text-xs text-gray-500">PNG, JPG, GIF up to 10MB each (will be optimized)</p>
           </div>
         </div>
+        
+        {isOptimizing && (
+          <div className="mt-2 text-center">
+            <p className="text-sm text-blue-600">Optimizing images...</p>
+          </div>
+        )}
         
         {selectedFiles && selectedFiles.length > 0 && (
           <div className="mt-2">
             <p className="text-sm text-gray-600">
-              Selected {selectedFiles.length} file(s):
+              Selected {selectedFiles.length} file(s) {optimizedFiles.length > 0 && "(optimized)"}:
             </p>
             <ul className="text-xs text-gray-500 mt-1">
               {Array.from(selectedFiles).map((file, index) => (
-                <li key={index}>• {file.name}</li>
+                <li key={index}>
+                  • {file.name} 
+                  {optimizedFiles[index] && (
+                    <span className="text-green-600 ml-1">
+                      ({(file.size / 1024 / 1024).toFixed(1)}MB → {(optimizedFiles[index].size / 1024 / 1024).toFixed(1)}MB)
+                    </span>
+                  )}
+                </li>
               ))}
             </ul>
           </div>
@@ -185,9 +268,9 @@ const AdminUploadForm = ({ onCancel }: AdminUploadFormProps) => {
         <Button 
           type="submit" 
           className="flex-1"
-          disabled={isUploading || !selectedFiles || selectedFiles.length === 0}
+          disabled={isUploading || isOptimizing || !selectedFiles || selectedFiles.length === 0}
         >
-          {isUploading ? "Uploading..." : "Upload Images"}
+          {isUploading ? "Uploading..." : isOptimizing ? "Optimizing..." : "Upload Images"}
         </Button>
         <Button type="button" variant="outline" onClick={onCancel}>
           Cancel
