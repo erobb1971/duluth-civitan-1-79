@@ -1,17 +1,23 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { Button } from "@/components/ui/button";
-import { Mail } from "lucide-react";
+import { Mail, HandHelping } from "lucide-react";
 import MembershipApplicationModal from "./MembershipApplicationModal";
+import VolunteerModal from "./VolunteerModal";
 
 const CtaSection = () => {
   const [membershipModalOpen, setMembershipModalOpen] = useState(false);
+  const [volunteerModalOpen, setVolunteerModalOpen] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
   const [isVisible, setIsVisible] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
 
   const handleMembershipClick = () => {
     setMembershipModalOpen(true);
+  };
+
+  const handleVolunteerClick = () => {
+    setVolunteerModalOpen(true);
   };
 
   useEffect(() => {
@@ -134,13 +140,22 @@ const CtaSection = () => {
               </div>
 
               <div className="text-center">
-                <Button 
-                  onClick={handleMembershipClick}
-                  className="bg-civitan-gold text-civitan-blue hover:bg-yellow-400 font-medium text-base sm:text-lg px-6 sm:px-8 py-2 sm:py-6 h-auto transform transition-all duration-500 hover:scale-105"
-                >
-                  <Mail className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
-                  Become a Member
-                </Button>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                  <Button 
+                    onClick={handleMembershipClick}
+                    className="bg-civitan-gold text-civitan-blue hover:bg-yellow-400 font-medium text-base sm:text-lg px-6 sm:px-8 py-2 sm:py-6 h-auto transform transition-all duration-500 hover:scale-105"
+                  >
+                    <Mail className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
+                    Become a Member
+                  </Button>
+                  <Button 
+                    onClick={handleVolunteerClick}
+                    className="bg-white text-civitan-blue hover:bg-gray-100 font-medium text-base sm:text-lg px-6 sm:px-8 py-2 sm:py-6 h-auto transform transition-all duration-500 hover:scale-105"
+                  >
+                    <HandHelping className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
+                    Volunteer
+                  </Button>
+                </div>
               </div>
             </div>
           </div>
@@ -150,6 +165,10 @@ const CtaSection = () => {
       <MembershipApplicationModal
         open={membershipModalOpen}
         onOpenChange={setMembershipModalOpen}
+      />
+      <VolunteerModal
+        open={volunteerModalOpen}
+        onOpenChange={setVolunteerModalOpen}
       />
     </>
   );
