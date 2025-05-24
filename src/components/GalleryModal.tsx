@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -39,6 +40,13 @@ const GalleryModal = ({ open, onOpenChange, initialImageId }: GalleryModalProps)
       }
     }
   }, [initialImageId, filteredImages]);
+
+  // Reset currentImageIndex when filteredImages changes and current index is out of bounds
+  useEffect(() => {
+    if (filteredImages.length > 0 && currentImageIndex >= filteredImages.length) {
+      setCurrentImageIndex(0);
+    }
+  }, [filteredImages, currentImageIndex]);
 
   const handlePrevious = () => {
     setCurrentImageIndex(prev => 
@@ -90,6 +98,7 @@ const GalleryModal = ({ open, onOpenChange, initialImageId }: GalleryModalProps)
     setTimeout(() => setClickCount(0), 3000);
   };
 
+  // Early return for empty state
   if (filteredImages.length === 0) {
     return (
       <Dialog open={open} onOpenChange={onOpenChange}>
@@ -106,7 +115,25 @@ const GalleryModal = ({ open, onOpenChange, initialImageId }: GalleryModalProps)
     );
   }
 
-  const currentImage = filteredImages[currentImageIndex];
+  // Safe access to currentImage - ensure we have a valid index
+  const currentImage = filteredImages[Math.min(currentImageIndex, filteredImages.length - 1)];
+
+  // Additional safety check - if currentImage is still undefined, show error state
+  if (!currentImage) {
+    return (
+      <Dialog open={open} onOpenChange={onOpenChange}>
+        <DialogContent className="max-w-4xl max-h-[90vh] p-0">
+          <div className="p-6 text-center">
+            <h3 className="text-lg font-semibold mb-4">Error loading image</h3>
+            <p className="text-gray-600 mb-4">There was a problem loading the selected image.</p>
+            <Button onClick={() => onOpenChange(false)} variant="outline">
+              Close Gallery
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+    );
+  }
 
   return (
     <>
