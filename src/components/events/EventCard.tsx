@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -6,6 +7,7 @@ import { formatEventDate } from "@/utils/events";
 import { toast } from "@/hooks/use-toast";
 import CalendarButton from "./CalendarButton";
 import ShareButtons from "./ShareButtons";
+import HolidayEventTitle from "./HolidayEventTitle";
 
 interface EventCardProps {
   event: any;
@@ -61,7 +63,7 @@ const EventCard: React.FC<EventCardProps> = ({ event }) => {
           </time>
         </div>
         <CardTitle className="text-lg sm:text-xl text-civitan-blue dark:text-white">
-          {event.title}
+          <HolidayEventTitle event={event} />
         </CardTitle>
         {event.location && (
           <div className="flex items-start mt-2">

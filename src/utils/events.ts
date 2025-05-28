@@ -21,6 +21,7 @@ export interface Event {
   nextMeetingDate?: string; // Next meeting date after a holiday or no-meeting event
   externalUrl?: string; // URL for external registration/information
   speakerBio?: string; // Biography information for speakers
+  isHoliday?: boolean; // Flag to indicate this is a holiday event
 }
 
 const today = startOfDay(new Date());
@@ -143,12 +144,13 @@ export const eventsData: Event[] = [
   },
   {
     id: "memorial-day-2025",
-    title: "🇺🇸 Memorial Day (No Meeting)",
+    title: "Memorial Day (No Meeting)",
     startDate: "2025-05-26",
     type: "national",
     buttonText: "More Info",
     emailSubject: "Memorial Day Inquiry",
     isNoMeeting: true,
+    isHoliday: true,
     description: "We will not be having a meeting due to Memorial Day, but our next meeting is on June 9th and we would love for you to come, bring a friend!",
     nextMeetingDate: "2025-06-09",
   },
@@ -221,12 +223,13 @@ export const eventsData: Event[] = [
   // July 2025 Events
   {
     id: "independence-day-2025",
-    title: "🇺🇸 Independence Day (No Meeting)",
+    title: "Independence Day (No Meeting)",
     startDate: "2025-07-04",
     type: "national",
     buttonText: "More Info",
     emailSubject: "Independence Day Inquiry",
     isNoMeeting: true,
+    isHoliday: true,
     description: "We will not be having a meeting due to Independence Day, but our next meeting is on July 14th and we would love for you to come, bring a friend!"
   },
   {
@@ -295,12 +298,13 @@ export const eventsData: Event[] = [
   // September 2025 Events
   {
     id: "labor-day-2025",
-    title: "🇺🇸 Labor Day (No Meeting)",
+    title: "Labor Day (No Meeting)",
     startDate: "2025-09-01",
     type: "national",
     buttonText: "More Info",
     emailSubject: "Labor Day Inquiry",
     isNoMeeting: true,
+    isHoliday: true,
     description: "We will not be having a meeting due to Labor Day, but our next meeting is on September 8th and we would love for you to come, bring a friend!",
     nextMeetingDate: "2025-09-08"
   },
