@@ -44,11 +44,11 @@ const GetInvolvedSection: React.FC<GetInvolvedSectionProps> = ({
           className="w-full sm:w-[calc(50%-0.5rem)]"
         >
           <Button 
-            className="w-full bg-white text-civitan-blue hover:bg-gray-100 font-semibold py-6 h-auto text-lg rounded-xl shadow-lg"
-            onClick={onMembershipClick}
+            className="w-full bg-civitan-blue text-white border-2 border-white hover:bg-blue-700 font-semibold py-6 h-auto text-lg rounded-xl shadow-lg"
+            onClick={onVolunteerClick}
           >
-            <UserPlus className="mr-2 h-5 w-5" />
-            Become a Member
+            <HandHelping className="mr-2 h-5 w-5" />
+            Volunteer
           </Button>
         </motion.div>
         <motion.div
@@ -57,11 +57,11 @@ const GetInvolvedSection: React.FC<GetInvolvedSectionProps> = ({
           className="w-full"
         >
           <Button 
-            className="w-full bg-civitan-blue text-white border-2 border-white hover:bg-blue-700 font-semibold py-6 h-auto text-lg rounded-xl shadow-lg"
-            onClick={onVolunteerClick}
+            className="w-full bg-white text-civitan-blue hover:bg-gray-100 font-semibold py-6 h-auto text-lg rounded-xl shadow-lg"
+            onClick={onMembershipClick}
           >
-            <HandHelping className="mr-2 h-5 w-5" />
-            Volunteer
+            <UserPlus className="mr-2 h-5 w-5" />
+            Become a Member
           </Button>
         </motion.div>
       </div>
