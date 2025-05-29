@@ -1,7 +1,5 @@
 
 import React from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Users, Heart, Globe } from "lucide-react";
 
 const AboutHero = () => {
   return (
@@ -15,33 +13,6 @@ const AboutHero = () => {
         <p className="text-lg sm:text-xl max-w-4xl mx-auto text-gray-700 leading-relaxed">
           Since 2003, Duluth Civitan has been dedicated to improving the lives of children and adults with developmental disabilities in Gwinnett County through hands-on service, fundraising, and advocacy.
         </p>
-      </div>
-
-      {/* Impact Statistics */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 mb-12 sm:mb-16">
-        <Card className="civitan-shadow border-l-4 border-civitan-gold">
-          <CardContent className="p-6 text-center">
-            <Users className="w-12 h-12 text-civitan-blue mx-auto mb-4" />
-            <h3 className="text-2xl sm:text-3xl font-bold text-civitan-blue mb-2">20+</h3>
-            <p className="text-gray-700">Years of Service</p>
-          </CardContent>
-        </Card>
-        
-        <Card className="civitan-shadow border-l-4 border-civitan-gold">
-          <CardContent className="p-6 text-center">
-            <Heart className="w-12 h-12 text-civitan-blue mx-auto mb-4" />
-            <h3 className="text-2xl sm:text-3xl font-bold text-civitan-blue mb-2">50+</h3>
-            <p className="text-gray-700">Active Members</p>
-          </CardContent>
-        </Card>
-        
-        <Card className="civitan-shadow border-l-4 border-civitan-gold">
-          <CardContent className="p-6 text-center">
-            <Globe className="w-12 h-12 text-civitan-blue mx-auto mb-4" />
-            <h3 className="text-2xl sm:text-3xl font-bold text-civitan-blue mb-2">1000+</h3>
-            <p className="text-gray-700">Lives Impacted</p>
-          </CardContent>
-        </Card>
       </div>
 
       {/* Mission Quote */}

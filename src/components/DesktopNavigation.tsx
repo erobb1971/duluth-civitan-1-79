@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import CivitanLogo from "./CivitanLogo";
 import { Button } from "@/components/ui/button";
@@ -79,7 +80,7 @@ const DesktopNavigation = () => {
       }`}
       role="banner"
     >
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-4 sm:px-6 max-w-7xl">
         <div className="flex h-20 items-center justify-between">
           <div className="flex items-center">
             <a 
