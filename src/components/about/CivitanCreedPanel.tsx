@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from "react";
-import { Scroll, Handshake, Heart, Building, Flame, Users, Eye, Hand, Ear, Mic, Sunrise } from "lucide-react";
+import { Heart, Users, Building, Handshake, Globe, Target, Eye, Hand, Lightbulb, ArrowUp, UserCheck, Compass } from "lucide-react";
 
 const CivitanCreedPanel = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -12,12 +12,12 @@ const CivitanCreedPanel = () => {
 
   const creedSections = [
     {
-      icon: Scroll,
+      icon: Heart,
       text: "I believe that Civitan is a way of life, not merely membership in an organization.",
       delay: "0ms"
     },
     {
-      icon: Heart,
+      icon: Users,
       text: "I believe in the worth and dignity of every human being and that I should serve others without personal gain.",
       delay: "100ms"
     },
@@ -32,12 +32,12 @@ const CivitanCreedPanel = () => {
       delay: "300ms"
     },
     {
-      icon: Flame,
+      icon: Globe,
       text: "I believe that I should help create an atmosphere of goodwill and understanding between all peoples.",
       delay: "400ms"
     },
     {
-      icon: Users,
+      icon: Target,
       text: "I believe that Civitan can help me become a better person and that I, in turn, can help Civitan become a better organization.",
       delay: "500ms"
     },
@@ -52,29 +52,29 @@ const CivitanCreedPanel = () => {
       delay: "700ms"
     },
     {
-      icon: Ear,
+      icon: Lightbulb,
       text: "I believe that service to others is the best work of life.",
       delay: "800ms"
     },
     {
-      icon: Mic,
+      icon: ArrowUp,
       text: "I believe in the power of individual effort and community action.",
       delay: "900ms"
     },
     {
-      icon: Sunrise,
+      icon: UserCheck,
       text: "I believe that working together we can build better communities.",
       delay: "1000ms"
     },
     {
-      icon: Building,
+      icon: Compass,
       text: "I believe that Civitan builds good citizenship through fellowship and service.",
       delay: "1100ms"
     }
   ];
 
   return (
-    <div className="bg-civitan-blue py-16 sm:py-20 lg:py-24">
+    <div className="bg-civitan-blue py-16 sm:py-20 lg:py-24 -mt-1">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         {/* Header */}
         <div 
@@ -86,13 +86,13 @@ const CivitanCreedPanel = () => {
             The Civitan Creed
           </h2>
           <div className="w-24 h-1 bg-civitan-gold mx-auto mb-6"></div>
-          <p className="font-crimson text-xl sm:text-2xl lg:text-3xl text-civitan-gold italic max-w-3xl mx-auto">
+          <p className="font-crimson text-base sm:text-lg text-civitan-gold italic max-w-3xl mx-auto">
             The principles that guide our service and unite us in purpose
           </p>
         </div>
 
-        {/* Creed Content */}
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 lg:gap-8">
+        {/* Creed Content - 2 Column Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
           {creedSections.map((section, index) => {
             const IconComponent = section.icon;
             return (
@@ -109,7 +109,7 @@ const CivitanCreedPanel = () => {
                 <div className="flex-shrink-0 w-11 h-11 sm:w-12 sm:h-12 bg-civitan-gold rounded-full flex items-center justify-center mt-1">
                   <IconComponent className="w-5 h-5 sm:w-6 sm:h-6 text-civitan-blue" />
                 </div>
-                <p className="font-crimson text-sm sm:text-base lg:text-lg text-white leading-relaxed">
+                <p className="font-crimson text-base sm:text-lg text-white leading-relaxed">
                   {section.text}
                 </p>
               </div>
@@ -123,7 +123,7 @@ const CivitanCreedPanel = () => {
             isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
           }`}
         >
-          <p className="font-playfair text-xl sm:text-2xl lg:text-3xl text-civitan-gold font-semibold italic">
+          <p className="font-crimson text-base sm:text-lg text-civitan-gold font-semibold italic">
             "Building better citizenship through service"
           </p>
         </div>
