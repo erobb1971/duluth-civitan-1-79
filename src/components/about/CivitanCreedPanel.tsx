@@ -86,7 +86,7 @@ const CivitanCreedPanel = () => {
             The Civitan Creed
           </h2>
           <div className="w-24 h-1 bg-civitan-gold mx-auto mb-6"></div>
-          <p className="font-crimson text-lg sm:text-xl text-civitan-gold italic max-w-3xl mx-auto">
+          <p className="font-crimson text-xl sm:text-2xl lg:text-3xl text-civitan-gold italic max-w-3xl mx-auto">
             The principles that guide our service and unite us in purpose
           </p>
         </div>
