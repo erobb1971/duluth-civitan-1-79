@@ -29,13 +29,6 @@ const MobileNavigation = () => {
   };
 
   const handleContactClick = () => {
-    const contactSection = document.getElementById("contact");
-    if (contactSection) {
-      contactSection.scrollIntoView({ behavior: "smooth", block: "start" });
-      announceToScreenReader("Navigated to contact section");
-      return;
-    }
-    
     window.location.href = "mailto:info@duluthcivitanclub.org";
     announceToScreenReader("Opening email client");
   };
@@ -50,12 +43,9 @@ const MobileNavigation = () => {
     announceToScreenReader("Opening volunteer modal");
   };
 
-  const handleScrollToEvents = () => {
-    const eventsSection = document.getElementById("events");
-    if (eventsSection) {
-      eventsSection.scrollIntoView({ behavior: "smooth", block: "start" });
-      announceToScreenReader("Navigated to events section");
-    }
+  const handleEventsClick = () => {
+    setCalendarModalOpen(true);
+    announceToScreenReader("Opening events calendar");
   };
 
   const navItems: NavItem[] = [
@@ -70,8 +60,8 @@ const MobileNavigation = () => {
       title: "Events", 
       href: "#", 
       icon: <CalendarDays className="w-4 h-4" aria-hidden="true" />,
-      action: handleScrollToEvents,
-      ariaLabel: "Navigate to events section"
+      action: handleEventsClick,
+      ariaLabel: "Open events calendar"
     },
     { 
       title: "Volunteer", 
@@ -92,7 +82,7 @@ const MobileNavigation = () => {
       href: "#", 
       icon: <Mail className="w-4 h-4" aria-hidden="true" />,
       action: handleContactClick,
-      ariaLabel: "Navigate to contact section or open email"
+      ariaLabel: "Open email to contact us"
     },
   ];
 

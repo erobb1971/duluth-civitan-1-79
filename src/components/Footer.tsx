@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowUp, PiggyBank, Facebook, Instagram, HandHelping } from "lucide-react";
@@ -137,11 +138,11 @@ const Footer = () => {
 
         <div className="border-t border-white/10 pt-2">
           <div className="flex flex-col md:flex-row justify-center items-center">
-            <p className="text-gray-300 text-center">&copy; 2025 Duluth Civitan. All rights reserved.</p>
+            <p className="text-gray-300 text-center hidden md:block">&copy; 2025 Duluth Civitan. All rights reserved.</p>
             <div className="mt-1 md:mt-0 md:ml-6 flex justify-center items-center">
               <button 
                 onClick={handlePrivacyPolicyClick}
-                className="text-gray-300 hover:text-white focus:text-white mr-4 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-civitan-blue rounded-md px-2 py-1"
+                className="text-gray-300 hover:text-white focus:text-white mr-4 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-civitan-blue rounded-md px-2 py-1 hidden md:block"
                 aria-label="View privacy policy"
               >
                 Privacy Policy
