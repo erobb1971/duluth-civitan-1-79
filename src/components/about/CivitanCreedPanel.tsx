@@ -1,5 +1,6 @@
+
 import React, { useEffect, useState } from "react";
-import { Scroll, Handshake, Heart, Building, Flame, Users } from "lucide-react";
+import { Scroll, Handshake, Heart, Building, Flame, Users, Eye, Hand, Ear, Mic, Sunrise } from "lucide-react";
 
 const CivitanCreedPanel = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -16,35 +17,65 @@ const CivitanCreedPanel = () => {
       delay: "0ms"
     },
     {
-      icon: Handshake,
+      icon: Heart,
       text: "I believe in the worth and dignity of every human being and that I should serve others without personal gain.",
-      delay: "200ms"
+      delay: "100ms"
     },
     {
       icon: Building,
       text: "I believe that I should be a good citizen and work for the betterment of my community.",
-      delay: "400ms"
+      delay: "200ms"
     },
     {
-      icon: Heart,
+      icon: Handshake,
       text: "I believe in justice, patriotism, and the golden rule.",
-      delay: "600ms"
+      delay: "300ms"
     },
     {
       icon: Flame,
       text: "I believe that I should help create an atmosphere of goodwill and understanding between all peoples.",
-      delay: "800ms"
+      delay: "400ms"
     },
     {
       icon: Users,
       text: "I believe that Civitan can help me become a better person and that I, in turn, can help Civitan become a better organization.",
+      delay: "500ms"
+    },
+    {
+      icon: Eye,
+      text: "I believe in the brotherhood of man under the fatherhood of God.",
+      delay: "600ms"
+    },
+    {
+      icon: Hand,
+      text: "I believe that I should live in such a way that when I am gone, the world will be a little better because I have lived.",
+      delay: "700ms"
+    },
+    {
+      icon: Ear,
+      text: "I believe that service to others is the best work of life.",
+      delay: "800ms"
+    },
+    {
+      icon: Mic,
+      text: "I believe in the power of individual effort and community action.",
+      delay: "900ms"
+    },
+    {
+      icon: Sunrise,
+      text: "I believe that working together we can build better communities.",
       delay: "1000ms"
+    },
+    {
+      icon: Building,
+      text: "I believe that Civitan builds good citizenship through fellowship and service.",
+      delay: "1100ms"
     }
   ];
 
   return (
     <div className="bg-civitan-blue py-16 sm:py-20 lg:py-24">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         {/* Header */}
         <div 
           className={`text-center mb-12 sm:mb-16 transition-all duration-800 ${
@@ -61,13 +92,13 @@ const CivitanCreedPanel = () => {
         </div>
 
         {/* Creed Content */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 lg:gap-8">
           {creedSections.map((section, index) => {
             const IconComponent = section.icon;
             return (
               <div
                 key={index}
-                className={`flex items-start gap-4 sm:gap-6 transition-all duration-800 ${
+                className={`flex items-start gap-4 sm:gap-5 transition-all duration-800 ${
                   isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
                 }`}
                 style={{ 
@@ -75,10 +106,10 @@ const CivitanCreedPanel = () => {
                   animation: isVisible ? `stagger-fade-in 0.8s ease-out forwards` : 'none'
                 }}
               >
-                <div className="flex-shrink-0 w-12 h-12 sm:w-14 sm:h-14 bg-civitan-gold rounded-full flex items-center justify-center mt-1">
-                  <IconComponent className="w-6 h-6 sm:w-7 sm:h-7 text-civitan-blue" />
+                <div className="flex-shrink-0 w-11 h-11 sm:w-12 sm:h-12 bg-civitan-gold rounded-full flex items-center justify-center mt-1">
+                  <IconComponent className="w-5 h-5 sm:w-6 sm:h-6 text-civitan-blue" />
                 </div>
-                <p className="font-crimson text-base sm:text-lg lg:text-xl text-white leading-relaxed">
+                <p className="font-crimson text-sm sm:text-base lg:text-lg text-white leading-relaxed">
                   {section.text}
                 </p>
               </div>
