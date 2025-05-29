@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { ArrowUp, PiggyBank, Facebook, Instagram, HandHelping } from "lucide-react";
@@ -7,14 +6,31 @@ import DonationModal from "./DonationModal";
 import VolunteerModal from "./VolunteerModal";
 import BackToTop from "./BackToTop";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { useAccessibility } from "./AccessibilityProvider";
 
 const Footer = () => {
   const [privacyPolicyModalOpen, setPrivacyPolicyModalOpen] = useState(false);
   const [donationModalOpen, setDonationModalOpen] = useState(false);
   const [volunteerModalOpen, setVolunteerModalOpen] = useState(false);
+  const { announceToScreenReader } = useAccessibility();
+
+  const handlePrivacyPolicyClick = () => {
+    setPrivacyPolicyModalOpen(true);
+    announceToScreenReader("Opening privacy policy modal");
+  };
+
+  const handleDonateClick = () => {
+    setDonationModalOpen(true);
+    announceToScreenReader("Opening donation modal");
+  };
+
+  const handleVolunteerClick = () => {
+    setVolunteerModalOpen(true);
+    announceToScreenReader("Opening volunteer modal");
+  };
 
   return (
-    <footer className="relative py-2.5 overflow-hidden">
+    <footer className="relative py-2.5 overflow-hidden" role="contentinfo">
       {/* Modern gradient background with blur effect to match ContactSection */}
       <div className="absolute inset-0 z-0 bg-gradient-to-b from-civitan-blue to-[#0a1428]"></div>
       <div className="absolute inset-0 z-0 opacity-20">
@@ -26,17 +42,17 @@ const Footer = () => {
         {/* Social Media Icons */}
         <div className="flex justify-center items-center mb-4 pt-3">
           <TooltipProvider>
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-4" role="group" aria-label="Social media links">
               <Tooltip>
                 <TooltipTrigger asChild>
                   <a 
                     href="https://www.facebook.com/DuluthCivitan/" 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="text-gray-300 hover:text-white transition-colors"
-                    aria-label="Follow us on Facebook"
+                    className="text-gray-300 hover:text-white focus:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-civitan-blue rounded-md p-1"
+                    aria-label="Follow Duluth Civitan on Facebook (opens in new tab)"
                   >
-                    <Facebook size={22} />
+                    <Facebook size={22} aria-hidden="true" />
                   </a>
                 </TooltipTrigger>
                 <TooltipContent>
@@ -50,10 +66,10 @@ const Footer = () => {
                     href="https://www.instagram.com/duluth.civitan.club/" 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="text-gray-300 hover:text-white transition-colors"
-                    aria-label="Follow us on Instagram"
+                    className="text-gray-300 hover:text-white focus:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-civitan-blue rounded-md p-1"
+                    aria-label="Follow Duluth Civitan on Instagram (opens in new tab)"
                   >
-                    <Instagram size={22} />
+                    <Instagram size={22} aria-hidden="true" />
                   </a>
                 </TooltipTrigger>
                 <TooltipContent>
@@ -67,10 +83,9 @@ const Footer = () => {
                     href="https://www.threads.com/@duluth.civitan.club" 
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className="text-gray-300 hover:text-white transition-colors"
-                    aria-label="Follow us on Threads"
+                    className="text-gray-300 hover:text-white focus:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-civitan-blue rounded-md p-1"
+                    aria-label="Follow Duluth Civitan on Threads (opens in new tab)"
                   >
-                    {/* Custom Threads icon */}
                     <svg 
                       width="22" 
                       height="22" 
@@ -78,7 +93,7 @@ const Footer = () => {
                       fill="none" 
                       xmlns="http://www.w3.org/2000/svg"
                       className="threads-icon"
-                      aria-label="Threads"
+                      aria-hidden="true"
                     >
                       <path 
                         d="M12.7323 20.9999C14.9823 20.9999 16.7323 20.2499 17.9823 18.7499C19.2323 17.2499 19.9823 15.2499 19.9823 12.7499C19.9823 12.2499 19.9323 11.7499 19.8823 11.2499C19.6323 8.24988 18.4823 5.99988 16.4823 4.49988C15.2323 3.49988 13.7323 2.99988 11.9823 2.99988C10.2323 2.99988 8.73233 3.49988 7.48233 4.49988C5.48233 5.99988 4.33233 8.24988 4.08233 11.2499C4.03233 11.7499 3.98233 12.2499 3.98233 12.7499C3.98233 15.2499 4.73233 17.2499 5.98233 18.7499C7.23233 20.2499 8.98233 20.9999 11.2323 20.9999"
@@ -125,29 +140,32 @@ const Footer = () => {
             <p className="text-gray-300 text-center">&copy; 2025 Duluth Civitan. All rights reserved.</p>
             <div className="mt-1 md:mt-0 md:ml-6 flex justify-center items-center">
               <button 
-                onClick={() => setPrivacyPolicyModalOpen(true)}
-                className="text-gray-300 hover:text-white mr-4 focus:outline-none"
+                onClick={handlePrivacyPolicyClick}
+                className="text-gray-300 hover:text-white focus:text-white mr-4 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-civitan-blue rounded-md px-2 py-1"
+                aria-label="View privacy policy"
               >
                 Privacy Policy
               </button>
               
               <Button 
                 variant="outline" 
-                onClick={() => setVolunteerModalOpen(true)}
-                className="bg-white/10 border-white/20 text-white hover:bg-white/20 font-bold mr-4 hidden md:flex"
+                onClick={handleVolunteerClick}
+                className="bg-white/10 border-white/20 text-white hover:bg-white/20 focus:bg-white/20 font-bold mr-4 hidden md:flex focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-civitan-blue"
                 size="sm"
+                aria-label="Open volunteer information and sign-up"
               >
-                <HandHelping className="h-4 w-4 mr-2" />
+                <HandHelping className="h-4 w-4 mr-2" aria-hidden="true" />
                 Volunteer
               </Button>
               
               <Button 
                 variant="default" 
-                onClick={() => setDonationModalOpen(true)}
-                className="bg-civitan-gold hover:bg-yellow-500 text-civitan-blue font-bold ml-4 hidden md:flex"
+                onClick={handleDonateClick}
+                className="bg-civitan-gold hover:bg-yellow-500 focus:bg-yellow-500 text-civitan-blue font-bold ml-4 hidden md:flex focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2"
                 size="sm"
+                aria-label="Open donation form and information"
               >
-                <PiggyBank className="h-4 w-4 mr-2" />
+                <PiggyBank className="h-4 w-4 mr-2" aria-hidden="true" />
                 Donate
               </Button>
             </div>

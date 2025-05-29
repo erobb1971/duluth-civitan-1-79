@@ -8,12 +8,14 @@ import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMe
 import { cn } from "@/lib/utils";
 import { PiggyBank, Facebook, Instagram, HandHelping } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { useAccessibility } from "./AccessibilityProvider";
 
 const DesktopNavigation = () => {
   const [membershipModalOpen, setMembershipModalOpen] = useState(false);
   const [donationModalOpen, setDonationModalOpen] = useState(false);
   const [volunteerModalOpen, setVolunteerModalOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const { announceToScreenReader } = useAccessibility();
 
   // Add scroll event listener to detect scrolling for header styling
   useEffect(() => {
@@ -32,7 +34,7 @@ const DesktopNavigation = () => {
   }, []);
 
   // Improved scroll function with better handling of section targeting
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
+  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, sectionId: string, sectionName: string) => {
     e.preventDefault();
     
     // Wait a tiny bit for any pending DOM updates
@@ -47,6 +49,13 @@ const DesktopNavigation = () => {
           top: rect.top + scrollTop - headerHeight,
           behavior: "smooth",
         });
+        
+        // Announce navigation for screen readers
+        announceToScreenReader(`Navigated to ${sectionName} section`);
+        
+        // Set focus to the section for keyboard users
+        section.setAttribute('tabindex', '-1');
+        section.focus();
       } else {
         console.log(`Section with ID "${sectionId}" not found`);
       }
@@ -55,91 +64,108 @@ const DesktopNavigation = () => {
 
   const handleDonateClick = () => {
     setDonationModalOpen(true);
+    announceToScreenReader("Opening donation modal");
   };
 
   const handleVolunteerClick = () => {
     setVolunteerModalOpen(true);
+    announceToScreenReader("Opening volunteer modal");
   };
 
   return (
-    <header className={`hidden lg:block fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300 ${
-      isScrolled ? "bg-white/95 backdrop-blur-sm shadow-md" : "bg-white border-b border-gray-200"
-    }`}>
+    <header 
+      className={`hidden lg:block fixed top-0 left-0 right-0 z-50 w-full transition-all duration-300 ${
+        isScrolled ? "bg-white/95 backdrop-blur-sm shadow-md" : "bg-white border-b border-gray-200"
+      }`}
+      role="banner"
+    >
       <div className="container mx-auto px-4">
         <div className="flex h-20 items-center justify-between">
           <div className="flex items-center">
-            <a href="#" className="flex items-center">
+            <a 
+              href="#" 
+              className="flex items-center focus:outline-none focus:ring-2 focus:ring-civitan-blue focus:ring-offset-2 rounded-md"
+              aria-label="Duluth Civitan Club - Go to homepage"
+              onClick={(e) => handleNavClick(e, "home", "homepage")}
+            >
               <CivitanLogo size="md" className="p-2" />
             </a>
           </div>
 
           <NavigationMenu>
-            <NavigationMenuList className="gap-1">
-              <NavigationMenuItem>
+            <NavigationMenuList className="gap-1" role="menubar">
+              <NavigationMenuItem role="none">
                 <NavigationMenuLink 
                   href="/#home"
-                  className={navigationMenuTriggerStyle()}
-                  onClick={(e) => handleNavClick(e, "home")}
+                  className={cn(navigationMenuTriggerStyle(), "focus:ring-2 focus:ring-civitan-blue focus:ring-offset-2")}
+                  onClick={(e) => handleNavClick(e, "home", "home")}
+                  role="menuitem"
                 >
                   Home
                 </NavigationMenuLink>
               </NavigationMenuItem>
 
-              <NavigationMenuItem>
+              <NavigationMenuItem role="none">
                 <NavigationMenuLink 
                   href="/#about"
-                  className={navigationMenuTriggerStyle()}
-                  onClick={(e) => handleNavClick(e, "about")}
+                  className={cn(navigationMenuTriggerStyle(), "focus:ring-2 focus:ring-civitan-blue focus:ring-offset-2")}
+                  onClick={(e) => handleNavClick(e, "about", "about us")}
+                  role="menuitem"
                 >
                   About
                 </NavigationMenuLink>
               </NavigationMenuItem>
               
-              <NavigationMenuItem>
+              <NavigationMenuItem role="none">
                 <NavigationMenuLink 
                   href="/#membership"
-                  className={navigationMenuTriggerStyle()}
-                  onClick={(e) => handleNavClick(e, "membership")}
+                  className={cn(navigationMenuTriggerStyle(), "focus:ring-2 focus:ring-civitan-blue focus:ring-offset-2")}
+                  onClick={(e) => handleNavClick(e, "membership", "membership")}
+                  role="menuitem"
                 >
                   Membership
                 </NavigationMenuLink>
               </NavigationMenuItem>
 
-              <NavigationMenuItem>
+              <NavigationMenuItem role="none">
                 <NavigationMenuLink 
                   href="/#partners"
-                  className={navigationMenuTriggerStyle()}
-                  onClick={(e) => handleNavClick(e, "partners")}
+                  className={cn(navigationMenuTriggerStyle(), "focus:ring-2 focus:ring-civitan-blue focus:ring-offset-2")}
+                  onClick={(e) => handleNavClick(e, "partners", "partners")}
+                  role="menuitem"
                 >
                   Partners
                 </NavigationMenuLink>
               </NavigationMenuItem>
               
-              <NavigationMenuItem>
+              <NavigationMenuItem role="none">
                 <NavigationMenuLink 
                   href="/#gallery"
-                  className={navigationMenuTriggerStyle()}
-                  onClick={(e) => handleNavClick(e, "gallery")}
+                  className={cn(navigationMenuTriggerStyle(), "focus:ring-2 focus:ring-civitan-blue focus:ring-offset-2")}
+                  onClick={(e) => handleNavClick(e, "gallery", "gallery")}
+                  role="menuitem"
                 >
                   Gallery
                 </NavigationMenuLink>
               </NavigationMenuItem>
 
-              <NavigationMenuItem>
+              <NavigationMenuItem role="none">
                 <NavigationMenuLink 
                   href="/#events"
-                  className={navigationMenuTriggerStyle()}
-                  onClick={(e) => handleNavClick(e, "events")}
+                  className={cn(navigationMenuTriggerStyle(), "focus:ring-2 focus:ring-civitan-blue focus:ring-offset-2")}
+                  onClick={(e) => handleNavClick(e, "events", "events")}
+                  role="menuitem"
                 >
                   Events
                 </NavigationMenuLink>
               </NavigationMenuItem>
 
-              <NavigationMenuItem>
+              <NavigationMenuItem role="none">
                 <NavigationMenuLink 
                   href="/#contact"
-                  className={navigationMenuTriggerStyle()}
-                  onClick={(e) => handleNavClick(e, "contact")}
+                  className={cn(navigationMenuTriggerStyle(), "focus:ring-2 focus:ring-civitan-blue focus:ring-offset-2")}
+                  onClick={(e) => handleNavClick(e, "contact", "contact")}
+                  role="menuitem"
                 >
                   Contact
                 </NavigationMenuLink>
@@ -149,16 +175,17 @@ const DesktopNavigation = () => {
 
           <div className="flex items-center space-x-4">
             <TooltipProvider>
-              <div className="flex items-center space-x-2 mr-2">
+              <div className="flex items-center space-x-2 mr-2" role="group" aria-label="Social media links">
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <a 
                       href="https://www.facebook.com/DuluthCivitan/" 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className="text-gray-600 hover:text-blue-600 transition-colors"
+                      className="text-gray-600 hover:text-blue-600 focus:text-blue-600 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 rounded-md p-1"
+                      aria-label="Follow Duluth Civitan on Facebook (opens in new tab)"
                     >
-                      <Facebook size={20} />
+                      <Facebook size={20} aria-hidden="true" />
                     </a>
                   </TooltipTrigger>
                   <TooltipContent>
@@ -172,9 +199,10 @@ const DesktopNavigation = () => {
                       href="https://www.instagram.com/duluth.civitan.club/" 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className="text-gray-600 hover:text-pink-600 transition-colors"
+                      className="text-gray-600 hover:text-pink-600 focus:text-pink-600 transition-colors focus:outline-none focus:ring-2 focus:ring-pink-600 focus:ring-offset-2 rounded-md p-1"
+                      aria-label="Follow Duluth Civitan on Instagram (opens in new tab)"
                     >
-                      <Instagram size={20} />
+                      <Instagram size={20} aria-hidden="true" />
                     </a>
                   </TooltipTrigger>
                   <TooltipContent>
@@ -188,9 +216,9 @@ const DesktopNavigation = () => {
                       href="https://www.threads.com/@duluth.civitan.club" 
                       target="_blank" 
                       rel="noopener noreferrer"
-                      className="text-gray-600 hover:text-black transition-colors"
+                      className="text-gray-600 hover:text-black focus:text-black transition-colors focus:outline-none focus:ring-2 focus:ring-gray-600 focus:ring-offset-2 rounded-md p-1"
+                      aria-label="Follow Duluth Civitan on Threads (opens in new tab)"
                     >
-                      {/* Custom Threads icon */}
                       <svg 
                         width="20" 
                         height="20" 
@@ -198,6 +226,7 @@ const DesktopNavigation = () => {
                         fill="none" 
                         xmlns="http://www.w3.org/2000/svg"
                         className="threads-icon"
+                        aria-hidden="true"
                       >
                         <path 
                           d="M12.7323 20.9999C14.9823 20.9999 16.7323 20.2499 17.9823 18.7499C19.2323 17.2499 19.9823 15.2499 19.9823 12.7499C19.9823 12.2499 19.9323 11.7499 19.8823 11.2499C19.6323 8.24988 18.4823 5.99988 16.4823 4.49988C15.2323 3.49988 13.7323 2.99988 11.9823 2.99988C10.2323 2.99988 8.73233 3.49988 7.48233 4.49988C5.48233 5.99988 4.33233 8.24988 4.08233 11.2499C4.03233 11.7499 3.98233 12.2499 3.98233 12.7499C3.98233 15.2499 4.73233 17.2499 5.98233 18.7499C7.23233 20.2499 8.98233 20.9999 11.2323 20.9999"
@@ -241,18 +270,20 @@ const DesktopNavigation = () => {
             <Button 
               variant="outline"
               onClick={handleVolunteerClick}
-              className="bg-white border-civitan-blue text-civitan-blue hover:bg-civitan-blue hover:text-white font-bold"
+              className="bg-white border-civitan-blue text-civitan-blue hover:bg-civitan-blue hover:text-white focus:bg-civitan-blue focus:text-white font-bold focus:outline-none focus:ring-2 focus:ring-civitan-blue focus:ring-offset-2"
+              aria-label="Open volunteer information and sign-up"
             >
-              <HandHelping className="h-4 w-4 mr-2" />
+              <HandHelping className="h-4 w-4 mr-2" aria-hidden="true" />
               Volunteer
             </Button>
 
             <Button 
               variant="default"
               onClick={handleDonateClick}
-              className="bg-civitan-gold hover:bg-yellow-500 text-civitan-blue font-bold"
+              className="bg-civitan-gold hover:bg-yellow-500 focus:bg-yellow-500 text-civitan-blue font-bold focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2"
+              aria-label="Open donation form and information"
             >
-              <PiggyBank className="h-4 w-4 mr-2" />
+              <PiggyBank className="h-4 w-4 mr-2" aria-hidden="true" />
               Donate
             </Button>
           </div>
