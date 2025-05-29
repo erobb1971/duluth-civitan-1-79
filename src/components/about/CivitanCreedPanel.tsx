@@ -1,6 +1,5 @@
-
 import React, { useEffect, useState } from "react";
-import { scroll, handshake, heart, building, flame, dove } from "lucide-react";
+import { Scroll, Handshake, Heart, Building, Flame, Users } from "lucide-react";
 
 const CivitanCreedPanel = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -12,32 +11,32 @@ const CivitanCreedPanel = () => {
 
   const creedSections = [
     {
-      icon: scroll,
+      icon: Scroll,
       text: "I believe that Civitan is a way of life, not merely membership in an organization.",
       delay: "0ms"
     },
     {
-      icon: handshake,
+      icon: Handshake,
       text: "I believe in the worth and dignity of every human being and that I should serve others without personal gain.",
       delay: "200ms"
     },
     {
-      icon: building,
+      icon: Building,
       text: "I believe that I should be a good citizen and work for the betterment of my community.",
       delay: "400ms"
     },
     {
-      icon: heart,
+      icon: Heart,
       text: "I believe in justice, patriotism, and the golden rule.",
       delay: "600ms"
     },
     {
-      icon: flame,
+      icon: Flame,
       text: "I believe that I should help create an atmosphere of goodwill and understanding between all peoples.",
       delay: "800ms"
     },
     {
-      icon: dove,
+      icon: Users,
       text: "I believe that Civitan can help me become a better person and that I, in turn, can help Civitan become a better organization.",
       delay: "1000ms"
     }
