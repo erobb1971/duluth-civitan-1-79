@@ -1,14 +1,7 @@
-
 import React from "react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { CheckCircle, XCircle } from "lucide-react";
-
-interface TestResult {
-  test: string;
-  status: "pass" | "fail" | "pending";
-  details: string;
-  data?: any;
-}
+import { TestResult } from "./types";
 
 interface SecurityTestResultsProps {
   testResults: TestResult[];

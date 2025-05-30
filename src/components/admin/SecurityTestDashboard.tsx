@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Shield } from "lucide-react";
@@ -6,13 +5,7 @@ import { useAuth } from "@/hooks/useAuth";
 import SecurityTestExecution from "./SecurityTestExecution";
 import SecurityTestResults from "./SecurityTestResults";
 import SecurityDocumentation from "./SecurityDocumentation";
-
-interface TestResult {
-  test: string;
-  status: "pass" | "fail" | "pending";
-  details: string;
-  data?: any;
-}
+import { TestResult } from "./types";
 
 const SecurityTestDashboard = () => {
   const { user, member } = useAuth();

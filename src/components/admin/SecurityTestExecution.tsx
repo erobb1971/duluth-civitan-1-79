@@ -1,16 +1,9 @@
-
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
-
-interface TestResult {
-  test: string;
-  status: "pass" | "fail" | "pending";
-  details: string;
-  data?: any;
-}
+import { TestResult } from "./types";
 
 interface SecurityTestExecutionProps {
   isRunning: boolean;
