@@ -58,7 +58,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     console.log("Setting up auth state listener...");
     
-    // Set up auth state listener FIRST
+    // Set up auth state listener
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, session) => {
         console.log('Auth state changed:', event, session?.user?.email);
@@ -74,6 +74,22 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           setTimeout(() => {
             fetchMember(session.user.id);
           }, 0);
+          
+          // For SIGNED_IN event, trigger immediate navigation
+          if (event === 'SIGNED_IN') {
+            console.log('SIGNED_IN event detected, triggering navigation...');
+            // Use a longer timeout to ensure state is fully updated
+            setTimeout(() => {
+              const currentPath = window.location.pathname;
+              console.log('Current path:', currentPath);
+              
+              // Only redirect if we're on auth pages
+              if (currentPath === '/auth/login' || currentPath === '/auth/signup' || currentPath === '/') {
+                console.log('Redirecting to member portal...');
+                window.location.href = '/member-portal';
+              }
+            }, 100);
+          }
         } else {
           console.log('No user, clearing member data');
           setMember(null);
@@ -84,7 +100,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       }
     );
 
-    // THEN check for existing session
+    // Check for existing session
     supabase.auth.getSession().then(({ data: { session }, error }) => {
       if (error) {
         console.error('Error getting session:', error);

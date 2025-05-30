@@ -17,7 +17,7 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [submitting, setSubmitting] = useState(false);
 
-  // Redirect logic - simplified and more reliable
+  // Simplified redirect logic - only redirect if user is authenticated and not loading
   useEffect(() => {
     console.log("Login useEffect - Auth state:", { 
       user: !!user, 
@@ -25,8 +25,8 @@ const Login = () => {
       userEmail: user?.email 
     });
     
-    // Only redirect if we're not loading and have a user
-    if (!loading && user) {
+    // Only redirect if we have a user and we're not in initial loading state
+    if (user && !loading) {
       console.log("User is authenticated, redirecting to member portal");
       navigate("/member-portal", { replace: true });
     }
@@ -53,7 +53,7 @@ const Login = () => {
           title: "Welcome back!",
           description: "You have successfully signed in.",
         });
-        // Remove manual navigation - let useEffect handle it
+        // Note: Navigation is now handled by the auth context
       }
     } catch (err) {
       console.error("Unexpected login error:", err);
@@ -70,16 +70,6 @@ const Login = () => {
   // Show loading while checking auth status
   if (loading) {
     console.log("Login page showing loading spinner");
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-civitan-blue"></div>
-      </div>
-    );
-  }
-
-  // If user is already authenticated, don't show login form
-  if (user) {
-    console.log("User already authenticated, should be redirecting...");
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-civitan-blue"></div>
