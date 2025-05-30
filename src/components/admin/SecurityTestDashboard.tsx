@@ -55,7 +55,7 @@ const SecurityTestDashboard = () => {
       addTestResult({
         test: "Current User Member Access",
         status: "fail",
-        details: `Exception: ${error}`
+        details: `Exception: ${String(error)}`
       });
     }
 
@@ -87,7 +87,7 @@ const SecurityTestDashboard = () => {
       addTestResult({
         test: "All Members Access",
         status: "fail",
-        details: `Exception: ${error}`
+        details: `Exception: ${String(error)}`
       });
     }
 
@@ -114,7 +114,7 @@ const SecurityTestDashboard = () => {
       addTestResult({
         test: "Admin Function Check",
         status: "fail",
-        details: `Exception: ${error}`
+        details: `Exception: ${String(error)}`
       });
     }
 
@@ -154,11 +154,11 @@ const SecurityTestDashboard = () => {
       addTestResult({
         test: "Insert Own Record",
         status: "fail",
-        details: `Exception: ${error}`
+        details: `Exception: ${String(error)}`
       });
     }
 
-    // Test 5: RLS Policy Status (Simplified)
+    // Test 5: RLS Behavior Check (Simplified)
     try {
       // Since we can't query pg_policies directly, we'll test RLS behavior instead
       const { data: testMembers, error } = await supabase
@@ -184,7 +184,7 @@ const SecurityTestDashboard = () => {
       addTestResult({
         test: "RLS Behavior Check",
         status: "fail",
-        details: `Could not check RLS behavior: ${error}`
+        details: `Could not check RLS behavior: ${String(error)}`
       });
     }
 
