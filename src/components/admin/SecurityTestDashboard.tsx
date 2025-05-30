@@ -54,7 +54,7 @@ const SecurityTestDashboard = () => {
       addTestResult({
         test: "Current User Member Access",
         status: "fail",
-        details: `Exception: ${String(error)}`
+        details: `Exception: ${error instanceof Error ? error.message : String(error)}`
       });
     }
 
@@ -86,7 +86,7 @@ const SecurityTestDashboard = () => {
       addTestResult({
         test: "All Members Access",
         status: "fail",
-        details: `Exception: ${String(error)}`
+        details: `Exception: ${error instanceof Error ? error.message : String(error)}`
       });
     }
 
@@ -113,7 +113,7 @@ const SecurityTestDashboard = () => {
       addTestResult({
         test: "Admin Function Check",
         status: "fail",
-        details: `Exception: ${String(error)}`
+        details: `Exception: ${error instanceof Error ? error.message : String(error)}`
       });
     }
 
@@ -153,7 +153,7 @@ const SecurityTestDashboard = () => {
       addTestResult({
         test: "Insert Own Record",
         status: "fail",
-        details: `Exception: ${String(error)}`
+        details: `Exception: ${error instanceof Error ? error.message : String(error)}`
       });
     }
 
@@ -183,7 +183,7 @@ const SecurityTestDashboard = () => {
       addTestResult({
         test: "RLS Behavior Check",
         status: "fail",
-        details: `Could not check RLS behavior: ${String(error)}`
+        details: `Could not check RLS behavior: ${error instanceof Error ? error.message : String(error)}`
       });
     }
 
