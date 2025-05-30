@@ -18,13 +18,13 @@ const MemberSettings = () => {
   const [formData, setFormData] = useState({
     first_name: member?.first_name || "",
     last_name: member?.last_name || "",
-    phone: member?.phone || "",
-    address: member?.address || "",
-    city: member?.city || "",
-    state: member?.state || "",
-    zip_code: member?.zip_code || "",
-    emergency_contact_name: member?.emergency_contact_name || "",
-    emergency_contact_phone: member?.emergency_contact_phone || "",
+    phone: (member as any)?.phone || "",
+    address: (member as any)?.address || "",
+    city: (member as any)?.city || "",
+    state: (member as any)?.state || "",
+    zip_code: (member as any)?.zip_code || "",
+    emergency_contact_name: (member as any)?.emergency_contact_name || "",
+    emergency_contact_phone: (member as any)?.emergency_contact_phone || "",
   });
 
   const handleUpdateProfile = async (e: React.FormEvent) => {
