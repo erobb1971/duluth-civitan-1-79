@@ -50,21 +50,6 @@ export const displaySecurityNotice = () => {
   );
 };
 
-// CSP-like protection (limited client-side implementation)
-export const addCSPProtection = () => {
-  try {
-    // Add basic CSP meta tag - note: limited effectiveness when added via JS
-    const meta = document.createElement('meta');
-    meta.httpEquiv = 'Content-Security-Policy';
-    meta.content = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:;";
-    document.head.appendChild(meta);
-    
-    console.log("Basic CSP protection added (client-side - limited effectiveness)");
-  } catch (e) {
-    console.error("Error adding CSP protection:", e);
-  }
-};
-
 // Input sanitization helper
 export const sanitizeInput = (input: string): string => {
   if (typeof input !== 'string') return '';
@@ -102,7 +87,6 @@ export const initializeSecurity = () => {
   try {
     addContentProtection();
     displaySecurityNotice();
-    addCSPProtection();
     
     // Add security headers awareness
     console.log(
