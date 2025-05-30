@@ -45,13 +45,15 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
       if (error) {
         console.error('Error fetching member:', error);
-        return;
+        return null;
       }
 
       console.log("Member data fetched:", data);
       setMember(data);
+      return data;
     } catch (error) {
       console.error('Error in fetchMember:', error);
+      return null;
     }
   };
 
@@ -70,15 +72,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         // Handle member data fetching
         if (session?.user) {
           console.log('User authenticated, fetching member data...');
-          // Use setTimeout to prevent blocking the auth state change
-          setTimeout(() => {
-            fetchMember(session.user.id);
-          }, 0);
+          const memberData = await fetchMember(session.user.id);
           
-          // For SIGNED_IN event, trigger immediate navigation
-          if (event === 'SIGNED_IN') {
+          // For SIGNED_IN event, trigger navigation after member data is loaded
+          if (event === 'SIGNED_IN' && memberData) {
             console.log('SIGNED_IN event detected, triggering navigation...');
-            // Use a longer timeout to ensure state is fully updated
             setTimeout(() => {
               const currentPath = window.location.pathname;
               console.log('Current path:', currentPath);
@@ -116,9 +114,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         setUser(session?.user ?? null);
         
         if (session?.user) {
-          setTimeout(() => {
-            fetchMember(session.user.id);
-          }, 0);
+          fetchMember(session.user.id);
         }
       }
       

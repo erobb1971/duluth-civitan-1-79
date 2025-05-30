@@ -11,26 +11,27 @@ import { useAuth } from "@/hooks/useAuth";
 
 const Login = () => {
   const navigate = useNavigate();
-  const { user, loading, signIn } = useAuth();
+  const { user, member, loading, signIn } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [submitting, setSubmitting] = useState(false);
 
-  // Simplified redirect logic - only redirect if user is authenticated and not loading
+  // Redirect logic - only redirect when we have both user and member data
   useEffect(() => {
     console.log("Login useEffect - Auth state:", { 
       user: !!user, 
+      member: !!member,
       loading, 
       userEmail: user?.email 
     });
     
-    // Only redirect if we have a user and we're not in initial loading state
-    if (user && !loading) {
-      console.log("User is authenticated, redirecting to member portal");
+    // Only redirect if we have both user and member data and we're not loading
+    if (user && member && !loading) {
+      console.log("User is authenticated with member data, redirecting to member portal");
       navigate("/member-portal", { replace: true });
     }
-  }, [user, loading, navigate]);
+  }, [user, member, loading, navigate]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();

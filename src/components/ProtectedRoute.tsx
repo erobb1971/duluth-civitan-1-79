@@ -33,7 +33,17 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
     return <Navigate to="/auth/login" state={{ from: location }} replace />;
   }
 
-  console.log("User authenticated, rendering protected content");
+  // Show loading if user exists but member data is still loading
+  if (user && !member) {
+    console.log("User found but member data still loading");
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-civitan-blue"></div>
+      </div>
+    );
+  }
+
+  console.log("User authenticated and member data loaded, rendering protected content");
   return <>{children}</>;
 };
 
