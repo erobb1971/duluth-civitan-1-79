@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -36,25 +37,28 @@ const SecurityTestExecution = ({
         .single();
 
       if (error) {
-        onTestResult({
+        const result: TestResult = {
           test: "Current User Member Access",
           status: "fail",
           details: `Error fetching own member data: ${error.message}`
-        });
+        };
+        onTestResult(result);
       } else {
-        onTestResult({
+        const result: TestResult = {
           test: "Current User Member Access",
           status: "pass",
           details: `Successfully retrieved own member data: ${currentMember.first_name} ${currentMember.last_name}`,
           data: currentMember
-        });
+        };
+        onTestResult(result);
       }
     } catch (error) {
-      onTestResult({
+      const result: TestResult = {
         test: "Current User Member Access",
         status: "fail",
         details: `Exception: ${error instanceof Error ? error.message : String(error)}`
-      });
+      };
+      onTestResult(result);
     }
 
     // Test 2: All Members Access (Admin vs User)
@@ -64,29 +68,32 @@ const SecurityTestExecution = ({
         .select('*');
 
       if (error) {
-        onTestResult({
+        const result: TestResult = {
           test: "All Members Access",
           status: member?.is_admin ? "fail" : "pass",
           details: member?.is_admin 
             ? `Admin should be able to access all members but got error: ${error.message}`
             : `Non-admin correctly blocked from accessing all members: ${error.message}`
-        });
+        };
+        onTestResult(result);
       } else {
-        onTestResult({
+        const result: TestResult = {
           test: "All Members Access", 
           status: member?.is_admin ? "pass" : "fail",
           details: member?.is_admin
             ? `Admin successfully retrieved ${allMembers.length} members`
             : `Non-admin incorrectly gained access to ${allMembers.length} members`,
           data: allMembers
-        });
+        };
+        onTestResult(result);
       }
     } catch (error) {
-      onTestResult({
+      const result: TestResult = {
         test: "All Members Access",
         status: "fail",
         details: `Exception: ${error instanceof Error ? error.message : String(error)}`
-      });
+      };
+      onTestResult(result);
     }
 
     // Test 3: Admin Function Test
@@ -95,25 +102,28 @@ const SecurityTestExecution = ({
         .rpc('is_user_admin', { user_id: user?.id });
 
       if (error) {
-        onTestResult({
+        const result: TestResult = {
           test: "Admin Function Check",
           status: "fail",
           details: `Error calling is_user_admin function: ${error.message}`
-        });
+        };
+        onTestResult(result);
       } else {
-        onTestResult({
+        const result: TestResult = {
           test: "Admin Function Check",
           status: "pass",
           details: `is_user_admin function returned: ${adminCheck} (expected: ${member?.is_admin})`,
           data: { function_result: adminCheck, member_is_admin: member?.is_admin }
-        });
+        };
+        onTestResult(result);
       }
     } catch (error) {
-      onTestResult({
+      const result: TestResult = {
         test: "Admin Function Check",
         status: "fail",
         details: `Exception: ${error instanceof Error ? error.message : String(error)}`
-      });
+      };
+      onTestResult(result);
     }
 
     // Test 4: Insert Test (Own Record)
@@ -133,27 +143,30 @@ const SecurityTestExecution = ({
         .single();
 
       if (error) {
-        onTestResult({
+        const result: TestResult = {
           test: "Insert Own Record",
           status: "fail",
           details: `Failed to insert test record: ${error.message}`
-        });
+        };
+        onTestResult(result);
       } else {
-        onTestResult({
+        const result: TestResult = {
           test: "Insert Own Record",
           status: "pass",
           details: `Successfully inserted test record: ${insertResult.id}`
-        });
+        };
+        onTestResult(result);
 
         // Clean up test record
         await supabase.from('members').delete().eq('id', insertResult.id);
       }
     } catch (error) {
-      onTestResult({
+      const result: TestResult = {
         test: "Insert Own Record",
         status: "fail",
         details: `Exception: ${error instanceof Error ? error.message : String(error)}`
-      });
+      };
+      onTestResult(result);
     }
 
     // Test 5: RLS Behavior Check (Simplified)
@@ -163,26 +176,29 @@ const SecurityTestExecution = ({
         .select('id, first_name, last_name, is_admin');
 
       if (error) {
-        onTestResult({
+        const result: TestResult = {
           test: "RLS Behavior Check",
           status: "fail",
           details: `Could not test RLS behavior: ${error.message}`
-        });
+        };
+        onTestResult(result);
       } else {
         const expectedCount = member?.is_admin ? "multiple" : "1";
-        onTestResult({
+        const result: TestResult = {
           test: "RLS Behavior Check",
           status: "pass",
           details: `RLS working correctly - retrieved ${testMembers.length} member records (expected: ${expectedCount} for ${member?.is_admin ? 'admin' : 'user'})`,
           data: { member_count: testMembers.length, user_is_admin: member?.is_admin }
-        });
+        };
+        onTestResult(result);
       }
     } catch (error) {
-      onTestResult({
+      const result: TestResult = {
         test: "RLS Behavior Check",
         status: "fail",
         details: `Could not check RLS behavior: ${error instanceof Error ? error.message : String(error)}`
-      });
+      };
+      onTestResult(result);
     }
 
     onTestComplete();
