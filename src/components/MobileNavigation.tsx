@@ -1,9 +1,10 @@
 
 import React, { useState } from "react";
-import { ArrowUp, CalendarDays, Mail, PiggyBank, HandHelping, Home, Users } from "lucide-react";
+import { ArrowUp, CalendarDays, Mail, PiggyBank, HandHelping, Home, Users, User } from "lucide-react";
 import { CalendarModal } from "./calendar";
 import DonationModal from "./DonationModal";
 import VolunteerModal from "./VolunteerModal";
+import MemberLoginModal from "./MemberLoginModal";
 import { useAccessibility } from "./AccessibilityProvider";
 
 interface NavItem {
@@ -18,6 +19,7 @@ const MobileNavigation = () => {
   const [calendarModalOpen, setCalendarModalOpen] = useState(false);
   const [donationModalOpen, setDonationModalOpen] = useState(false);
   const [volunteerModalOpen, setVolunteerModalOpen] = useState(false);
+  const [memberLoginModalOpen, setMemberLoginModalOpen] = useState(false);
   const { announceToScreenReader } = useAccessibility();
 
   const handleScrollToSection = (sectionId: string, sectionName: string) => {
@@ -67,6 +69,11 @@ const MobileNavigation = () => {
     handleScrollToSection("about", "about us");
   };
 
+  const handleMemberLoginClick = () => {
+    setMemberLoginModalOpen(true);
+    announceToScreenReader("Opening member login modal");
+  };
+
   const navItems: NavItem[] = [
     { 
       title: "Home", 
@@ -90,11 +97,11 @@ const MobileNavigation = () => {
       ariaLabel: "Go to events section"
     },
     { 
-      title: "Volunteer", 
+      title: "Login", 
       href: "#", 
-      icon: <HandHelping className="w-4 h-4" aria-hidden="true" />,
-      action: handleVolunteerClick,
-      ariaLabel: "Open volunteer information modal"
+      icon: <User className="w-4 h-4" aria-hidden="true" />,
+      action: handleMemberLoginClick,
+      ariaLabel: "Open member login modal"
     },
     { 
       title: "Donate", 
@@ -144,6 +151,11 @@ const MobileNavigation = () => {
       <VolunteerModal
         open={volunteerModalOpen}
         onOpenChange={setVolunteerModalOpen}
+      />
+
+      <MemberLoginModal
+        open={memberLoginModalOpen}
+        onOpenChange={setMemberLoginModalOpen}
       />
     </>
   );

@@ -1,13 +1,13 @@
-
 import React, { useState, useEffect } from "react";
 import CivitanLogo from "./CivitanLogo";
 import { Button } from "@/components/ui/button";
 import MembershipApplicationModal from "./MembershipApplicationModal";
 import DonationModal from "./DonationModal";
 import VolunteerModal from "./VolunteerModal";
+import MemberLoginModal from "./MemberLoginModal";
 import { NavigationMenu, NavigationMenuContent, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger, navigationMenuTriggerStyle } from "./ui/navigation-menu";
 import { cn } from "@/lib/utils";
-import { PiggyBank, Facebook, Instagram, HandHelping } from "lucide-react";
+import { PiggyBank, Facebook, Instagram, HandHelping, User } from "lucide-react";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { useAccessibility } from "./AccessibilityProvider";
 
@@ -15,6 +15,7 @@ const DesktopNavigation = () => {
   const [membershipModalOpen, setMembershipModalOpen] = useState(false);
   const [donationModalOpen, setDonationModalOpen] = useState(false);
   const [volunteerModalOpen, setVolunteerModalOpen] = useState(false);
+  const [memberLoginModalOpen, setMemberLoginModalOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const { announceToScreenReader } = useAccessibility();
 
@@ -71,6 +72,11 @@ const DesktopNavigation = () => {
   const handleVolunteerClick = () => {
     setVolunteerModalOpen(true);
     announceToScreenReader("Opening volunteer modal");
+  };
+
+  const handleMemberLoginClick = () => {
+    setMemberLoginModalOpen(true);
+    announceToScreenReader("Opening member login modal");
   };
 
   return (
@@ -269,6 +275,16 @@ const DesktopNavigation = () => {
             </TooltipProvider>
 
             <Button 
+              variant="ghost"
+              onClick={handleMemberLoginClick}
+              className="text-civitan-blue hover:text-civitan-gold focus:text-civitan-gold hover:bg-civitan-blue/10 focus:bg-civitan-blue/10 font-bold focus:outline-none focus:ring-2 focus:ring-civitan-blue focus:ring-offset-2"
+              aria-label="Member login"
+            >
+              <User className="h-4 w-4 mr-2" aria-hidden="true" />
+              Member Login
+            </Button>
+
+            <Button 
               variant="outline"
               onClick={handleVolunteerClick}
               className="bg-white border-civitan-blue text-civitan-blue hover:bg-civitan-blue hover:text-white focus:bg-civitan-blue focus:text-white font-bold focus:outline-none focus:ring-2 focus:ring-civitan-blue focus:ring-offset-2"
@@ -304,6 +320,11 @@ const DesktopNavigation = () => {
       <VolunteerModal
         open={volunteerModalOpen}
         onOpenChange={setVolunteerModalOpen}
+      />
+
+      <MemberLoginModal
+        open={memberLoginModalOpen}
+        onOpenChange={setMemberLoginModalOpen}
       />
     </header>
   );
