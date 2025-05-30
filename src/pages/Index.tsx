@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { useEffect } from "react";
 import DesktopNavigation from "@/components/DesktopNavigation";
 import MobileNavigation from "@/components/MobileNavigation";
 import HeroSection from "@/components/HeroSection";
@@ -12,17 +12,17 @@ import PartnersSection from "@/components/PartnersSection";
 import Footer from "@/components/Footer";
 import MembershipSection from "@/components/MembershipSection";
 import { useIsMobile } from "@/hooks/use-mobile";
-// import { initializeSecurity } from "@/utils/security";
+import { initializeSecurity } from "@/utils/security";
 
 const Index = () => {
-  // Security initialization temporarily disabled for domain linking
-  // useEffect(() => {
-  //   try {
-  //     initializeSecurity();
-  //   } catch (error) {
-  //     console.error("Error initializing security in Index component:", error);
-  //   }
-  // }, []);
+  // Initialize security measures
+  useEffect(() => {
+    try {
+      initializeSecurity();
+    } catch (error) {
+      console.error("Error initializing security in Index component:", error);
+    }
+  }, []);
   
   const isMobile = useIsMobile();
 

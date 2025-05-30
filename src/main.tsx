@@ -6,13 +6,13 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { initializeSecurity } from "./utils/security";
 
-// Only initialize security in browser context with robust error handling
+// Initialize security measures in browser context with comprehensive error handling
 if (typeof window !== 'undefined') {
   try {
-    // Security initialization temporarily disabled
-    // initializeSecurity();
+    // Initialize educational/supplementary security measures
+    initializeSecurity();
   } catch (error) {
-    console.error("Error in main.tsx initialization:", error);
+    console.error("Error in main.tsx security initialization:", error);
   }
 }
 

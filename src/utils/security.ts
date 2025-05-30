@@ -1,65 +1,121 @@
 
 /**
  * Security utility functions for Duluth Civitan website
+ * 
+ * SECURITY NOTE: This file contains client-side security measures only.
+ * These are supplementary protections and should NOT be relied upon for actual security.
+ * All critical security must be implemented on the server side.
  */
 
-// Disable right-click and context menu on images - with improved error handling
-export const disableImageRightClick = () => {
+// Light content protection - educational purposes only
+export const addContentProtection = () => {
   try {
-    // For regular images - less aggressive approach
-    document.addEventListener('contextmenu', (e) => {
-      if (e.target instanceof HTMLImageElement) {
-        // Just show a message instead of preventing default
-        console.log("Image is protected by copyright.");
-        return false;
-      }
-    }, false);
-
-    // Add visual cue for protected images - simplified
+    // Add basic content protection styles
     const styles = document.createElement('style');
     styles.innerHTML = `
+      /* Light content protection - easily bypassed, for educational purposes only */
       img {
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
         -webkit-touch-callout: none;
+        pointer-events: none;
+      }
+      
+      /* Re-enable pointer events for interactive elements */
+      button, a, input, textarea, select {
+        pointer-events: auto;
       }
     `;
     document.head.appendChild(styles);
   } catch (e) {
-    console.error("Error in image protection:", e);
+    console.error("Error adding content protection:", e);
   }
 };
 
-// Very light DevTools detection - just informational
-export const detectDevTools = () => {
-  // Show a minimal notice in console only
+// Educational security notice
+export const displaySecurityNotice = () => {
   console.log(
-    "Duluth Civitan content is copyright protected. Please respect our intellectual property."
+    "%cSecurity Notice",
+    "color: #ff6b6b; font-size: 16px; font-weight: bold;",
+    "\n\nThis website implements client-side protections for educational purposes only.",
+    "\nTrue security requires proper server-side implementation with:",
+    "\n• Authentication & authorization",
+    "\n• Input validation & sanitization", 
+    "\n• CSRF protection",
+    "\n• Rate limiting",
+    "\n• Secure session management",
+    "\n\nContent is copyright protected - please respect intellectual property."
   );
 };
 
-// Non-aggressive frame busting that won't cause security errors or affect domain linking
-export const preventFraming = () => {
+// CSP-like protection (limited client-side implementation)
+export const addCSPProtection = () => {
   try {
-    // Commenting out frame protection to avoid domain linking issues
-    /* 
+    // Add basic CSP meta tag - note: limited effectiveness when added via JS
     const meta = document.createElement('meta');
-    meta.httpEquiv = 'X-Frame-Options';
-    meta.content = "SAMEORIGIN";
+    meta.httpEquiv = 'Content-Security-Policy';
+    meta.content = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:;";
     document.head.appendChild(meta);
-    */
     
-    // For now, just log that we're skipping frame protection during domain linking
-    console.log("Frame protection temporarily disabled for domain linking");
+    console.log("Basic CSP protection added (client-side - limited effectiveness)");
   } catch (e) {
-    console.error("Error in frame protection:", e);
+    console.error("Error adding CSP protection:", e);
   }
 };
 
-// Initialize minimal security features with comprehensive error handling
+// Input sanitization helper
+export const sanitizeInput = (input: string): string => {
+  if (typeof input !== 'string') return '';
+  
+  return input
+    .replace(/[<>]/g, '') // Remove potential HTML tags
+    .replace(/javascript:/gi, '') // Remove javascript: protocols  
+    .replace(/on\w+=/gi, '') // Remove event handlers
+    .replace(/data:/gi, '') // Remove data: protocols
+    .trim()
+    .slice(0, 1000); // Limit length
+};
+
+// Rate limiting helper (client-side - easily bypassed)
+export const createRateLimiter = (maxRequests: number, windowMs: number) => {
+  const requests: number[] = [];
+  
+  return () => {
+    const now = Date.now();
+    // Remove old requests outside the window
+    const validRequests = requests.filter(time => now - time < windowMs);
+    
+    if (validRequests.length >= maxRequests) {
+      console.warn("Rate limit exceeded - please slow down");
+      return false;
+    }
+    
+    requests.push(now);
+    return true;
+  };
+};
+
+// Initialize security measures (educational/supplementary only)
 export const initializeSecurity = () => {
   try {
-    disableImageRightClick();
-    detectDevTools();
-    // preventFraming(); // Temporarily disabled for domain linking
+    addContentProtection();
+    displaySecurityNotice();
+    addCSPProtection();
+    
+    // Add security headers awareness
+    console.log(
+      "%cSecurity Headers Needed",
+      "color: #ffa500; font-size: 14px; font-weight: bold;",
+      "\n\nFor production, implement these server-side headers:",
+      "\n• X-Content-Type-Options: nosniff",
+      "\n• X-Frame-Options: DENY", 
+      "\n• X-XSS-Protection: 1; mode=block",
+      "\n• Strict-Transport-Security: max-age=31536000; includeSubDomains",
+      "\n• Content-Security-Policy: (strict policy)",
+      "\n• Referrer-Policy: strict-origin-when-cross-origin"
+    );
   } catch (e) {
     console.error("Error initializing security features:", e);
   }
