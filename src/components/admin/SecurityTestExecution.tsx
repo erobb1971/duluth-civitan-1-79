@@ -39,14 +39,14 @@ const SecurityTestExecution = ({
       if (error) {
         const result: TestResult = {
           test: "Current User Member Access",
-          status: "fail",
+          status: "fail" as const,
           details: `Error fetching own member data: ${error.message}`
         };
         onTestResult(result);
       } else {
         const result: TestResult = {
           test: "Current User Member Access",
-          status: "pass",
+          status: "pass" as const,
           details: `Successfully retrieved own member data: ${currentMember.first_name} ${currentMember.last_name}`,
           data: currentMember
         };
@@ -55,7 +55,7 @@ const SecurityTestExecution = ({
     } catch (error) {
       const result: TestResult = {
         test: "Current User Member Access",
-        status: "fail",
+        status: "fail" as const,
         details: `Exception: ${error instanceof Error ? error.message : String(error)}`
       };
       onTestResult(result);
@@ -70,7 +70,7 @@ const SecurityTestExecution = ({
       if (error) {
         const result: TestResult = {
           test: "All Members Access",
-          status: member?.is_admin ? "fail" : "pass",
+          status: (member?.is_admin ? "fail" : "pass") as const,
           details: member?.is_admin 
             ? `Admin should be able to access all members but got error: ${error.message}`
             : `Non-admin correctly blocked from accessing all members: ${error.message}`
@@ -79,7 +79,7 @@ const SecurityTestExecution = ({
       } else {
         const result: TestResult = {
           test: "All Members Access", 
-          status: member?.is_admin ? "pass" : "fail",
+          status: (member?.is_admin ? "pass" : "fail") as const,
           details: member?.is_admin
             ? `Admin successfully retrieved ${allMembers.length} members`
             : `Non-admin incorrectly gained access to ${allMembers.length} members`,
@@ -90,7 +90,7 @@ const SecurityTestExecution = ({
     } catch (error) {
       const result: TestResult = {
         test: "All Members Access",
-        status: "fail",
+        status: "fail" as const,
         details: `Exception: ${error instanceof Error ? error.message : String(error)}`
       };
       onTestResult(result);
@@ -104,14 +104,14 @@ const SecurityTestExecution = ({
       if (error) {
         const result: TestResult = {
           test: "Admin Function Check",
-          status: "fail",
+          status: "fail" as const,
           details: `Error calling is_user_admin function: ${error.message}`
         };
         onTestResult(result);
       } else {
         const result: TestResult = {
           test: "Admin Function Check",
-          status: "pass",
+          status: "pass" as const,
           details: `is_user_admin function returned: ${adminCheck} (expected: ${member?.is_admin})`,
           data: { function_result: adminCheck, member_is_admin: member?.is_admin }
         };
@@ -120,7 +120,7 @@ const SecurityTestExecution = ({
     } catch (error) {
       const result: TestResult = {
         test: "Admin Function Check",
-        status: "fail",
+        status: "fail" as const,
         details: `Exception: ${error instanceof Error ? error.message : String(error)}`
       };
       onTestResult(result);
@@ -145,14 +145,14 @@ const SecurityTestExecution = ({
       if (error) {
         const result: TestResult = {
           test: "Insert Own Record",
-          status: "fail",
+          status: "fail" as const,
           details: `Failed to insert test record: ${error.message}`
         };
         onTestResult(result);
       } else {
         const result: TestResult = {
           test: "Insert Own Record",
-          status: "pass",
+          status: "pass" as const,
           details: `Successfully inserted test record: ${insertResult.id}`
         };
         onTestResult(result);
@@ -163,7 +163,7 @@ const SecurityTestExecution = ({
     } catch (error) {
       const result: TestResult = {
         test: "Insert Own Record",
-        status: "fail",
+        status: "fail" as const,
         details: `Exception: ${error instanceof Error ? error.message : String(error)}`
       };
       onTestResult(result);
@@ -178,7 +178,7 @@ const SecurityTestExecution = ({
       if (error) {
         const result: TestResult = {
           test: "RLS Behavior Check",
-          status: "fail",
+          status: "fail" as const,
           details: `Could not test RLS behavior: ${error.message}`
         };
         onTestResult(result);
@@ -186,7 +186,7 @@ const SecurityTestExecution = ({
         const expectedCount = member?.is_admin ? "multiple" : "1";
         const result: TestResult = {
           test: "RLS Behavior Check",
-          status: "pass",
+          status: "pass" as const,
           details: `RLS working correctly - retrieved ${testMembers.length} member records (expected: ${expectedCount} for ${member?.is_admin ? 'admin' : 'user'})`,
           data: { member_count: testMembers.length, user_is_admin: member?.is_admin }
         };
@@ -195,7 +195,7 @@ const SecurityTestExecution = ({
     } catch (error) {
       const result: TestResult = {
         test: "RLS Behavior Check",
-        status: "fail",
+        status: "fail" as const,
         details: `Could not check RLS behavior: ${error instanceof Error ? error.message : String(error)}`
       };
       onTestResult(result);
