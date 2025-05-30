@@ -22,7 +22,7 @@ const Signup = () => {
   // Redirect if already authenticated
   useEffect(() => {
     if (user) {
-      navigate("/");
+      navigate("/member-portal");
     }
   }, [user, navigate]);
 

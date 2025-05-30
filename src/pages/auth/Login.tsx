@@ -20,7 +20,7 @@ const Login = () => {
   // Redirect if already authenticated
   useEffect(() => {
     if (user) {
-      navigate("/");
+      navigate("/member-portal");
     }
   }, [user, navigate]);
 
@@ -40,12 +40,12 @@ const Login = () => {
           variant: "destructive",
         });
       } else {
-        console.log("Login successful, redirecting...");
+        console.log("Login successful, redirecting to member portal...");
         toast({
           title: "Welcome back!",
           description: "You have successfully signed in.",
         });
-        navigate("/");
+        navigate("/member-portal");
       }
     } catch (err) {
       console.error("Unexpected login error:", err);
