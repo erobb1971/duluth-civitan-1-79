@@ -700,7 +700,7 @@ WHERE schemaname = 'public';`}
                 <ol>
                   <li>Create new Supabase project</li>
                   <li>Run the complete migration SQL</li>
-                  <li>Restore data using: <code>psql -h [host] -U postgres -d postgres < backup.sql</code></li>
+                  <li>Restore data using: <code>psql -h [host] -U postgres -d postgres &lt; backup.sql</code></li>
                   <li>Reconfigure authentication settings</li>
                   <li>Test with Security Dashboard</li>
                 </ol>
