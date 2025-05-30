@@ -3,19 +3,21 @@ import React from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { CalendarDays, FileText, Users, Award, Clock, MapPin, AlertCircle } from "lucide-react";
+import { CalendarDays, FileText, Users, Award, Clock, MapPin, AlertCircle, Shield } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
 
 const MemberDashboard = () => {
-  // Mock data - will be replaced with Supabase queries
-  const memberInfo = {
-    name: "John Doe",
-    membershipType: "Active Member",
-    joinDate: "2020-01-15",
-    role: "Member",
-    attendanceRate: 85,
-    volunteerHours: 24
-  };
+  const { member } = useAuth();
 
+  if (!member) {
+    return (
+      <div className="flex items-center justify-center py-8">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-civitan-blue"></div>
+      </div>
+    );
+  }
+
+  // Mock data for demo - will be replaced with real Supabase queries
   const upcomingEvents = [
     {
       id: 1,
@@ -28,7 +30,7 @@ const MemberDashboard = () => {
     {
       id: 2,
       title: "Community Service Day",
-      date: "2024-02-20",
+      date: "2024-02-20", 
       time: "9:00 AM",
       location: "Downtown Park",
       type: "volunteer"
@@ -38,15 +40,15 @@ const MemberDashboard = () => {
   const recentAnnouncements = [
     {
       id: 1,
-      title: "New Volunteer Opportunity",
-      content: "Help with the upcoming food drive this weekend.",
-      date: "2024-02-10",
+      title: "Welcome to the Member Portal!",
+      content: "Your member account has been successfully activated. Explore all the features available to you.",
+      date: new Date().toISOString().split('T')[0],
       priority: "high"
     },
     {
       id: 2,
       title: "Meeting Minutes Available",
-      content: "January meeting minutes have been uploaded.",
+      content: "January meeting minutes have been uploaded to the documents section.",
       date: "2024-02-08",
       priority: "normal"
     }
@@ -66,23 +68,43 @@ const MemberDashboard = () => {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div>
               <p className="text-sm text-gray-600">Name</p>
-              <p className="font-semibold">{memberInfo.name}</p>
+              <p className="font-semibold">{member.first_name} {member.last_name}</p>
             </div>
             <div>
               <p className="text-sm text-gray-600">Status</p>
-              <Badge variant="secondary">{memberInfo.membershipType}</Badge>
+              <Badge variant="secondary">{member.membership_type} Member</Badge>
             </div>
             <div>
-              <p className="text-sm text-gray-600">Member Since</p>
-              <p className="font-semibold">{new Date(memberInfo.joinDate).toLocaleDateString()}</p>
+              <p className="text-sm text-gray-600">Member Number</p>
+              <p className="font-semibold">{member.member_number}</p>
             </div>
             <div>
               <p className="text-sm text-gray-600">Role</p>
-              <p className="font-semibold">{memberInfo.role}</p>
+              <div className="flex items-center gap-2">
+                <p className="font-semibold">{member.is_admin ? 'Admin' : 'Member'}</p>
+                {member.is_admin && <Shield className="h-4 w-4 text-amber-600" />}
+              </div>
             </div>
           </div>
         </CardContent>
       </Card>
+
+      {/* Admin Notice */}
+      {member.is_admin && (
+        <Card>
+          <CardContent className="pt-6">
+            <div className="flex items-start gap-3 p-4 bg-amber-50 rounded-lg">
+              <Shield className="h-5 w-5 text-amber-600 mt-0.5" />
+              <div>
+                <h4 className="font-medium text-amber-900">Administrator Access</h4>
+                <p className="text-sm text-amber-700 mt-1">
+                  You have administrative privileges. You can access all member data, manage events, and view audit logs.
+                </p>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -95,9 +117,9 @@ const MemberDashboard = () => {
           </CardHeader>
           <CardContent>
             <div className="text-3xl font-bold text-civitan-blue">
-              {memberInfo.attendanceRate}%
+              --
             </div>
-            <p className="text-sm text-gray-600">Last 12 months</p>
+            <p className="text-sm text-gray-600">Will be calculated from event attendance</p>
           </CardContent>
         </Card>
 
@@ -110,9 +132,9 @@ const MemberDashboard = () => {
           </CardHeader>
           <CardContent>
             <div className="text-3xl font-bold text-civitan-gold">
-              {memberInfo.volunteerHours}
+              --
             </div>
-            <p className="text-sm text-gray-600">This year</p>
+            <p className="text-sm text-gray-600">Will be tracked in service hours</p>
           </CardContent>
         </Card>
       </div>

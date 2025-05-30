@@ -2,8 +2,8 @@
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { LogOut, User, Calendar, FileText, Users, Bell, Settings, Shield } from "lucide-react";
+import { LogOut, User, Calendar, FileText, Users, Settings, Shield } from "lucide-react";
+import { useAuth } from "@/hooks/useAuth";
 import MemberDashboard from "./MemberDashboard";
 import MemberCalendar from "./MemberCalendar";
 import MemberDocuments from "./MemberDocuments";
@@ -15,14 +15,35 @@ interface MemberPortalProps {
 }
 
 const MemberPortal = ({ onLogout }: MemberPortalProps) => {
+  const { member } = useAuth();
   const [activeTab, setActiveTab] = useState("dashboard");
+
+  if (!member) {
+    return (
+      <div className="flex items-center justify-center py-8">
+        <div className="text-center">
+          <p className="text-gray-500">Loading member information...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-2xl font-bold text-civitan-blue">Member Portal</h2>
-          <p className="text-gray-600">Welcome back to your member dashboard</p>
+          <h2 className="text-2xl font-bold text-civitan-blue">
+            Welcome, {member.first_name} {member.last_name}
+          </h2>
+          <div className="flex items-center gap-3 mt-1">
+            <p className="text-gray-600">Member #{member.member_number}</p>
+            {member.is_admin && (
+              <div className="flex items-center gap-1 px-2 py-1 bg-amber-100 text-amber-800 rounded-full text-xs font-medium">
+                <Shield className="h-3 w-3" />
+                Admin
+              </div>
+            )}
+          </div>
         </div>
         <Button variant="outline" onClick={onLogout}>
           <LogOut className="h-4 w-4 mr-2" />
