@@ -8,8 +8,15 @@ interface ProtectedRouteProps {
 }
 
 const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
-  const { user, loading } = useAuth();
+  const { user, member, loading } = useAuth();
   const location = useLocation();
+
+  console.log("ProtectedRoute - Auth state:", { 
+    user: !!user, 
+    member: !!member, 
+    loading,
+    currentPath: location.pathname 
+  });
 
   // Show loading spinner while checking authentication
   if (loading) {
@@ -22,9 +29,11 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
 
   // Redirect to login if not authenticated
   if (!user) {
+    console.log("No user found, redirecting to login");
     return <Navigate to="/auth/login" state={{ from: location }} replace />;
   }
 
+  console.log("User authenticated, rendering protected content");
   return <>{children}</>;
 };
 
