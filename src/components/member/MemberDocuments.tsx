@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -149,7 +148,7 @@ const MemberDocuments = () => {
                         <div className="flex items-center gap-2">
                           <h4 className="font-medium">{doc.title}</h4>
                           {doc.restricted && (
-                            <Lock className="h-4 w-4 text-yellow-500" title="Restricted Access" />
+                            <Lock className="h-4 w-4 text-yellow-500" />
                           )}
                         </div>
                         <div className="flex items-center gap-4 text-sm text-gray-500">
