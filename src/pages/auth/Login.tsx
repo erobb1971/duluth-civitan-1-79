@@ -11,21 +11,26 @@ import { useAuth } from "@/hooks/useAuth";
 
 const Login = () => {
   const navigate = useNavigate();
-  const { user, member, loading, signIn } = useAuth();
+  const { user, loading, signIn } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [submitting, setSubmitting] = useState(false);
 
-  // Enhanced debugging for auth state
+  // Redirect logic - simplified and more reliable
   useEffect(() => {
-    console.log("Login page - Auth state:", { user: !!user, member: !!member, loading });
+    console.log("Login useEffect - Auth state:", { 
+      user: !!user, 
+      loading, 
+      userEmail: user?.email 
+    });
     
+    // Only redirect if we're not loading and have a user
     if (!loading && user) {
-      console.log("User authenticated, redirecting to member portal...");
+      console.log("User is authenticated, redirecting to member portal");
       navigate("/member-portal", { replace: true });
     }
-  }, [user, member, loading, navigate]);
+  }, [user, loading, navigate]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -43,12 +48,12 @@ const Login = () => {
           variant: "destructive",
         });
       } else {
-        console.log("Login successful, should redirect automatically...");
+        console.log("Login successful - auth state will handle redirect");
         toast({
           title: "Welcome back!",
           description: "You have successfully signed in.",
         });
-        // Don't manually navigate here - let the useEffect handle it
+        // Remove manual navigation - let useEffect handle it
       }
     } catch (err) {
       console.error("Unexpected login error:", err);
@@ -64,12 +69,25 @@ const Login = () => {
 
   // Show loading while checking auth status
   if (loading) {
+    console.log("Login page showing loading spinner");
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-civitan-blue"></div>
       </div>
     );
   }
+
+  // If user is already authenticated, don't show login form
+  if (user) {
+    console.log("User already authenticated, should be redirecting...");
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-civitan-blue"></div>
+      </div>
+    );
+  }
+
+  console.log("Rendering login form");
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">

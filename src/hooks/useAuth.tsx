@@ -60,20 +60,26 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     
     // Set up auth state listener FIRST
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event, session) => {
+      async (event, session) => {
         console.log('Auth state changed:', event, session?.user?.email);
+        
+        // Update session and user state immediately
         setSession(session);
         setUser(session?.user ?? null);
         
-        // Defer member fetch to avoid deadlock
+        // Handle member data fetching
         if (session?.user) {
+          console.log('User authenticated, fetching member data...');
+          // Use setTimeout to prevent blocking the auth state change
           setTimeout(() => {
             fetchMember(session.user.id);
           }, 0);
         } else {
+          console.log('No user, clearing member data');
           setMember(null);
         }
         
+        // Set loading to false after processing auth change
         setLoading(false);
       }
     );
@@ -82,24 +88,29 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     supabase.auth.getSession().then(({ data: { session }, error }) => {
       if (error) {
         console.error('Error getting session:', error);
-      } else {
-        console.log('Initial session check:', session?.user?.email || 'No session');
+        setLoading(false);
+        return;
       }
       
-      setSession(session);
-      setUser(session?.user ?? null);
+      console.log('Initial session check:', session?.user?.email || 'No session');
       
-      if (session?.user) {
-        setTimeout(() => {
-          fetchMember(session.user.id);
-        }, 0);
+      // Only update if we don't already have this session
+      if (session?.user?.id !== user?.id) {
+        setSession(session);
+        setUser(session?.user ?? null);
+        
+        if (session?.user) {
+          setTimeout(() => {
+            fetchMember(session.user.id);
+          }, 0);
+        }
       }
       
       setLoading(false);
     });
 
     return () => subscription.unsubscribe();
-  }, []);
+  }, []); // Remove user from dependencies to prevent loops
 
   const signUp = async (email: string, password: string, firstName: string, lastName: string) => {
     try {
