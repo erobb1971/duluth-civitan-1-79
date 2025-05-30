@@ -40,7 +40,7 @@ const EventsSection = () => {
   };
 
   return (
-    <section id="events" className="section bg-white dark:bg-gray-900 py-8 sm:py-16">
+    <section className="section bg-white dark:bg-gray-900 py-8 sm:py-16">
       <div className="container mx-auto px-4 sm:px-6">
         {/* Only render EventsHeader on desktop */}
         <EventsHeader />

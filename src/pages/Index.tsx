@@ -32,7 +32,7 @@ const Index = () => {
       <div id="home" className={`${isMobile ? '' : 'scroll-mt-20'}`}></div>
       <HeroSection />
       
-      <div id="about" className="scroll-mt-20"></div>
+      <div id="about" className="scroll-mt-32"></div>
       <AboutSection />
       
       {/* Timeline section - removed background color as it now has its own background */}
@@ -41,23 +41,23 @@ const Index = () => {
       </div>
       
       {/* Membership section */}
-      <div id="membership" className="scroll-mt-20"></div>
+      <div id="membership" className="scroll-mt-32"></div>
       <MembershipSection />
       
       {/* Partners section */}
-      <div id="partners" className="scroll-mt-20"></div>
+      <div id="partners" className="scroll-mt-32"></div>
       <PartnersSection />
       
       {/* Gallery section */}
-      <div id="gallery" className="scroll-mt-20"></div>
+      <div id="gallery" className="scroll-mt-32"></div>
       <GallerySection />
       
       {/* Events section */}
-      <div id="events" className="scroll-mt-20"></div>
+      <div id="events" className="scroll-mt-32"></div>
       <EventsSection />
       
       {/* Contact section - now correctly positioned for mobile and desktop */}
-      <div id="contact" className="scroll-mt-20"></div>
+      <div id="contact" className="scroll-mt-32"></div>
       {!isMobile && <ContactSection />}
       
       <Footer />

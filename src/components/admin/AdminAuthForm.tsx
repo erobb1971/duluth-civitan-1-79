@@ -18,7 +18,7 @@ const AdminAuthForm = ({ onAuthenticated, onCancel }: AdminAuthFormProps) => {
   const [showTwoFactor, setShowTwoFactor] = useState(false);
 
   const getAdminPassword = () => {
-    return localStorage.getItem('admin_password') || "AcireCreates25!";
+    return localStorage.getItem('admin_password') || "admin1234";
   };
 
   const is2FAEnabled = () => {
