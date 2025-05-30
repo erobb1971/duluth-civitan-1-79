@@ -34,7 +34,7 @@ const DesktopNavigation = () => {
     };
   }, []);
 
-  // Improved scroll function with better handling of section targeting
+  // Fixed scroll function with correct 128px offset to match scroll-mt-32 class
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, sectionId: string, sectionName: string) => {
     e.preventDefault();
     
@@ -44,7 +44,7 @@ const DesktopNavigation = () => {
       if (section) {
         const rect = section.getBoundingClientRect();
         const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        const headerHeight = 80; // Adjust for header height
+        const headerHeight = 128; // Fixed to match scroll-mt-32 (128px)
         
         window.scrollTo({
           top: rect.top + scrollTop - headerHeight,

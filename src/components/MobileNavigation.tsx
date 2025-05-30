@@ -1,6 +1,6 @@
 
 import React, { useState } from "react";
-import { ArrowUp, CalendarDays, Mail, PiggyBank, HandHelping } from "lucide-react";
+import { ArrowUp, CalendarDays, Mail, PiggyBank, HandHelping, Home, Users } from "lucide-react";
 import { CalendarModal } from "./calendar";
 import DonationModal from "./DonationModal";
 import VolunteerModal from "./VolunteerModal";
@@ -19,6 +19,22 @@ const MobileNavigation = () => {
   const [donationModalOpen, setDonationModalOpen] = useState(false);
   const [volunteerModalOpen, setVolunteerModalOpen] = useState(false);
   const { announceToScreenReader } = useAccessibility();
+
+  const handleScrollToSection = (sectionId: string, sectionName: string) => {
+    const section = document.getElementById(sectionId);
+    if (section) {
+      const rect = section.getBoundingClientRect();
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      const mobileNavHeight = 80; // Account for mobile nav height
+      
+      window.scrollTo({
+        top: rect.top + scrollTop - mobileNavHeight,
+        behavior: "smooth",
+      });
+      
+      announceToScreenReader(`Navigated to ${sectionName} section`);
+    }
+  };
 
   const handleScrollToTop = () => {
     window.scrollTo({
@@ -44,24 +60,34 @@ const MobileNavigation = () => {
   };
 
   const handleEventsClick = () => {
-    setCalendarModalOpen(true);
-    announceToScreenReader("Opening events calendar");
+    handleScrollToSection("events", "events");
+  };
+
+  const handleAboutClick = () => {
+    handleScrollToSection("about", "about us");
   };
 
   const navItems: NavItem[] = [
     { 
-      title: "Top", 
+      title: "Home", 
       href: "#", 
-      icon: <ArrowUp className="w-4 h-4" aria-hidden="true" />,
+      icon: <Home className="w-4 h-4" aria-hidden="true" />,
       action: handleScrollToTop,
       ariaLabel: "Scroll to top of page"
+    },
+    { 
+      title: "About", 
+      href: "#", 
+      icon: <Users className="w-4 h-4" aria-hidden="true" />,
+      action: handleAboutClick,
+      ariaLabel: "Go to about section"
     },
     { 
       title: "Events", 
       href: "#", 
       icon: <CalendarDays className="w-4 h-4" aria-hidden="true" />,
       action: handleEventsClick,
-      ariaLabel: "Open events calendar"
+      ariaLabel: "Go to events section"
     },
     { 
       title: "Volunteer", 
@@ -76,13 +102,6 @@ const MobileNavigation = () => {
       icon: <PiggyBank className="w-4 h-4" aria-hidden="true" />,
       action: handleDonateClick,
       ariaLabel: "Open donation modal"
-    },
-    { 
-      title: "Contact", 
-      href: "#", 
-      icon: <Mail className="w-4 h-4" aria-hidden="true" />,
-      action: handleContactClick,
-      ariaLabel: "Open email to contact us"
     },
   ];
 
